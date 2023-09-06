@@ -37,20 +37,22 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const json = JSON.stringify(Object.fromEntries(data));
     console.log(
-      // email: data.get('email'),
-      // password: data.get('password'),
-
       json
-
     );
-    fetch('https://64f8d138824680fd21801557.mockapi.io/users', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
+    try {
+      fetch('https://64f8d138824680fd21801557.mockapi.io/users', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        // Send your data in the request body as JSON
+        body: json
+      })
+    } catch (error) {
+      console.log(error);
+    } finally {
+      navigate('/Home')
+    }
 
-      // Send your data in the request body as JSON
-      body: json
-    })
-    navigate('/Home')
+
   };
 
   return (
