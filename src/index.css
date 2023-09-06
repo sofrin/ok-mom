@@ -7,3 +7,8 @@
 		@apply max-w-[1720px];
 	}
 }
+@layer base {
+	body {
+		@apply bg-[#EAEBE4];
+	}
+}

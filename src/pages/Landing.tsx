@@ -21,7 +21,7 @@ export const Landing = () => {
         </nav>
       </div>
     </header>
-    <main className="bg-[#EAEBE4] container">
+    <main className="container">
       <div className="container relative">
         <img className="w-[1680px] h-[960px]" src="/hero.png" alt="heropng" />
         <p className=" font-medium text-5xl  max-w-[600px] absolute top-[542px] left-[190px]" > The largest community of lazy parents</p>
@@ -67,7 +67,7 @@ export const Landing = () => {
         <button className="w-48 h-12 rounded-md text-white bg-[#18A0FB] text-center text-base">Join Today</button>
       </div>
     </main>
-    <footer className="bg-[#EAEBE4] container">
+    <footer className="container">
       <nav className="flex items-center  justify-between px-10 ">
         <Link to="/" className="flex flex-row items-center p-2 gap-6 pl-14" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
           Technology </span></Link>
