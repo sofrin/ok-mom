@@ -21,7 +21,7 @@ export const Landing = () => {
         </nav>
       </div>
     </header>
-    <main className="bg-[#EAEBE4]">
+    <main className="bg-[#EAEBE4] container">
       <div className="container relative">
         <img className="w-[1680px] h-[960px]" src="/hero.png" alt="heropng" />
         <p className=" font-medium text-5xl  max-w-[600px] absolute top-[542px] left-[190px]" > The largest community of lazy parents</p>
@@ -35,19 +35,19 @@ export const Landing = () => {
         <div className="flex flex-row flex-wrap justify-between">
           <div className="flex flex-col max-w-2xl">
             <h3 className="text-2xl font-bold pb-6">Sed ut perspiciatis</h3>
-            <p className="text-lg tracking-tighter pb-10"> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+            <p className="text-xl tracking-tighter pb-10"> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
           </div>
           <div className="flex flex-col max-w-2xl">
             <h3 className="text-2xl font-bold pb-6" >Lorem ipsum dolor</h3>
-            <p className="text-lg  tracking-tighter pb-10">Amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+            <p className="text-xl  tracking-tighter pb-10">Amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
           </div>
           <div className="flex flex-col max-w-2xl">
             <h3 className="text-2xl font-bold pb-6">Nemo enim ipsam</h3>
-            <p className="text-lg tracking-tighter pb-10" >Consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.</p>
+            <p className="text-xl tracking-tighter pb-10" >Consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.</p>
           </div>
           <div className="flex flex-col max-w-2xl">
             <h3 className="text-2xl font-bold pb-6">Tempor incididunt</h3>
-            <p className="text-lg tracking-tighter pb-10">Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
+            <p className="text-xl tracking-tighter pb-10">Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ export const Landing = () => {
         <button className="w-48 h-12 rounded-md text-white bg-[#18A0FB] text-center text-base">Join Today</button>
       </div>
     </main>
-    <footer className="bg-[#EAEBE4]">
+    <footer className="bg-[#EAEBE4] container">
       <nav className="flex items-center  justify-between px-10 ">
         <Link to="/" className="flex flex-row items-center p-2 gap-6 pl-14" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
           Technology </span></Link>
