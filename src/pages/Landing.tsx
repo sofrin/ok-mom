@@ -75,11 +75,9 @@ export const Landing = () => {
           <li><NavLink className=" font-medium text-xl   text-black  " to="/">Mobile app</NavLink></li>
           <li><NavLink className=" font-medium text-xl   text-black " to="/">Community</NavLink></li>
           <li><NavLink className=" font-medium text-xl   text-black " to="/">Company</NavLink></li>
-
         </ul>
         <p className="opacity-80 w-[240px] "> © VigrebuhaTechnology, Inc. 2023. We love our users!</p>
       </nav>
     </footer>
-
   </>;
 };
