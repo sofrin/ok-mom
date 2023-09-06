@@ -1,20 +1,23 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 export const Landing = () => {
   return <>
     <header>
       <div className="container">
         <nav className="flex items-center justify-between px-10">
-          <a href="#" className="flex flex-row items-center p-2 gap-6 pr-12" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
-            Technology </span></a>
+          <Link to="/" className="flex flex-row items-center p-2 gap-6 pr-12" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
+            Technology </span></Link>
           <ul className="flex gap-12 mr-auto ">
-            <li><a className=" font-medium text-xl   text-[#18A0FB]  " href="#">Features</a></li>
-            <li><a className=" font-medium text-xl   text-[#18A0FB] " href="#">Pricing</a></li>
-            <li><a className=" font-medium text-xl   text-[#18A0FB] " href="#">Community</a></li>
-            <li><a className=" font-medium text-xl   text-[#18A0FB] " href="#">Support</a></li>
+            <li><NavLink className=" font-medium text-xl   text-[#18A0FB]  " to="/">Features</NavLink></li>
+            <li><NavLink className=" font-medium text-xl   text-[#18A0FB] " to="/">Pricing</NavLink></li>
+            <li><NavLink className=" font-medium text-xl   text-[#18A0FB] " to="/">Community</NavLink></li>
+            <li><NavLink className=" font-medium text-xl   text-[#18A0FB] " to="/">Support</NavLink></li>
           </ul>
-          <div className="flex gap-3 "><button className="w-32 h-10 rounded-md border-[1px] border-[#18A0FB] text-[#18A0FB] text-center text-sm"> Log In</button>
-            <button className="w-32 h-10 rounded-md text-white bg-[#18A0FB] text-center text-sm">Register</button></div>
+          <div className="flex gap-3 ">
+            <Link to='/SignIn'> <button className="w-32 h-10 rounded-md border-[1px] border-[#18A0FB] text-[#18A0FB] text-center text-sm"> Log In</button></Link>
+            <Link to='/SignUp'> <button className="w-32 h-10 rounded-md text-white bg-[#18A0FB] text-center text-sm">Register</button></Link>
+          </div>
         </nav>
       </div>
     </header>
@@ -66,12 +69,12 @@ export const Landing = () => {
     </main>
     <footer className="bg-[#EAEBE4]">
       <nav className="flex items-center  justify-between px-10 ">
-        <a href="#" className="flex flex-row items-center p-2 gap-6 pl-14" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
-          Technology </span></a>
+        <Link to="/" className="flex flex-row items-center p-2 gap-6 pl-14" ><img src='/Vector 4.svg' alt="logo" /> <span className="font-medium text-xl max-w-[100px]">Vigrebuha
+          Technology </span></Link>
         <ul className="flex gap-28  justify-center items-center flex-1">
-          <li><a className=" font-medium text-xl   text-black  " href="#">Mobile app</a></li>
-          <li><a className=" font-medium text-xl   text-black " href="#">Community</a></li>
-          <li><a className=" font-medium text-xl   text-black " href="#">Company</a></li>
+          <li><NavLink className=" font-medium text-xl   text-black  " to="/">Mobile app</NavLink></li>
+          <li><NavLink className=" font-medium text-xl   text-black " to="/">Community</NavLink></li>
+          <li><NavLink className=" font-medium text-xl   text-black " to="/">Company</NavLink></li>
 
         </ul>
         <p className="opacity-80 w-[240px] "> © VigrebuhaTechnology, Inc. 2023. We love our users!</p>
