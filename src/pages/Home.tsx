@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from './ListItems';
+import { mainListItems } from '../Components/ListItems';
 import { Button, Link, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import AddIcon from '@mui/icons-material/Add';
