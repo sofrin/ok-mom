@@ -12,19 +12,21 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const taskAddSchema = z.object({
-  child: z.string().optional(),
-  title: z.string().optional(),
-  points: z.number().optional(),
-  taskType: z.string().optional(),
-  description: z.string().optional(),
-  priority: z.string().optional(),
+  child: z.string(),
+  title: z.string(),
+  points: z.number(),
+  taskType: z.string(),
+  description: z.string(),
+  priority: z.string(),
   date: z.string().optional(),
   tags: z.string().optional(),
 });
 
-type taskAddSchema = z.infer<typeof taskAddSchema>;
+export type taskAddSchema = z.infer<typeof taskAddSchema>;
 
 export default function AddTaskDialog() {
+
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -48,7 +50,7 @@ export default function AddTaskDialog() {
     );
     if (response.ok) {
       alert('Form submited successfully');
-      reset
+      reset()
       return;
     } else {
       alert('Form submition failed');

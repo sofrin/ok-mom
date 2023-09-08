@@ -17,9 +17,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../Components/ListItems';
-import { Button, Link, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
-import AddTaskDialog from '../Components/AddTaskDialog';
+import AddTaskDialog, { taskAddSchema } from '../Components/AddTaskDialog';
+import { ChildTaskCard } from '../Components/ChildTaskCard';
 
 
 const drawerWidth: number = 240;
@@ -27,6 +26,8 @@ const drawerWidth: number = 240;
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -74,19 +75,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+export type tasksResponse = taskAddSchema & { id?: string }
 export default function Home() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+
+  const [tasks, setTasks] = React.useState<tasksResponse[]>([]);
+  React.useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await fetch(`https://64f8d138824680fd21801557.mockapi.io/tasks`, {
+        method: 'GET',
+        headers: { 'content-type': 'application/json' },
+      })
+      const tasks = await response.json()
+      // console.log(tasks);
+      setTasks(tasks)
+    };
+    fetchTasks()
+
+  }, []);
+
+  console.log(tasks);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -157,128 +169,11 @@ export default function Home() {
           }}
         >
           <Toolbar />
+
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={4} lg={6}>
-                <Paper
-                  sx={{
-                    p: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 400,
-                  }}
-                >
-                  <Grid container spacing={1}>
-                    <Grid item xs={5} sx={{ mr: 15 }}>
-                      <Item >Ребенок 1</Item>
-                    </Grid>
-                    <Grid item xs={4} className='w-1/4'>
-                      <Typography>Прогресс выполнения задач</Typography>
-                    </Grid>
-                    <Grid item xs={6} sx={{ mr: 15 }}>
-                      <Typography>Задачи на сегодня:</Typography>
-                    </Grid>
-                    <Grid item xs={8} sx={{ p: 4 }}>
-                      <List disablePadding>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 1"
-                          />
-                        </ListItem>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 2"
-                          />
-                        </ListItem>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 3"
-                          />
-                        </ListItem>
-                      </List>
-                    </Grid>
-
-                    <Grid item xs={8} sx={{ p: 4 }}>
-                      <Link href="#">Смотреть расписание →</Link>
-                    </Grid>
-                    <Grid item xs={5} sx={{ mr: 10 }}>
-                      <Button>Добавить задачу +</Button>
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Item>10 Баллов</Item>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={4} lg={6}>
-                <Paper
-                  sx={{
-                    p: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 400,
-                  }}
-                >
-                  <Grid container spacing={1}>
-                    <Grid item xs={5} sx={{ mr: 15 }}>
-                      <Item >Ребенок 2</Item>
-                    </Grid>
-                    <Grid item xs={4} className='w-1/4'>
-                      <Typography>Прогресс выполнения задач</Typography>
-                    </Grid>
-                    <Grid item xs={6} sx={{ mr: 15 }}>
-                      <Typography>Задачи на сегодня:</Typography>
-                    </Grid>
-                    <Grid item xs={8} sx={{ p: 4 }}>
-                      <List disablePadding>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 1"
-                          />
-                        </ListItem>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 2"
-                          />
-                        </ListItem>
-                        <ListItem disablePadding>
-                          <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                            <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="описание задачи 3"
-                          />
-                        </ListItem>
-                      </List>
-                    </Grid>
-
-                    <Grid item xs={8} sx={{ p: 4 }}>
-                      <Link href="#">Смотреть расписание →</Link>
-                    </Grid>
-                    <Grid item xs={5} sx={{ mr: 10 }}>
-                      <Button>Добавить задачу +</Button>
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Item>22 Баллов</Item>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
+              <ChildTaskCard child='Ребёнок 1' tasks={tasks} />
+              <ChildTaskCard child='Ребёнок 2' tasks={tasks} />
               <Grid item xs={12} lg={6}>
                 <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
                   <AddTaskDialog />
