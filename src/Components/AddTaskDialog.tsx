@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const taskAddSchema = z.object({
-  child: z.number().optional(),
+  child: z.string().optional(),
   title: z.string().optional(),
   points: z.number().optional(),
   taskType: z.number().optional(),
@@ -103,13 +103,13 @@ export default function AddTaskDialog() {
             <DialogContentText>Задача для:</DialogContentText>
 
             <Select
-              defaultValue={1}
+              defaultValue={'Ребёнок 1'}
               id='child'
               label='Ребёнок'
               {...register('child')}
             >
-              <MenuItem value={1}>Ребёнок 1</MenuItem>
-              <MenuItem value={2}>Ребёнок 2</MenuItem>
+              <MenuItem value={'Ребёнок 1'}>Ребёнок 1</MenuItem>
+              <MenuItem value={'Ребёнок 2'}>Ребёнок 2</MenuItem>
             </Select>
           </div>
           <div className="flex flex-col">
@@ -137,11 +137,11 @@ export default function AddTaskDialog() {
             <Select
               id='taskType'
               label='Type'
-              defaultValue={1}
+              defaultValue={'Ежедневно'}
               {...register('taskType')}
             >
-              <MenuItem value={1}>Ежедневно</MenuItem>
-              <MenuItem value={2}>Единоразово</MenuItem>
+              <MenuItem value={'Ежедневно'}>Ежедневно</MenuItem>
+              <MenuItem value={'Единоразово'}>Единоразово</MenuItem>
             </Select>
             <TextField
               minRows='3'
@@ -166,13 +166,13 @@ export default function AddTaskDialog() {
               id='priority'
               label='Приоритет'
               variant='outlined'
-              defaultValue={2}
+              defaultValue={'Средний'}
               {...register('priority')}
             >
-              <MenuItem value={1}>Низкий</MenuItem>
-              <MenuItem value={2}>Средний</MenuItem>
-              <MenuItem value={3}>Высокий</MenuItem>
-              <MenuItem value={4}>Критический</MenuItem>
+              <MenuItem value={'Низкий'}>Низкий</MenuItem>
+              <MenuItem value={'Средний'}>Средний</MenuItem>
+              <MenuItem value={'Высокий'}>Высокий</MenuItem>
+              <MenuItem value={'Критический'}>Критический</MenuItem>
             </Select>
             <TextField
               autoFocus
