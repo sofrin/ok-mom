@@ -15,9 +15,9 @@ const taskAddSchema = z.object({
   child: z.string().optional(),
   title: z.string().optional(),
   points: z.number().optional(),
-  taskType: z.number().optional(),
+  taskType: z.string().optional(),
   description: z.string().optional(),
-  priority: z.number().optional(),
+  priority: z.string().optional(),
   date: z.string().optional(),
   tags: z.string().optional(),
 });
