@@ -82,7 +82,7 @@ export default function AddTaskDialog() {
       // fullWidth
       >
         <DialogTitle>Добавить задание</DialogTitle>
-        <DialogContent >
+        <DialogContent sx={{ width: 600 }} >
           {errors.description && (
             <p className='text-red-100'> {`${errors.description.message}`}</p>
           )}
