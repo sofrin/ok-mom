@@ -24,10 +24,10 @@ const taskAddSchema = z.object({
 
 export type taskAddSchema = z.infer<typeof taskAddSchema>;
 
-export default function AddTaskDialog() {
+export default function AddTaskDialog({ setTasks, open, setOpen }) {
 
 
-  const [open, setOpen] = React.useState(false);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,6 +38,7 @@ export default function AddTaskDialog() {
   };
   const onSubmit = async (data: taskAddSchema) => {
     console.log(data);
+    setTasks((prev: any) => [...prev, data])
 
     const response = await fetch(
       'https://64f8d138824680fd21801557.mockapi.io/tasks',
@@ -201,7 +202,7 @@ export default function AddTaskDialog() {
           <Button
             disabled={isSubmitting}
             type="submit"
-          // onClick={handleClose}
+            onClick={handleClose}
           >
             Готово
           </Button>
