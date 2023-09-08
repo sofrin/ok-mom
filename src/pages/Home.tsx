@@ -19,7 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../Components/ListItems';
 import { Button, Link, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
-import AddIcon from '@mui/icons-material/Add';
+import AddTaskDialog from '../Components/AddTaskDialog';
 
 
 const drawerWidth: number = 240;
@@ -279,11 +279,9 @@ export default function Home() {
                   </Grid>
                 </Paper>
               </Grid>
-
-
               <Grid item xs={12} lg={6}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 70 }}>
-                  <Button><AddIcon /></Button>
+                <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                  <AddTaskDialog />
                 </Paper>
               </Grid>
             </Grid>

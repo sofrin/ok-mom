@@ -50,6 +50,7 @@ export default function SignUp() {
   const navigate = useNavigate()
 
   const onSubmit = async (data: signUpSchema) => {
+
     const response = await fetch('https://64f8d138824680fd21801557.mockapi.io/users', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -116,7 +117,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   {...register('password', {
-                    required: "passwird is required"
+                    required: "passwrd is required"
                   })}
 
                   fullWidth
