@@ -57,6 +57,9 @@ export const FullTask: React.FC = () => {
   if (!singleTask) {
     return <div>Загрузка...</div>;
   }
+  const handleClose = () => {
+    navigate('/Home');
+  };
   const onSubmit = async (data: taskAddSchema) => {
     console.log(`данные из измененной формы`, data);
 
@@ -71,15 +74,14 @@ export const FullTask: React.FC = () => {
     );
     if (response.ok) {
       alert('Form edited successfully');
+      handleClose()
       return;
     } else {
       alert('Form edit failed');
       return;
     }
   };
-  const handleClose = () => {
-    navigate('/Home');
-  };
+
   return (
     <Dialog
       component='form'
@@ -224,7 +226,7 @@ export const FullTask: React.FC = () => {
         <Button
           disabled={isSubmitting}
           type="submit"
-        // onClick={handleClose}
+
         >
           Готово
         </Button>
