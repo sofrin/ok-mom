@@ -10,6 +10,7 @@ import { MenuItem, Select } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { tasksResponse } from '../pages/Home';
 
 const taskAddSchema = z.object({
   child: z.string(),
@@ -21,13 +22,15 @@ const taskAddSchema = z.object({
   date: z.string().optional(),
   tags: z.string().optional(),
 });
+type AddTaskDialogProps = {
+  setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
+  open: boolean,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 export type taskAddSchema = z.infer<typeof taskAddSchema>;
 
-export default function AddTaskDialog({ setTasks, open, setOpen }) {
-
-
-
+export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,7 +41,7 @@ export default function AddTaskDialog({ setTasks, open, setOpen }) {
   };
   const onSubmit = async (data: taskAddSchema) => {
     console.log(data);
-    setTasks((prev: any) => [...prev, data])
+    setTasks((prev: tasksResponse[]) => [...prev, data])
 
     const response = await fetch(
       'https://64f8d138824680fd21801557.mockapi.io/tasks',

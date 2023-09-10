@@ -10,6 +10,11 @@ import { tasksResponse } from '../pages/Home';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+type ChildTaskCardProps = {
+  child: string,
+  tasks: tasksResponse[],
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 export const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,7 +24,8 @@ export const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export const ChildTaskCard: React.FC = ({ child, tasks, setOpen }) => {
+
+export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };

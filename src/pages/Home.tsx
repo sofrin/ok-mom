@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../Components/ListItems';
-import AddTaskDialog, { taskAddSchema } from '../Components/AddTaskDialog';
+import { AddTaskDialog, taskAddSchema } from '../Components/AddTaskDialog';
 import { ChildTaskCard } from '../Components/ChildTaskCard';
 
 
