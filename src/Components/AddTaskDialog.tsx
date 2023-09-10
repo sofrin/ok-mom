@@ -35,14 +35,13 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
   const onSubmit = async (data: taskAddSchema) => {
     console.log(data);
-    setTasks((prev: tasksResponse[]) => [...prev, data])
 
+    setTasks((prev: tasksResponse[]) => [...prev, data])
     const response = await fetch(
       'https://64f8d138824680fd21801557.mockapi.io/tasks',
       {
@@ -78,7 +77,6 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
       </Button>
 
       <Dialog
-
         component='form'
         onSubmit={handleSubmit(onSubmit)}
         open={open}

@@ -172,8 +172,8 @@ export default function Home() {
 
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <ChildTaskCard child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} />
-              <ChildTaskCard child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} />
+              <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} />
+              <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} />
               <Grid item xs={12} lg={6}>
                 <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
                   <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} />

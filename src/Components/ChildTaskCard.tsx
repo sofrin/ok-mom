@@ -9,6 +9,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import { tasksResponse } from '../pages/Home';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Link as RouterLink } from 'react-router-dom';
 
 type ChildTaskCardProps = {
   child: string,
@@ -31,26 +32,25 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
   };
 
   const filtteredTasks = tasks.filter((obj: tasksResponse) => Object.values(obj).includes(child))
-  const priorityCircle = (obj: tasksResponse) => {
-    switch (obj.priority) {
+  const priorityCircle = (priority: string) => {
+    switch (priority) {
       case 'Низкий':
         return <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-        break;
       case 'Средний':
         return <CircleIcon color='secondary' fontSize={'small'} sx={{ fontSize: 10 }} />
-        break;
       case 'Высокий':
         return <CircleIcon color='primary' fontSize={'small'} sx={{ fontSize: 10 }} />
-        break;
       case 'Критический':
         return <CircleIcon color='error' fontSize={'small'} sx={{ fontSize: 10 }} />
-        break;
 
       default:
         break;
     }
   }
   const points = filtteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
+  if (!tasks) {
+    return <div>Загрузка...</div>
+  }
   return (
     <>
       <Grid item xs={12} md={4} lg={6}>
@@ -72,7 +72,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               <Grid item xs={4} justifyContent='center' >
                 <Typography>Прогресс выполнения задач</Typography>
                 <Box sx={{ position: 'relative', display: 'inline-flex', ml: 7, bgcolor: 'lightgrey', borderRadius: 5 }}>
-                  <CircularProgress variant="determinate" value={points * 0.01} />
+                  <CircularProgress variant="determinate" value={points * 0.1} />
                   <Box
                     sx={{
                       top: 0,
@@ -89,7 +89,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
                       variant="caption"
                       component="div"
                       color="text.secondary"
-                    >{`${Math.round(points * 0.01)}%`}</Typography>
+                    >{`${Math.round(points * 0.1)}%`}</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -99,14 +99,18 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
             </Grid>
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 150, overflow: 'auto' }}>
               <List disablePadding>
-                {filtteredTasks.map((obj: tasksResponse) => <ListItem key={obj.id} disablePadding>
-                  <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-                    {priorityCircle(obj)}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={obj.description}
-                  />
-                </ListItem>)}
+                {filtteredTasks.map((obj: tasksResponse) =>
+                  <RouterLink to={`/Home/${obj.id}`}>
+                    <ListItem key={obj.id} disablePadding>
+                      <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
+                        {priorityCircle(obj.priority)}
+                      </ListItemIcon>
+
+                      <ListItemText
+                        primary={obj.title}
+                      />
+                    </ListItem>
+                  </RouterLink>)}
               </List>
             </Grid>
 

@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SIgnUp";
 import { NotFound } from "./pages/NotFound";
 import Home from './pages/Home'
+import { FullTask } from "./pages/FullTask";
 
 function App() {
 
@@ -30,6 +31,10 @@ function App() {
       <Route
         path='/Home'
         element={<Home />}
+      />
+      <Route
+        path='/Home/:id'
+        element={<FullTask />}
       />
 
     </Routes>
