@@ -16,9 +16,7 @@ import { taskAddSchema } from '../Components/AddTaskDialog';
 
 
 export const FullTask: React.FC = () => {
-  const handleClose = () => {
-    navigate('/Home');
-  };
+
   const {
     register,
     handleSubmit,
@@ -63,7 +61,7 @@ export const FullTask: React.FC = () => {
     console.log(`данные из измененной формы`, data);
 
     const response = await fetch(
-      `https://64f8d138824680fd21801557.mockapi.io/tasks/` + id,
+      `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
       {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
@@ -79,7 +77,9 @@ export const FullTask: React.FC = () => {
       return;
     }
   };
-
+  const handleClose = () => {
+    navigate('/Home');
+  };
   return (
     <Dialog
       component='form'
@@ -224,7 +224,7 @@ export const FullTask: React.FC = () => {
         <Button
           disabled={isSubmitting}
           type="submit"
-          onClick={handleClose}
+        // onClick={handleClose}
         >
           Готово
         </Button>
