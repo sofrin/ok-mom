@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,7 +13,9 @@ import { useForm } from 'react-hook-form';
 import { tasksResponse } from './Home';
 import { taskAddSchema } from '../Components/AddTaskDialog';
 
-export const FullTask = () => {
+
+
+export const FullTask: React.FC = () => {
   const handleClose = () => {
     navigate('/Home');
   };
@@ -22,7 +24,7 @@ export const FullTask = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<taskAddSchema>();
-  const { id } = useParams();
+  let { id } = useParams();
   console.log(`id из useParams`, id);
   const navigate = useNavigate();
   const [singleTask, setSingleTask] = useState<tasksResponse>();
@@ -30,25 +32,29 @@ export const FullTask = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
+  const location = useLocation()
+
+  const tasks: tasksResponse[] = location.state.tasks
+  if (id === 'undefined') {
+    id = String(Number(tasks[tasks.length - 2].id) + 1)
+    window.history.replaceState(null, "VT", `/Home/${id}`)
+  }
   useEffect(() => {
-    async function fetchPizza() {
-      const fetchTasks = async () => {
-        try {
-          const response = await fetch(`https://64f8d138824680fd21801557.mockapi.io/tasks/` + id, {
-            method: 'GET',
-            headers: { 'content-type': 'application/json' },
-          })
-          const task = await response.json()
-          // console.log(tasks);
-          setSingleTask(task)
-        } catch (error) {
-          alert('Ошибка при получении задачи');
-          navigate('/Home');
-        }
+    async function fetchTask() {
+      try {
+        const response = await fetch(`https://64f8d138824680fd21801557.mockapi.io/tasks/` + id, {
+          method: 'GET',
+          headers: { 'content-type': 'application/json' },
+        })
+        const task = await response.json()
+        // console.log(tasks);
+        setSingleTask(task)
+      } catch (error) {
+        alert('Ошибка при получении задачи');
+        navigate('/Home');
       }
-      fetchTasks()
     }
-    fetchPizza();
+    fetchTask()
   }, [id, navigate]);
   if (!singleTask) {
     return <div>Загрузка...</div>;

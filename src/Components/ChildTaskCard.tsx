@@ -100,8 +100,8 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 150, overflow: 'auto' }}>
               <List disablePadding>
                 {filtteredTasks.map((obj: tasksResponse) =>
-                  <RouterLink to={`/Home/${obj.id}`}>
-                    <ListItem key={obj.id} disablePadding>
+                  <RouterLink key={obj.title} to={`/Home/${obj.id}`} state={{ tasks: tasks }} >
+                    <ListItem disablePadding>
                       <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
                         {priorityCircle(obj.priority)}
                       </ListItemIcon>
