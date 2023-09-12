@@ -19,6 +19,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../Components/ListItems';
 import { AddTaskDialog, taskAddSchema } from '../Components/AddTaskDialog';
 import { ChildTaskCard } from '../Components/ChildTaskCard';
+import { CompletedTaskCard } from '../Components/CompletedTaskCard';
+
 
 
 const drawerWidth: number = 240;
@@ -76,6 +78,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 export type tasksResponse = taskAddSchema & { id?: string }
+export type tasksCompleted = taskAddSchema & { id?: string, completed: boolean }
 export default function Home() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -98,8 +101,8 @@ export default function Home() {
     fetchTasks()
 
   }, []);
-
   console.log(tasks);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -173,8 +176,9 @@ export default function Home() {
 
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} />
-              <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} />
+              <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} />
+              <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} />
+              <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} />
               <Grid item xs={12} lg={6}>
                 <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
                   <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} />
