@@ -59,7 +59,7 @@ export default function SignUp() {
     })
     if (response.ok) {
       alert('Form submited successfully')
-      navigate('/Home')
+      navigate('/Home/tasks')
       return
     } else {
       alert('Form submition failed')
