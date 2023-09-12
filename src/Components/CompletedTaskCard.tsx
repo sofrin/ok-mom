@@ -20,6 +20,25 @@ type CompletedTaskCardProps = {
 
 
 export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, setTasks }) => {
+  const handleClickDelete = async (obj: tasksResponse) => {
+    console.log(obj);
+    setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
+
+    const response = await fetch(
+      'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
+      {
+        method: 'DELETE',
+      },
+    );
+    if (response.ok) {
+      alert('Task deleted successfully');
+      return;
+    } else {
+      alert('failed');
+      return;
+    }
+  };
+
   const handleClickUndo = async (obj: tasksResponse) => {
     console.log(obj);
     const unCompletedObj = { ...obj, completed: 'false' }
@@ -99,7 +118,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
                           primary={obj.title}
                         />
                       </RouterLink>
-                      <ListItemButton onClick={() => handleClickUndo(obj)} sx={{ maxWidth: 25, paddingRight: 4 }} ><UndoIcon sx={[
+                      <ListItemButton onClick={() => handleClickUndo(obj)} sx={{ maxWidth: 25, padding: 0 }} ><UndoIcon sx={[
                         {
                           '&:hover': {
                             color: 'white',
@@ -109,13 +128,15 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
                         { 'marginRight': 1 }
                       ]} /></ListItemButton>
 
-                      <DeleteIcon sx={[
-                        {
-                          '&:hover': {
-                            color: 'red',
+                      <ListItemButton onClick={() => handleClickDelete(obj)} sx={{ maxWidth: 24, padding: 0 }} >
+                        <DeleteIcon sx={[
+                          {
+                            '&:hover': {
+                              color: 'red',
+                            },
                           },
-                        },
-                      ]} />
+                        ]} />
+                      </ListItemButton>
                     </ListItemButton>
                   </ListItem>
                 )}

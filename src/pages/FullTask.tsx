@@ -24,6 +24,7 @@ export const FullTask: React.FC = () => {
   } = useForm<taskAddSchema>();
   let { id } = useParams();
   console.log(`id из useParams`, id);
+
   const navigate = useNavigate();
   const [singleTask, setSingleTask] = useState<tasksResponse>();
   const [checked, setChecked] = useState(false);
@@ -33,6 +34,8 @@ export const FullTask: React.FC = () => {
   const location = useLocation()
 
   const tasks: tasksResponse[] = location.state.tasks
+  console.log(tasks);
+
   if (id === 'undefined') {
     id = String(Number(tasks[tasks.length - 2].id) + 1)
     window.history.replaceState(null, "VT", `/Home/${id}`)

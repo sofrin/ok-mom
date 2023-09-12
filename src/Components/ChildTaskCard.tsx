@@ -35,6 +35,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClickCompleted = async (obj: tasksResponse) => {
     console.log(obj);
     const completedObj = { ...obj, completed: 'true' }
@@ -59,6 +60,25 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     }
 
   };
+  const handleClickDelete = async (obj: tasksResponse) => {
+    console.log(obj);
+    setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
+
+    const response = await fetch(
+      'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
+      {
+        method: 'DELETE',
+      },
+    );
+    if (response.ok) {
+      alert('Task deleted successfully');
+      return;
+    } else {
+      alert('failed');
+      return;
+    }
+  };
+
 
 
   const priorityCircle = (priority: string) => {
@@ -132,7 +152,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
                 {filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
-                    <ListItemButton  >
+                    <ListItemButton>
                       <RouterLink className='flex items-center flex-1' to={`/Home/${obj.id}`} state={{ tasks: tasks }} >
                         <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
                           {priorityCircle(obj.priority)}
@@ -142,7 +162,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
                           primary={obj.title}
                         />
                       </RouterLink>
-                      <ListItemButton onClick={() => handleClickCompleted(obj)} sx={{ maxWidth: 24, paddingRight: 4 }} ><DoneIcon sx={[
+                      <ListItemButton onClick={() => handleClickCompleted(obj)} sx={{ maxWidth: 24, padding: 0 }} ><DoneIcon sx={[
                         {
                           '&:hover': {
                             color: 'white',
@@ -150,14 +170,15 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
                           },
                         }
                       ]} /></ListItemButton>
-
-                      <DeleteIcon sx={[
-                        {
-                          '&:hover': {
-                            color: 'red',
+                      <ListItemButton onClick={() => handleClickDelete(obj)} sx={{ maxWidth: 24, padding: 0 }} >
+                        <DeleteIcon sx={[
+                          {
+                            '&:hover': {
+                              color: 'red',
+                            },
                           },
-                        },
-                      ]} />
+                        ]} />
+                      </ListItemButton>
                     </ListItemButton>
                   </ListItem>
                 )}
