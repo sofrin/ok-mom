@@ -38,7 +38,7 @@ export const FullTask: React.FC = () => {
 
   if (id === 'undefined') {
     id = String(Number(tasks[tasks.length - 2].id) + 1)
-    window.history.replaceState(null, "VT", `/Home/${id}`)
+    window.history.replaceState(null, "VT", `/Home/tasks/${id}`)
   }
   useEffect(() => {
     async function fetchTask() {
@@ -52,7 +52,7 @@ export const FullTask: React.FC = () => {
         setSingleTask(task)
       } catch (error) {
         alert('Ошибка при получении задачи');
-        navigate('/Home');
+        navigate(-1);
       }
     }
     fetchTask()
@@ -61,7 +61,7 @@ export const FullTask: React.FC = () => {
     return <div>Загрузка...</div>;
   }
   const handleClose = () => {
-    navigate('/Home');
+    navigate(-1);
   };
   const onSubmit = async (data: taskAddSchema) => {
     console.log(`данные из измененной формы`, data);
