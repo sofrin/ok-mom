@@ -109,7 +109,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
 
                   <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
                     <ListItemButton  >
-                      <RouterLink className='flex items-center flex-1' key={obj.title} to={`/Home/${obj.id}`} state={{ tasks: tasks }} >
+                      <RouterLink className='flex items-center flex-1' key={obj.title} to={`/Home/tasks/${obj.id}`} state={{ tasks: tasks }} >
                         <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
                           {priorityCircle(obj.priority)}
                         </ListItemIcon>
