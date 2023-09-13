@@ -17,7 +17,8 @@ type ChildTaskCardProps = {
   child: string,
   tasks: tasksResponse[],
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>
+  setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
+  setdefaultChild: React.Dispatch<React.SetStateAction<string>>
 
 }
 
@@ -30,10 +31,11 @@ export const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks }) => {
+export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks, setdefaultChild }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setdefaultChild(child)
   };
 
   const handleClickCompleted = async (obj: tasksResponse) => {

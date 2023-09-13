@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import { AddTaskDialog, taskAddSchema } from '../Components/AddTaskDialog';
 import { ChildTaskCard } from '../Components/ChildTaskCard';
 import { CompletedTaskCard } from '../Components/CompletedTaskCard';
@@ -11,6 +10,7 @@ export type tasksResponse = taskAddSchema & { id: string }
 export type tasksCompleted = taskAddSchema & { id?: string, completed: boolean }
 export default function Home() {
   const [openForm, setOpenForm] = React.useState(false);
+  const [defaultChild, setdefaultChild] = React.useState('Ребёнок 1');
 
   const [tasks, setTasks] = React.useState<tasksResponse[]>([]);
   React.useEffect(() => {
@@ -32,13 +32,13 @@ export default function Home() {
   return (
 
     <Grid container spacing={3}>
-      <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} />
-      <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} />
-      <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} />
+
+      <Grid item xs={12} lg={6}> <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
+      <Grid item xs={12} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
+
+      <Grid item xs={12} lg={6}>  <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} /></Grid>
       <Grid item xs={12} lg={6}>
-        <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
-          <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} />
-        </Paper>
+        {openForm && <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} defaultChild={defaultChild} />}
       </Grid>
     </Grid>
 

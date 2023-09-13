@@ -28,16 +28,17 @@ type AddTaskDialogProps = {
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
   open: boolean,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  tasks: tasksResponse[]
+  tasks: tasksResponse[],
+  defaultChild: string
 }
 
 export type taskAddSchema = z.infer<typeof taskAddSchema>;
 
-export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen, tasks }) => {
+export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen, tasks, defaultChild }) => {
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
   const handleClose = () => {
     setOpen(false);
   };
@@ -74,14 +75,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
     formState: { isSubmitting, errors },
   } = useForm<taskAddSchema>({ resolver: zodResolver(taskAddSchema) });
   return (
-    <div >
-      <Button
-        variant='outlined'
-        onClick={handleClickOpen}
-      >
-        Open form dialog
-      </Button>
-
+    <>
       <Dialog
         component='form'
         onSubmit={handleSubmit(onSubmit)}
@@ -113,7 +107,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
             <DialogContentText>Задача для:</DialogContentText>
 
             <Select
-              defaultValue={'Ребёнок 1'}
+              defaultValue={defaultChild}
               id='child'
               label='Ребёнок'
               {...register('child')}
@@ -217,6 +211,6 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
           <Button onClick={handleClose}>Отмена</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
