@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
-import { ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import { ListItem, ListItemIcon, ListItemText, ListItemButton, Skeleton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import { tasksResponse } from '../pages/Home';
 import { Link as RouterLink } from 'react-router-dom';
@@ -14,12 +14,12 @@ import UndoIcon from '@mui/icons-material/Undo';
 type CompletedTaskCardProps = {
   tasks: tasksResponse[],
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>
-
+  isLoading: boolean
 }
 
 
 
-export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, setTasks }) => {
+export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, setTasks, isLoading }) => {
   const handleClickDelete = async (obj: tasksResponse) => {
     console.log(obj);
     setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
@@ -105,7 +105,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
 
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 300, overflowY: 'auto', overflowX: 'hidden' }}>
               <List disablePadding>
-                {filteredTasks.map((obj: tasksResponse) =>
+                {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
                     <ListItemButton  >
@@ -139,7 +139,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
                       </ListItemButton>
                     </ListItemButton>
                   </ListItem>
-                )}
+                ) : <Skeleton variant="rounded" width={510} height={144} />}
               </List>
             </Grid>
             <Grid item xs={5}>

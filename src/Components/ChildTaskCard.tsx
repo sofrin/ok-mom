@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
-import { ListItem, ListItemIcon, ListItemText, Link, Button, ListItemButton } from '@mui/material';
+import { ListItem, ListItemIcon, ListItemText, Link, Button, ListItemButton, Skeleton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import { tasksResponse } from '../pages/Home';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,7 +19,7 @@ type ChildTaskCardProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
   setdefaultChild: React.Dispatch<React.SetStateAction<string>>
-
+  isLoading: boolean
 }
 
 export const Item = styled(Paper)(({ theme }) => ({
@@ -31,7 +31,7 @@ export const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks, setdefaultChild }) => {
+export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks, setdefaultChild, isLoading }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -124,7 +124,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               <Grid item xs={4} md={4} display='flex' direction='column' justifyContent='center' >
                 <Typography>Прогресс выполнения задач</Typography>
                 <Box sx={{ position: 'relative', display: 'inline-flex', ml: 7, bgcolor: 'lightgrey', borderRadius: 5, marginLeft: 'auto', marginRight: 'auto' }}>
-                  <CircularProgress variant="determinate" value={points * 0.1} />
+                  {points ? <CircularProgress variant="determinate" value={points * 0.1} /> : <Skeleton variant="circular" width={40} height={40} />}
                   <Box
                     sx={{
                       top: 0,
@@ -147,11 +147,11 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               </Grid>
             </Grid>
             <Grid item xs={12} >
-              <Typography>Задачи на сегодня:</Typography>
+              <Typography>Задачи:</Typography>
             </Grid>
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 150, overflowY: 'auto', overflowX: 'hidden' }}>
               <List disablePadding>
-                {filteredTasks.map((obj: tasksResponse) =>
+                {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
                     <ListItemButton>
@@ -183,7 +183,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
                       </ListItemButton>
                     </ListItemButton>
                   </ListItem>
-                )}
+                ) : <Skeleton variant="rounded" width={510} height={144} />}
               </List>
             </Grid>
 
