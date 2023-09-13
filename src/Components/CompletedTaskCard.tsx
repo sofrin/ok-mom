@@ -84,7 +84,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
   }
   return (
     <>
-      <Grid item xs={12} md={4} lg={6}>
+      <Grid item xs={12} md={12} lg={12}>
         <Paper
           sx={{
             p: 3,

@@ -33,11 +33,11 @@ export default function Home() {
 
     <Grid container spacing={3}>
 
-      <Grid item xs={12} lg={6}> <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
-      <Grid item xs={12} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
+      <Grid item xs={6} md={4} lg={6} > <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
+      <Grid item xs={6} md={4} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} /></Grid>
 
-      <Grid item xs={12} lg={6}>  <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} /></Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} /></Grid>
+      <Grid item xs={6} md={4} lg={6}>
         {openForm && <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} defaultChild={defaultChild} />}
       </Grid>
     </Grid>

@@ -105,7 +105,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
   }
   return (
     <>
-      <Grid item xs={12} md={4} lg={6}>
+      <Grid item xs={12} md={12} lg={12}>
         <Paper
           sx={{
             p: 3,
@@ -117,13 +117,13 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
           <Grid container direction="row" spacing={1} sx={{
             height: 450,
           }}>
-            <Grid container direction="row" item>
-              <Grid item xs={5} sx={{ mr: 15 }}>
+            <Grid container direction="row" item spacing={10} justifyContent='space-between' >
+              <Grid item xs={5} md={4} >
                 <Item ><Typography variant='body1' component="h3">{child}</Typography></Item>
               </Grid>
-              <Grid item xs={4} justifyContent='center' >
+              <Grid item xs={4} md={4} display='flex' direction='column' justifyContent='center' >
                 <Typography>Прогресс выполнения задач</Typography>
-                <Box sx={{ position: 'relative', display: 'inline-flex', ml: 7, bgcolor: 'lightgrey', borderRadius: 5 }}>
+                <Box sx={{ position: 'relative', display: 'inline-flex', ml: 7, bgcolor: 'lightgrey', borderRadius: 5, marginLeft: 'auto', marginRight: 'auto' }}>
                   <CircularProgress variant="determinate" value={points * 0.1} />
                   <Box
                     sx={{
