@@ -38,7 +38,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
 
   const handleClickCompleted = async (obj: tasksResponse) => {
     console.log(obj);
-    const completedObj = { ...obj, completed: 'true' }
+    const completedObj = { ...obj, isCompleted: 'true' }
     setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
     setTasks((prev) => [...prev, completedObj])
 
@@ -48,7 +48,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         // Send your data in the request body as JSON
-        body: JSON.stringify({ completed: 'true' })
+        body: JSON.stringify({ isCompleted: 'true' })
       },
     );
     if (response.ok) {

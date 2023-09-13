@@ -21,16 +21,19 @@ const taskAddSchema = z.object({
   priority: z.string(),
   date: z.string().optional(),
   tags: z.string().optional(),
+  id: z.string().default('0'),
+  isCompleted: z.string().default('false')
 });
 type AddTaskDialogProps = {
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
   open: boolean,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  tasks: tasksResponse[]
 }
 
 export type taskAddSchema = z.infer<typeof taskAddSchema>;
 
-export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen }) => {
+export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen, tasks }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,6 +42,10 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
     setOpen(false);
   };
   const onSubmit = async (data: taskAddSchema) => {
+    const maxIdObj: tasksResponse = tasks.reduce(function (prev, current) {
+      return (prev.id > current.id) ? prev : current
+    })
+    data.id = String(Number(maxIdObj.id) + 1)
     console.log(data);
     setTasks((prev: tasksResponse[]) => [...prev, data])
     const response = await fetch(

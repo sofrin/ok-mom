@@ -22,7 +22,7 @@ export const FullTask: React.FC = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<taskAddSchema>();
-  let { id } = useParams();
+  const { id } = useParams();
   console.log(`id из useParams`, id);
 
   const navigate = useNavigate();
@@ -36,10 +36,13 @@ export const FullTask: React.FC = () => {
   const tasks: tasksResponse[] = location.state.tasks
   console.log(tasks);
 
-  if (id === 'undefined') {
-    id = String(Number(tasks[tasks.length - 2].id) + 1)
-    window.history.replaceState(null, "VT", `/Home/tasks/${id}`)
-  }
+
+
+
+  // if (id === 'undefined') {
+  //   id = String(Number(maxId.id) + 1)
+  //   window.history.replaceState(null, "VT", `/Home/tasks/${id}`)
+  // }
   useEffect(() => {
     async function fetchTask() {
       try {

@@ -7,7 +7,7 @@ import { CompletedTaskCard } from '../Components/CompletedTaskCard';
 
 
 
-export type tasksResponse = taskAddSchema & { id?: string }
+export type tasksResponse = taskAddSchema & { id: string }
 export type tasksCompleted = taskAddSchema & { id?: string, completed: boolean }
 export default function Home() {
   const [openForm, setOpenForm] = React.useState(false);
@@ -37,7 +37,7 @@ export default function Home() {
       <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} />
       <Grid item xs={12} lg={6}>
         <Paper sx={{ p: 2, display: 'flex', height: 70, alignItems: 'center', justifyContent: 'center' }}>
-          <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} />
+          <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} />
         </Paper>
       </Grid>
     </Grid>
