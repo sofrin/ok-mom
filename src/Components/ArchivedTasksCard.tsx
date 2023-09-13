@@ -10,10 +10,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Item } from './ChildTaskCard';
 import UndoIcon from '@mui/icons-material/Undo';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-
-type CompletedTaskCardProps = {
+type ArchivedTasksCardProps = {
   tasks: tasksResponse[],
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>
   isLoading: boolean
@@ -21,7 +19,7 @@ type CompletedTaskCardProps = {
 
 
 
-export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, setTasks, isLoading }) => {
+export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, setTasks, isLoading }) => {
   const handleClickDelete = async (obj: tasksResponse) => {
     console.log(obj);
     setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
@@ -40,33 +38,10 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
       return;
     }
   };
-  const handleClickAchive = async (obj: tasksResponse) => {
-    console.log(obj);
-    const completedObj = { ...obj, isArchived: 'true' }
-    setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
-    setTasks((prev) => [...prev, completedObj])
 
-    const response = await fetch(
-      'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        // Send your data in the request body as JSON
-        body: JSON.stringify({ isArchived: 'true' })
-      },
-    );
-    if (response.ok) {
-      alert('Task archived successfully');
-      return;
-    } else {
-      alert('failed');
-      return;
-    }
-
-  };
   const handleClickUndo = async (obj: tasksResponse) => {
     console.log(obj);
-    const unCompletedObj = { ...obj, isCompleted: 'false' }
+    const unCompletedObj = { ...obj, isArchived: 'false' }
     setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
     setTasks((prev) => [...prev, unCompletedObj])
 
@@ -76,18 +51,18 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         // Send your data in the request body as JSON
-        body: JSON.stringify({ isCompleted: 'false' })
+        body: JSON.stringify({ isArchived: 'false' })
       },
     );
     if (response.ok) {
-      alert('Task Uncompleted successfully');
+      alert('Task UnArchived successfully');
       return;
     } else {
       alert('failed');
       return;
     }
   };
-  const filteredTasks = tasks.filter((obj: tasksResponse) => obj.isCompleted === 'true' && obj.isArchived !== 'true')
+  const filteredTasks = tasks.filter((obj: tasksResponse) => obj.isArchived === 'true')
   const priorityCircle = (priority: string) => {
     switch (priority) {
       case 'Низкий':
@@ -123,7 +98,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
           }}>
             <Grid container direction="row" item>
               <Grid item xs={5} sx={{ mr: 15 }}>
-                <Item >  <Typography variant='body1' component="h3">Выполненые задания</Typography></Item>
+                <Item >  <Typography variant='body1' component="h3">Задания в архиве</Typography></Item>
               </Grid>
 
             </Grid>
@@ -132,7 +107,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
               <List disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
-                  <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
+                  <ListItem key={obj.id} disablePadding sx={{ width: 510, opacity: 0.5 }} >
                     <ListItemButton  >
                       <RouterLink className='flex items-center flex-1' key={obj.title} to={`/Home/tasks/${obj.id}`} state={{ tasks: tasks }} >
                         <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
@@ -143,16 +118,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
                           primary={obj.title}
                         />
                       </RouterLink>
-                      <ListItemButton onClick={() => handleClickAchive(obj)} sx={{ maxWidth: 24, padding: 0 }} >
-                        <ThumbUpAltIcon sx={[
-                          {
-                            '&:hover': {
-                              color: 'green',
-                            },
-                          },
-                        ]} />
-                      </ListItemButton>
-                      <ListItemButton onClick={() => handleClickUndo(obj)} sx={{ maxWidth: 24, padding: 0 }} ><UndoIcon sx={[
+                      <ListItemButton onClick={() => handleClickUndo(obj)} sx={{ maxWidth: 25, padding: 0 }} ><UndoIcon sx={[
                         {
                           '&:hover': {
                             color: 'white',
@@ -171,7 +137,6 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
                           },
                         ]} />
                       </ListItemButton>
-
                     </ListItemButton>
                   </ListItem>
                 ) : <Skeleton variant="rounded" width={510} height={144} />}

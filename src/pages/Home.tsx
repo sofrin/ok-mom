@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import { AddTaskDialog, taskAddSchema } from '../Components/AddTaskDialog';
 import { ChildTaskCard } from '../Components/ChildTaskCard';
 import { CompletedTaskCard } from '../Components/CompletedTaskCard';
+import { ArchivedTasksCard } from '../Components/ArchivedTasksCard';
 
 
 
@@ -39,7 +40,8 @@ export default function Home() {
       <Grid item xs={6} md={4} lg={6} > <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} isLoading={isLoading} /></Grid>
       <Grid item xs={6} md={4} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} isLoading={isLoading} /></Grid>
 
-      <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard key={'Completed'} tasks={tasks} setTasks={setTasks} isLoading={isLoading} /></Grid>
+      <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} /></Grid>
+      <Grid item xs={6} md={4} lg={6}>  <ArchivedTasksCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} /></Grid>
       <Grid item xs={6} md={4} lg={6}>
         {openForm && <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} defaultChild={defaultChild} />}
       </Grid>

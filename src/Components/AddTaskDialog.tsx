@@ -22,7 +22,8 @@ const taskAddSchema = z.object({
   date: z.string().optional(),
   tags: z.string().optional(),
   id: z.string().default('0'),
-  isCompleted: z.string().default('false')
+  isCompleted: z.string().default('false'),
+  isArchived: z.string().default('false')
 });
 type AddTaskDialogProps = {
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
