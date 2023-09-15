@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import Dialog from '@mui/material/Dialog';
+
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
 import { tasksResponse } from './Home';
 import { taskAddSchema } from '../Components/AddTaskDialog';
+import Box from '@mui/material/Box';
 
 
 
@@ -89,14 +90,12 @@ export const FullTask: React.FC = () => {
   };
 
   return (
-    <Dialog
+    <Box
       component='form'
       onSubmit={handleSubmit(onSubmit)}
-      open
-      onClose={handleClose}
     // fullWidth
     >
-      <DialogTitle>Добавить задание</DialogTitle>
+      <DialogTitle>Редактировать задание</DialogTitle>
       <DialogContent sx={{ width: 600 }} >
         <FormControlLabel control={<Switch checked={checked}
           onChange={handleChange} />} label="edit" />
@@ -228,7 +227,7 @@ export const FullTask: React.FC = () => {
         </div>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: 'space-around' }}>
+      <DialogActions sx={{ justifyContent: 'flex-start' }}>
         <Button
           disabled={isSubmitting}
           type="submit"
@@ -238,6 +237,6 @@ export const FullTask: React.FC = () => {
         </Button>
         <Button onClick={handleClose}>Вернуться</Button>
       </DialogActions>
-    </Dialog>
+    </Box>
   );
 };
