@@ -139,6 +139,15 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
       draggableTask.child = child
       draggableTask.isArchived = 'false'
       draggableTask.isCompleted = 'false'
+      fetch(
+        'https://64f8d138824680fd21801557.mockapi.io/tasks/' + draggableTask.id,
+        {
+          method: 'PUT',
+          headers: { 'content-type': 'application/json' },
+          // Send your data in the request body as JSON
+          body: JSON.stringify({ isCompleted: 'false', isArchived: 'false', child: child })
+        },
+      );
       setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== draggableTask.id))
       setTasks((prev) => [...prev, draggableTask])
       setDraggableTask(undefined)
@@ -166,7 +175,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               <Grid item xs={5} md={4} >
                 <Item ><Typography variant='body1' component="h3">{child}</Typography></Item>
               </Grid>
-              <Grid item xs={4} md={4} display='flex' direction='column' justifyContent='center' >
+              <Grid item container xs={4} md={4} display='flex' direction='column' justifyContent='center' >
                 <Typography>Прогресс выполнения задач</Typography>
                 <Box sx={{ position: 'relative', display: 'inline-flex', ml: 7, bgcolor: 'lightgrey', borderRadius: 5, marginLeft: 'auto', marginRight: 'auto' }}>
                   {points ? <CircularProgress variant="determinate" value={points * 0.1} /> : <Skeleton variant="circular" width={40} height={40} />}

@@ -109,6 +109,15 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
     if (draggableTask) {
       draggableTask.isArchived = 'true'
       // draggableTask.isCompleted = 'true'
+      fetch(
+        'https://64f8d138824680fd21801557.mockapi.io/tasks/' + draggableTask.id,
+        {
+          method: 'PUT',
+          headers: { 'content-type': 'application/json' },
+          // Send your data in the request body as JSON
+          body: JSON.stringify({ isArchived: 'true' })
+        },
+      );
       setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== draggableTask.id))
       setTasks((prev) => [...prev, draggableTask])
       setDraggableTask(undefined)
