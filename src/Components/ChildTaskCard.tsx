@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import { Link as RouterLink } from 'react-router-dom';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { DragEvent } from 'react';
+
 
 type ChildTaskCardProps = {
   child: string,
@@ -19,7 +21,9 @@ type ChildTaskCardProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
   setdefaultChild: React.Dispatch<React.SetStateAction<string>>
-  isLoading: boolean
+  isLoading: boolean,
+  setDraggableTask: React.Dispatch<React.SetStateAction<tasksResponse | undefined>>
+  draggableTask: tasksResponse | undefined
 }
 
 export const Item = styled(Paper)(({ theme }) => ({
@@ -31,7 +35,7 @@ export const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks, setdefaultChild, isLoading }) => {
+export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setOpen, setTasks, setdefaultChild, isLoading, setDraggableTask, draggableTask }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -81,8 +85,6 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     }
   };
 
-
-
   const priorityCircle = (priority: string) => {
     switch (priority) {
       case 'Низкий':
@@ -98,14 +100,54 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
         break;
     }
   }
+
   const filteredTasks = tasks.filter((obj: tasksResponse) => Object.values(obj).includes(child) && !Object.values(obj).includes('true'))
   const points = filteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
   if (!tasks) {
     return <div>Загрузка...</div>
   }
+
+
+  function dragOverHandler(e: DragEvent) {
+    e.preventDefault()
+  }
+
+
+  function dragStartHandler(e: DragEvent, obj: tasksResponse) {
+    console.log(`dragStartHandler`, obj);
+    setDraggableTask(obj)
+    console.log(`DraggableTask`, draggableTask);
+    // obj.child = ''
+    // obj.isArchived = 'false'
+    // obj.isCompleted = 'false'
+    // setTasks((prev) => prev.filter((task) => task.id !== obj.id))
+
+    console.log(`dragStartHandler`, obj);
+  }
+
+
+
+  function dropHandler(e: DragEvent,): void {
+    e.preventDefault()
+    console.log(`dropHandler`, filteredTasks);
+    console.log(`draggableTask`, draggableTask);
+    if (draggableTask) {
+      console.log(`child`, child);
+      draggableTask.child = child
+      draggableTask.isArchived = 'false'
+      draggableTask.isCompleted = 'false'
+      setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== draggableTask.id))
+      setTasks((prev) => [...prev, draggableTask])
+      setDraggableTask(undefined)
+      console.log(`dropHandler`, filteredTasks);
+    }
+
+  }
+
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
+
+      <Grid onDrop={(e) => dropHandler(e)} onDragOver={(e) => { dragOverHandler(e) }} item xs={12} md={12} lg={12}>
         <Paper
           sx={{
             p: 3,
@@ -153,7 +195,11 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               <List disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
-                  <ListItem key={obj.id} disablePadding sx={{ width: 510 }} >
+                  <ListItem draggable
+                    onDragOver={(e) => { dragOverHandler(e) }}
+                    onDragStart={(e) => { dragStartHandler(e, obj) }}
+                    onDrop={(e) => dropHandler(e)}
+                    key={obj.id} disablePadding sx={{ width: 510 }} >
                     <ListItemButton>
                       <RouterLink className='flex items-center flex-1' to={`/Home/tasks/${obj.id}`} state={{ tasks: tasks }} >
                         <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
@@ -200,6 +246,8 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
             </Grid>
           </Grid>
         </Paper >
-      </Grid ></>
+      </Grid >
+
+    </>
   )
 };

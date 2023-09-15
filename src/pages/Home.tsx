@@ -15,6 +15,7 @@ export default function Home() {
   const [isLoading, setisLoading] = React.useState(false);
 
   const [tasks, setTasks] = React.useState<tasksResponse[]>([]);
+  const [draggableTask, setDraggableTask] = React.useState<tasksResponse>();
   React.useEffect(() => {
     const fetchTasks = async () => {
       setisLoading(true)
@@ -37,11 +38,13 @@ export default function Home() {
 
     <Grid container spacing={3}>
 
-      <Grid item xs={6} md={4} lg={6} > <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} isLoading={isLoading} /></Grid>
-      <Grid item xs={6} md={4} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks} setdefaultChild={setdefaultChild} isLoading={isLoading} /></Grid>
+      <Grid item xs={6} md={4} lg={6} > <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks}
+        setdefaultChild={setdefaultChild} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
+      <Grid item xs={6} md={4} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks}
+        setdefaultChild={setdefaultChild} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
 
-      <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} /></Grid>
-      <Grid item xs={6} md={4} lg={6}>  <ArchivedTasksCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} /></Grid>
+      <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
+      <Grid item xs={6} md={4} lg={6}>  <ArchivedTasksCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
       <Grid item xs={6} md={4} lg={6}>
         {openForm && <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} defaultChild={defaultChild} />}
       </Grid>

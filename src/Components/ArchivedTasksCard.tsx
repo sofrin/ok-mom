@@ -10,16 +10,19 @@ import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Item } from './ChildTaskCard';
 import UndoIcon from '@mui/icons-material/Undo';
+import { DragEvent } from 'react';
 
 type ArchivedTasksCardProps = {
   tasks: tasksResponse[],
   setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>
-  isLoading: boolean
+  isLoading: boolean,
+  setDraggableTask: React.Dispatch<React.SetStateAction<tasksResponse | undefined>>
+  draggableTask: tasksResponse | undefined
 }
 
 
 
-export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, setTasks, isLoading }) => {
+export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, setTasks, isLoading, setDraggableTask, draggableTask }) => {
   const handleClickDelete = async (obj: tasksResponse) => {
     console.log(obj);
     setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
@@ -79,12 +82,46 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
     }
   }
   const points = filteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
+  function dragOverHandler(e: DragEvent) {
+    e.preventDefault()
+  }
+
+
+  function dragStartHandler(e: DragEvent, obj: tasksResponse) {
+    console.log(`dragStartHandler`, obj);
+    setDraggableTask(obj)
+    console.log(`DraggableTask`, draggableTask);
+    // obj.child = ''
+    // obj.isArchived = 'false'
+    // obj.isCompleted = 'false'
+    // setTasks((prev) => prev.filter((task) => task.id !== obj.id))
+
+    console.log(`dragStartHandler`, obj);
+  }
+
+
+
+  function dropHandler(e: DragEvent): void {
+    e.preventDefault()
+    console.log(`dropHandler`, filteredTasks);
+    console.log(`draggableTask`, draggableTask);
+    if (draggableTask) {
+      draggableTask.isArchived = 'true'
+      // draggableTask.isCompleted = 'true'
+      setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== draggableTask.id))
+      setTasks((prev) => [...prev, draggableTask])
+      setDraggableTask(undefined)
+      console.log(`dropHandler`, filteredTasks);
+    }
+
+  }
+
   if (!tasks) {
     return <div>Загрузка...</div>
   }
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
+      <Grid onDrop={(e) => dropHandler(e)} onDragOver={(e) => { dragOverHandler(e) }} item xs={12} md={12} lg={12}>
         <Paper
           sx={{
             p: 3,
@@ -107,7 +144,10 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
               <List disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
-                  <ListItem key={obj.id} disablePadding sx={{ width: 510, opacity: 0.5 }} >
+                  <ListItem draggable
+                    onDragOver={(e) => { dragOverHandler(e) }}
+                    onDragStart={(e) => { dragStartHandler(e, obj) }}
+                    onDrop={(e) => dropHandler(e)} key={obj.id} disablePadding sx={{ width: 510, opacity: 0.5 }} >
                     <ListItemButton  >
                       <RouterLink className='flex items-center flex-1' key={obj.title} to={`/Home/tasks/${obj.id}`} state={{ tasks: tasks }} >
                         <ListItemIcon sx={{ p: 0, minWidth: 20 }}>
