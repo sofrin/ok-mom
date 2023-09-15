@@ -13,6 +13,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragEvent } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 
 
 type ChildTaskCardProps = {
@@ -103,6 +105,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
 
   const filteredTasks = tasks.filter((obj: tasksResponse) => Object.values(obj).includes(child) && !Object.values(obj).includes('true'))
   const points = filteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
+  const [parent] = useAutoAnimate()
   if (!tasks) {
     return <div>Загрузка...</div>
   }
@@ -192,7 +195,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
               <Typography>Задачи:</Typography>
             </Grid>
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 150, overflowY: 'auto', overflowX: 'hidden' }}>
-              <List disablePadding>
+              <List ref={parent} disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem draggable

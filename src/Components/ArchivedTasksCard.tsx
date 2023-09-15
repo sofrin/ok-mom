@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Item } from './ChildTaskCard';
 import UndoIcon from '@mui/icons-material/Undo';
 import { DragEvent } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type ArchivedTasksCardProps = {
   tasks: tasksResponse[],
@@ -115,6 +116,7 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
     }
 
   }
+  const [parent] = useAutoAnimate()
 
   if (!tasks) {
     return <div>Загрузка...</div>
@@ -141,7 +143,7 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
             </Grid>
 
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 300, overflowY: 'auto', overflowX: 'hidden' }}>
-              <List disablePadding>
+              <List ref={parent} disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem draggable

@@ -12,6 +12,7 @@ import { Item } from './ChildTaskCard';
 import UndoIcon from '@mui/icons-material/Undo';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { DragEvent } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type CompletedTaskCardProps = {
   tasks: tasksResponse[],
@@ -139,6 +140,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
         break;
     }
   }
+  const [parent] = useAutoAnimate()
   const points = filteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
   if (!tasks) {
     return <div>Загрузка...</div>
@@ -165,7 +167,7 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
             </Grid>
 
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 300, overflowY: 'auto', overflowX: 'hidden' }}>
-              <List disablePadding>
+              <List ref={parent} disablePadding>
                 {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
 
                   <ListItem draggable
