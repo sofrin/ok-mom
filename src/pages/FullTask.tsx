@@ -10,8 +10,8 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-import { tasksResponse } from './Home';
-import { taskAddSchema } from '../Components/AddTaskDialog';
+import { taskSchema } from './Home';
+import { taskSchema } from '../Components/AddTaskDialog';
 import Box from '@mui/material/Box';
 
 
@@ -27,14 +27,14 @@ export const FullTask: React.FC = () => {
   console.log(`id из useParams`, id);
 
   const navigate = useNavigate();
-  const [singleTask, setSingleTask] = useState<tasksResponse>();
+  const [singleTask, setSingleTask] = useState<taskSchema>();
   const [checked, setChecked] = useState(false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
   const location = useLocation()
 
-  const tasks: tasksResponse[] = location.state.tasks
+  const tasks: taskSchema[] = location.state.tasks
   console.log(tasks);
 
 

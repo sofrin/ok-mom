@@ -10,9 +10,9 @@ import { MenuItem, Select } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { tasksResponse } from '../pages/Home';
 
-const taskAddSchema = z.object({
+
+const taskSchema = z.object({
   child: z.string(),
   title: z.string(),
   points: z.number(),
@@ -26,14 +26,14 @@ const taskAddSchema = z.object({
   isArchived: z.string().default('false')
 });
 type AddTaskDialogProps = {
-  setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
+  setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>,
   open: boolean,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  tasks: tasksResponse[],
+  tasks: taskSchema[],
   defaultChild: string
 }
 
-export type taskAddSchema = z.infer<typeof taskAddSchema>;
+export type taskSchema = z.infer<typeof taskSchema>;
 
 export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen, tasks, defaultChild }) => {
 
@@ -43,13 +43,13 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
   const handleClose = () => {
     setOpen(false);
   };
-  const onSubmit = async (data: taskAddSchema) => {
-    const maxIdObj: tasksResponse = tasks.reduce(function (prev, current) {
+  const onSubmit = async (data: taskSchema) => {
+    const maxIdObj: taskSchema = tasks.reduce(function (prev, current) {
       return (prev.id > current.id) ? prev : current
     })
     data.id = String(Number(maxIdObj.id) + 1)
     console.log(data);
-    setTasks((prev: tasksResponse[]) => [...prev, data])
+    setTasks((prev: taskSchema[]) => [...prev, data])
     const response = await fetch(
       'https://64f8d138824680fd21801557.mockapi.io/tasks',
       {
@@ -74,7 +74,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<taskAddSchema>({ resolver: zodResolver(taskAddSchema) });
+  } = useForm<taskSchema>({ resolver: zodResolver(taskSchema) });
   return (
     <>
       <Dialog

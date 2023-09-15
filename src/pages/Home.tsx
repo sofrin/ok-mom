@@ -1,21 +1,21 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import { AddTaskDialog, taskAddSchema } from '../Components/AddTaskDialog';
+import { AddTaskDialog, taskSchema } from '../Components/AddTaskDialog';
 import { ChildTaskCard } from '../Components/ChildTaskCard';
 import { CompletedTaskCard } from '../Components/CompletedTaskCard';
 import { ArchivedTasksCard } from '../Components/ArchivedTasksCard';
 
 
 
-export type tasksResponse = taskAddSchema & { id: string }
-export type tasksCompleted = taskAddSchema & { id?: string, completed: boolean }
+
+
 export default function Home() {
   const [openForm, setOpenForm] = React.useState(false);
   const [defaultChild, setdefaultChild] = React.useState('Ребёнок 1');
   const [isLoading, setisLoading] = React.useState(false);
 
-  const [tasks, setTasks] = React.useState<tasksResponse[]>([]);
-  const [draggableTask, setDraggableTask] = React.useState<tasksResponse>();
+  const [tasks, setTasks] = React.useState<taskSchema[]>([]);
+  const [draggableTask, setDraggableTask] = React.useState<taskSchema>();
   React.useEffect(() => {
     const fetchTasks = async () => {
       setisLoading(true)

@@ -5,8 +5,8 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import { ListItem, ListItemIcon, ListItemText, Link, Button, ListItemButton, Skeleton } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
-import { tasksResponse } from '../pages/Home';
+
+
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Link as RouterLink } from 'react-router-dom';
@@ -14,18 +14,20 @@ import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragEvent } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { priorityCircle } from './PriorityCircle';
+import { taskSchema } from './AddTaskDialog';
 
 
 
 type ChildTaskCardProps = {
   child: string,
-  tasks: tasksResponse[],
+  tasks: taskSchema[],
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setTasks: React.Dispatch<React.SetStateAction<tasksResponse[]>>,
+  setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>,
   setdefaultChild: React.Dispatch<React.SetStateAction<string>>
   isLoading: boolean,
-  setDraggableTask: React.Dispatch<React.SetStateAction<tasksResponse | undefined>>
-  draggableTask: tasksResponse | undefined
+  setDraggableTask: React.Dispatch<React.SetStateAction<taskSchema | undefined>>
+  draggableTask: taskSchema | undefined
 }
 
 export const Item = styled(Paper)(({ theme }) => ({
@@ -44,10 +46,10 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     setdefaultChild(child)
   };
 
-  const handleClickCompleted = async (obj: tasksResponse) => {
+  const handleClickCompleted = async (obj: taskSchema) => {
     console.log(obj);
     const completedObj = { ...obj, isCompleted: 'true' }
-    setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
+    setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id))
     setTasks((prev) => [...prev, completedObj])
 
     const response = await fetch(
@@ -68,9 +70,9 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     }
 
   };
-  const handleClickDelete = async (obj: tasksResponse) => {
+  const handleClickDelete = async (obj: taskSchema) => {
     console.log(obj);
-    setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== obj.id))
+    setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id))
 
     const response = await fetch(
       'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
@@ -87,24 +89,10 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     }
   };
 
-  const priorityCircle = (priority: string) => {
-    switch (priority) {
-      case 'Низкий':
-        return <CircleIcon fontSize={'small'} sx={{ fontSize: 10 }} />
-      case 'Средний':
-        return <CircleIcon color='secondary' fontSize={'small'} sx={{ fontSize: 10 }} />
-      case 'Высокий':
-        return <CircleIcon color='primary' fontSize={'small'} sx={{ fontSize: 10 }} />
-      case 'Критический':
-        return <CircleIcon color='error' fontSize={'small'} sx={{ fontSize: 10 }} />
 
-      default:
-        break;
-    }
-  }
 
-  const filteredTasks = tasks.filter((obj: tasksResponse) => Object.values(obj).includes(child) && !Object.values(obj).includes('true'))
-  const points = filteredTasks.reduce((a: number, obj: tasksResponse) => a + obj.points, 0)
+  const filteredTasks = tasks.filter((obj: taskSchema) => Object.values(obj).includes(child) && !Object.values(obj).includes('true'))
+  const points = filteredTasks.reduce((a: number, obj: taskSchema) => a + obj.points, 0)
   const [parent] = useAutoAnimate()
   if (!tasks) {
     return <div>Загрузка...</div>
@@ -116,7 +104,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
   }
 
 
-  function dragStartHandler(e: DragEvent, obj: tasksResponse) {
+  function dragStartHandler(e: DragEvent, obj: taskSchema) {
     console.log(`dragStartHandler`, obj);
     setDraggableTask(obj)
     console.log(`DraggableTask`, draggableTask);
@@ -148,7 +136,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
           body: JSON.stringify({ isCompleted: 'false', isArchived: 'false', child: child })
         },
       );
-      setTasks((prev: tasksResponse[]) => prev.filter((task) => task.id !== draggableTask.id))
+      setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== draggableTask.id))
       setTasks((prev) => [...prev, draggableTask])
       setDraggableTask(undefined)
       console.log(`dropHandler`, filteredTasks);
@@ -205,7 +193,7 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
             </Grid>
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 150, overflowY: 'auto', overflowX: 'hidden' }}>
               <List ref={parent} disablePadding>
-                {!isLoading ? filteredTasks.map((obj: tasksResponse) =>
+                {!isLoading ? filteredTasks.map((obj: taskSchema) =>
 
                   <ListItem draggable
                     onDragOver={(e) => { dragOverHandler(e) }}
