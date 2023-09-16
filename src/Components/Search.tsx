@@ -45,6 +45,7 @@ export const Search: React.FC<SearchProps> = ({ setisLoading, setTasks }) => {
   return (
     <div className='m-16 flex justify-center relative' >
       <TextField
+        variant="outlined"
         className='border-2 w-96 rounded-lg border-gray-600 pl-4 opacity-50 focus:opacity-70 '
         ref={inputRef}
         value={value}
@@ -52,7 +53,7 @@ export const Search: React.FC<SearchProps> = ({ setisLoading, setTasks }) => {
         placeholder='Поиск задачи...'
       />
       {value !== '' &&
-        (<CloseIcon className='absolute right-80 top-[2px] opacity-30 cursor-pointer hover:opacity-80' onClick={onClickClose} />)}
+        (<CloseIcon className='absolute right-80 top-4 opacity-30 cursor-pointer hover:opacity-80' onClick={onClickClose} />)}
 
     </div>
   );
