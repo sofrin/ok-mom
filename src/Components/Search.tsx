@@ -2,6 +2,7 @@ import debounce from 'lodash.debounce';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { taskSchema } from './AddTaskDialog';
+import TextField from '@mui/material/TextField';
 
 type SearchProps = {
   setisLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -43,7 +44,7 @@ export const Search: React.FC<SearchProps> = ({ setisLoading, setTasks }) => {
 
   return (
     <div className='m-16 flex justify-center relative' >
-      <input
+      <TextField
         className='border-2 w-96 rounded-lg border-gray-600 pl-4 opacity-50 focus:opacity-70 '
         ref={inputRef}
         value={value}
