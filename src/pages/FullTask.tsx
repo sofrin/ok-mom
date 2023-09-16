@@ -10,7 +10,6 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-import { taskSchema } from './Home';
 import { taskSchema } from '../Components/AddTaskDialog';
 import Box from '@mui/material/Box';
 
@@ -22,7 +21,7 @@ export const FullTask: React.FC = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<taskAddSchema>();
+  } = useForm<taskSchema>();
   const { id } = useParams();
   console.log(`id из useParams`, id);
 
@@ -67,7 +66,7 @@ export const FullTask: React.FC = () => {
   const handleClose = () => {
     navigate(-1);
   };
-  const onSubmit = async (data: taskAddSchema) => {
+  const onSubmit = async (data: taskSchema) => {
     console.log(`данные из измененной формы`, data);
 
     const response = await fetch(
