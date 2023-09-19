@@ -165,7 +165,6 @@ export const CompletedTaskCard: React.FC<CompletedTaskCardProps> = ({ tasks, set
             <Grid item container direction="column" xs={12} sx={{ p: 4, height: 300, overflowY: 'auto', overflowX: 'hidden' }}>
               <List ref={parent} disablePadding>
                 {!isLoading ? filteredTasks.map((obj: taskSchema) =>
-
                   <ListItem draggable
                     onDragOver={(e) => { dragOverHandler(e) }}
                     onDragStart={(e) => { dragStartHandler(e, obj) }}
