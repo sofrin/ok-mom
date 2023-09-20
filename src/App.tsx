@@ -8,17 +8,12 @@ import { FullTask } from "./pages/FullTask";
 import ParentLayout from "./layouts/ParentLayout";
 
 function App() {
-
-
   return (
     <Routes>
-
       <Route
         path='/'
         element={<Landing />}
       />
-
-
       <Route
         path='/SignIn'
         element={<SignIn />}
