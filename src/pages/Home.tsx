@@ -5,10 +5,7 @@ import { ChildTaskCard } from '../Components/ChildTaskCard';
 import { CompletedTaskCard } from '../Components/CompletedTaskCard';
 import { ArchivedTasksCard } from '../Components/ArchivedTasksCard';
 import { Search } from '../Components/Search';
-
-
-
-
+import { SearchInput } from 'src/features/ui/Search/SearchInput';
 
 export default function Home() {
   const [openForm, setOpenForm] = React.useState(false);
@@ -37,7 +34,8 @@ export default function Home() {
 
   return (
     <>
-      <Search setTasks={setTasks} setisLoading={setisLoading} tasks={tasks} />
+      {/* <Search setTasks={setTasks} setisLoading={setisLoading} /> */}
+      <SearchInput setTasks={setTasks} setisLoading={setisLoading} />
 
       <Grid container spacing={3}>
 
