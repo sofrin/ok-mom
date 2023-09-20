@@ -1,11 +1,11 @@
-import { Landing } from "./pages/Landing"
+import { Landing } from "../pages/Landing"
 import { Route, Routes } from 'react-router-dom';
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SIgnUp";
-import { NotFound } from "./pages/NotFound";
-import Home from './pages/Home'
-import { FullTask } from "./pages/FullTask";
-import ParentLayout from "./layouts/ParentLayout";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SIgnUp";
+import { NotFound } from "../pages/NotFound";
+import Home from '../pages/Home'
+import { FullTask } from "../pages/FullTask";
+import ParentLayout from "../layouts/ParentLayout";
 
 function App() {
   return (
@@ -18,7 +18,6 @@ function App() {
         path='/SignIn'
         element={<SignIn />}
       />
-
       <Route
         path='/SignUp'
         element={<SignUp />}
