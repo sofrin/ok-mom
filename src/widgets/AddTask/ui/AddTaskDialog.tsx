@@ -9,61 +9,67 @@ import { taskSchema } from '../../../shared/types';
 import { TaskForm } from 'src/entities/TaskForm/TaskForm';
 
 type AddTaskDialogProps = {
-  setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  tasks: taskSchema[];
-  defaultChild: string;
+	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	tasks: taskSchema[];
+	defaultChild: string;
 };
 
-export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, setOpen, tasks, defaultChild }) => {
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const onSubmit = async (data: taskSchema) => {
-    const maxIdObj: taskSchema = tasks.reduce(function (prev, current) {
-      return (prev.id > current.id) ? prev : current
-    })
-    data.id = String(Number(maxIdObj.id) + 1)
-    console.log(data);
-    setTasks((prev: taskSchema[]) => [...prev, data])
-    const response = await fetch(
-      'https://64f8d138824680fd21801557.mockapi.io/tasks',
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        // Send your data in the request body as JSON
-        body: JSON.stringify(data),
-      },
-    );
-    if (response.ok) {
-      alert('Form submited successfully');
-      reset()
-      handleClose()
-      return;
-    } else {
-      alert('Form submition failed');
-      return;
-    }
-  };
+export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
+	setTasks,
+	open,
+	setOpen,
+	tasks,
+	defaultChild,
+}) => {
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const onSubmit = async (data: taskSchema) => {
+		const maxIdObj: taskSchema = tasks.reduce(function (prev, current) {
+			return prev.id > current.id ? prev : current;
+		});
+		data.id = String(Number(maxIdObj.id) + 1);
+		console.log(data);
+		setTasks((prev: taskSchema[]) => [...prev, data]);
+		const response = await fetch(
+			'https://64f8d138824680fd21801557.mockapi.io/tasks',
+			{
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				// Send your data in the request body as JSON
+				body: JSON.stringify(data),
+			},
+		);
+		if (response.ok) {
+			alert('Form submited successfully');
+			reset();
+			handleClose();
+			return;
+		} else {
+			alert('Form submition failed');
+			return;
+		}
+	};
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitting, errors },
-  } = useForm<taskSchema>({ resolver: zodResolver(taskSchema) });
-  return (
-    <>
-      <Dialog
-        component='form'
-        onSubmit={handleSubmit(onSubmit)}
-        open={open}
-        onClose={handleClose}
-      // fullWidth
-      >
-        <DialogTitle>Добавить задание</DialogTitle>
-        {/* <DialogContent sx={{ width: 600 }} >
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { isSubmitting, errors },
+	} = useForm<taskSchema>({ resolver: zodResolver(taskSchema) });
+	return (
+		<>
+			<Dialog
+				component='form'
+				onSubmit={handleSubmit(onSubmit)}
+				open={open}
+				onClose={handleClose}
+				// fullWidth
+			>
+				<DialogTitle>Добавить задание</DialogTitle>
+				{/* <DialogContent sx={{ width: 600 }} >
           {errors.description && (
             <p className='text-red-100'> {`${errors.description.message}`}</p>
           )}
@@ -177,19 +183,24 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({ setTasks, open, se
             />
           </div>
         </DialogContent> */}
-        <TaskForm defaultChild={defaultChild} checked={true} register={register} errors={errors} />
+				<TaskForm
+					defaultChild={defaultChild}
+					checked={true}
+					register={register}
+					errors={errors}
+				/>
 
-        <DialogActions sx={{ justifyContent: 'space-around' }}>
-          <Button
-            disabled={isSubmitting}
-            type="submit"
-          // onClick={handleClose}
-          >
-            Готово
-          </Button>
-          <Button onClick={handleClose}>Вернуться</Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-}
+				<DialogActions sx={{ justifyContent: 'space-around' }}>
+					<Button
+						disabled={isSubmitting}
+						type='submit'
+						// onClick={handleClose}
+					>
+						Готово
+					</Button>
+					<Button onClick={handleClose}>Вернуться</Button>
+				</DialogActions>
+			</Dialog>
+		</>
+	);
+};

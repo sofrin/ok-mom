@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -11,99 +10,98 @@ import { taskSchema } from '../../shared/types';
 import Box from '@mui/material/Box';
 import { TaskForm } from 'src/entities/TaskForm/TaskForm';
 
-
-
-
 export const FullTask: React.FC = () => {
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting, errors },
+	} = useForm<taskSchema>();
+	const { id } = useParams();
+	console.log(`id из useParams`, id);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = useForm<taskSchema>();
-  const { id } = useParams();
-  console.log(`id из useParams`, id);
+	const navigate = useNavigate();
+	const [singleTask, setSingleTask] = useState<taskSchema>();
+	const [checked, setChecked] = useState(false);
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setChecked(event.target.checked);
+	};
+	const location = useLocation();
 
-  const navigate = useNavigate();
-  const [singleTask, setSingleTask] = useState<taskSchema>();
-  const [checked, setChecked] = useState(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
-  const location = useLocation()
+	const tasks: taskSchema[] = location.state.tasks;
+	console.log(tasks);
 
-  const tasks: taskSchema[] = location.state.tasks
-  console.log(tasks);
+	// if (id === 'undefined') {
+	//   id = String(Number(maxId.id) + 1)
+	//   window.history.replaceState(null, "VT", `/Home/tasks/${id}`)
+	// }
+	useEffect(() => {
+		async function fetchTask() {
+			try {
+				const response = await fetch(
+					`https://64f8d138824680fd21801557.mockapi.io/tasks/` + id,
+					{
+						method: 'GET',
+						headers: { 'content-type': 'application/json' },
+					},
+				);
+				const task = await response.json();
+				// console.log(tasks);
+				setSingleTask(task);
+			} catch (error) {
+				alert('Ошибка при получении задачи');
+				navigate(-1);
+			}
+		}
+		fetchTask();
+	}, [id, navigate]);
+	if (!singleTask) {
+		return <div>Загрузка...</div>;
+	}
+	const handleClose = () => {
+		navigate(-1);
+	};
+	const onSubmit = async (data: taskSchema) => {
+		console.log(`данные из измененной формы`, data);
 
+		const response = await fetch(
+			`https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
+			{
+				method: 'PUT',
+				headers: { 'content-type': 'application/json' },
+				// Send your data in the request body as JSON
+				body: JSON.stringify(data),
+			},
+		);
+		if (response.ok) {
+			alert('Form edited successfully');
+			handleClose();
+			return;
+		} else {
+			alert('Form edit failed');
+			return;
+		}
+	};
 
-
-
-  // if (id === 'undefined') {
-  //   id = String(Number(maxId.id) + 1)
-  //   window.history.replaceState(null, "VT", `/Home/tasks/${id}`)
-  // }
-  useEffect(() => {
-    async function fetchTask() {
-      try {
-        const response = await fetch(`https://64f8d138824680fd21801557.mockapi.io/tasks/` + id, {
-          method: 'GET',
-          headers: { 'content-type': 'application/json' },
-        })
-        const task = await response.json()
-        // console.log(tasks);
-        setSingleTask(task)
-      } catch (error) {
-        alert('Ошибка при получении задачи');
-        navigate(-1);
-      }
-    }
-    fetchTask()
-  }, [id, navigate]);
-  if (!singleTask) {
-    return <div>Загрузка...</div>;
-  }
-  const handleClose = () => {
-    navigate(-1);
-  };
-  const onSubmit = async (data: taskSchema) => {
-    console.log(`данные из измененной формы`, data);
-
-    const response = await fetch(
-      `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        // Send your data in the request body as JSON
-        body: JSON.stringify(data),
-      },
-    );
-    if (response.ok) {
-      alert('Form edited successfully');
-      handleClose()
-      return;
-    } else {
-      alert('Form edit failed');
-      return;
-    }
-  };
-
-  return (
-    <Grid item sx={{ marginLeft: 'auto', marginRight: 'auto', width: "fit-content" }} >
-      <Paper
-        sx={{
-          p: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          width: "fit-content"
-        }}
-      >
-        <Box
-          component='form'
-          onSubmit={handleSubmit(onSubmit)}
-        // fullWidth
-        >
-          <DialogTitle>Редактировать задание</DialogTitle>
-          {/* <DialogContent sx={{ width: 600 }} >
+	return (
+		<Grid
+			item
+			sx={{ marginLeft: 'auto', marginRight: 'auto', width: 'fit-content' }}
+		>
+			<Paper
+				sx={{
+					p: 3,
+					display: 'flex',
+					flexDirection: 'column',
+					width: 'fit-content',
+				}}
+			>
+				<Box
+					component='form'
+					onSubmit={handleSubmit(onSubmit)}
+					// fullWidth
+				>
+					<DialogTitle>Редактировать задание</DialogTitle>
+					{/* <DialogContent sx={{ width: 600 }} >
             <FormControlLabel control={<Switch checked={checked}
               onChange={handleChange} />} label="edit" />
             {errors.description && (
@@ -233,21 +231,34 @@ export const FullTask: React.FC = () => {
               />
             </div>
           </DialogContent> */}
-          <FormControlLabel sx={{ ml: 2 }} control={<Switch checked={checked}
-            onChange={handleChange} />} label="edit" />
-          <TaskForm checked={checked} singleTask={singleTask} register={register} errors={errors} />
+					<FormControlLabel
+						sx={{ ml: 2 }}
+						control={
+							<Switch
+								checked={checked}
+								onChange={handleChange}
+							/>
+						}
+						label='edit'
+					/>
+					<TaskForm
+						checked={checked}
+						singleTask={singleTask}
+						register={register}
+						errors={errors}
+					/>
 
-          <DialogActions sx={{ justifyContent: 'flex-start' }}>
-            <Button
-              disabled={isSubmitting}
-              type="submit"
-            >
-              Готово
-            </Button>
-            <Button onClick={handleClose}>Вернуться</Button>
-          </DialogActions>
-        </Box>
-      </Paper></Grid>
-
-  );
+					<DialogActions sx={{ justifyContent: 'flex-start' }}>
+						<Button
+							disabled={isSubmitting}
+							type='submit'
+						>
+							Готово
+						</Button>
+						<Button onClick={handleClose}>Вернуться</Button>
+					</DialogActions>
+				</Box>
+			</Paper>
+		</Grid>
+	);
 };
