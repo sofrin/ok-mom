@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 
-import { Search } from '../Components/Search';
+
+import { SearchInput } from 'src/features/ui/Search/SearchInput';
+
 import ChildTaskCardWidget from 'src/widgets/ChildTaskCardWidget/ChildTaskCardWidget';
 import CompletedTaskCardWidget from '../widgets/CompletedCardWidget/CompletedCardWidget';
 import { ArchievedTaskCardWidget } from 'src/widgets/ArchievedTasksCardWidget/ArchievedTasksCardWIdget';
@@ -36,7 +38,10 @@ export default function Home() {
 
   return (
     <>
+      <SearchInput setTasks={setTasks} setisLoading={setisLoading} />
+=======
       <Search setTasks={setTasks} setisLoading={setisLoading} />
+>>>>>>> src/pages/Home.tsx
 
       <Grid container spacing={3}>
 
