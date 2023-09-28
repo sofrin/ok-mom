@@ -39,9 +39,7 @@ export default function Home() {
   return (
     <>
       <SearchInput setTasks={setTasks} setisLoading={setisLoading} />
-=======
-      <Search setTasks={setTasks} setisLoading={setisLoading} />
->>>>>>> src/pages/Home.tsx
+
 
       <Grid container spacing={3}>
 
