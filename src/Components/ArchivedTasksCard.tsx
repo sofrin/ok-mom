@@ -20,7 +20,7 @@ type ArchivedTasksCardProps = {
   setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>
   isLoading: boolean,
   setDraggableTask: React.Dispatch<React.SetStateAction<taskSchema | undefined>>
-  draggableTask: taskSchema | undefined
+  draggableTask: taskSchema | undefined,
 }
 
 
@@ -45,7 +45,7 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
     }
   };
 
-  const handleClickUndo = async (obj: taskSchema) => {
+  const handleClickUnArchive = async (obj: taskSchema) => {
     console.log(obj);
     const unCompletedObj = { ...obj, isArchived: 'false' }
     setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id))
@@ -152,7 +152,7 @@ export const ArchivedTasksCard: React.FC<ArchivedTasksCardProps> = ({ tasks, set
                           primary={obj.title}
                         />
                       </RouterLink>
-                      <ListItemButton onClick={() => handleClickUndo(obj)} sx={{ maxWidth: 25, padding: 0 }} ><UndoIcon sx={[
+                      <ListItemButton onClick={() => handleClickUnArchive(obj)} sx={{ maxWidth: 25, padding: 0 }} ><UndoIcon sx={[
                         {
                           '&:hover': {
                             color: 'white',
