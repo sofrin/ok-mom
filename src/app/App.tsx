@@ -1,11 +1,13 @@
 import { Landing } from "../pages/Landing"
 import { Route, Routes } from 'react-router-dom';
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SIgnUp";
-import { NotFound } from "../pages/NotFound";
+
+import { NotFound } from "../widgets/NotFound/NotFound";
 import Home from '../pages/Home'
-import { FullTask } from "../pages/FullTask";
-import ParentLayout from "../layouts/ParentLayout";
+
+import ParentLayout from "../widgets/ParentLayout/ParentLayout";
+import SignUpWidget from "src/widgets/SignUpWidget/SignUpWidget";
+import { SIgnInWidget } from "src/widgets/SIgnInWidget/SIgnInWidget";
+import { FullTask } from "src/widgets/FullTask/FullTaskWidget";
 
 function App() {
   return (
@@ -16,11 +18,11 @@ function App() {
       />
       <Route
         path='/SignIn'
-        element={<SignIn />}
+        element={<SIgnInWidget />}
       />
       <Route
         path='/SignUp'
-        element={<SignUp />}
+        element={<SignUpWidget />}
       />
       <Route
         path='/Home'

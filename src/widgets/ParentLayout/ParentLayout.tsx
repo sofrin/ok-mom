@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -15,63 +13,12 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { NavBar } from '../Components/NavBar';
+import { NavBar } from '../NavBar/NavBar';
 
 import { Outlet } from 'react-router-dom';
+import { AppBar } from '../../shared/ui/AppBar/AppBar';
+import { Drawer } from 'src/shared/ui/Drawer/Drawer';
 
-
-
-const drawerWidth: number = 240;
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -82,23 +29,23 @@ export default function ParentLayout() {
     setOpen(!open);
   };
 
-
-
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar
+          position='absolute'
+          open={open}
+        >
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
           >
             <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
+              edge='start'
+              color='inherit'
+              aria-label='open drawer'
               onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
@@ -108,22 +55,28 @@ export default function ParentLayout() {
               <MenuIcon />
             </IconButton>
             <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
+              component='h1'
+              variant='h6'
+              color='inherit'
               noWrap
               sx={{ flexGrow: 1 }}
             >
               Parent home page
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton color='inherit'>
+              <Badge
+                badgeContent={4}
+                color='secondary'
+              >
                 <NotificationsIcon />
               </Badge>
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer
+          variant='permanent'
+          open={open}
+        >
           <Toolbar
             sx={{
               display: 'flex',
@@ -137,13 +90,13 @@ export default function ParentLayout() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
+          <List component='nav'>
             {NavBar}
             <Divider sx={{ my: 1 }} />
           </List>
         </Drawer>
         <Box
-          component="main"
+          component='main'
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
@@ -156,11 +109,14 @@ export default function ParentLayout() {
         >
           <Toolbar />
 
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container
+            maxWidth='lg'
+            sx={{ mt: 4, mb: 4 }}
+          >
             <Outlet />
           </Container>
         </Box>
-      </Box >
-    </ThemeProvider >
+      </Box>
+    </ThemeProvider>
   );
 }

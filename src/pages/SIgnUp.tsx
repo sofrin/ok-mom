@@ -15,6 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Copyright } from 'src/shared/ui/Copyright/Copyright';
+
+
+
 
 
 const signUpSchema = z.object({
@@ -29,18 +33,7 @@ const signUpSchema = z.object({
 type signUpSchema = z.infer<typeof signUpSchema>
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" >
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        VigrebuhaTechnology, Inc.
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -50,7 +43,6 @@ export default function SignUp() {
   const navigate = useNavigate()
 
   const onSubmit = async (data: signUpSchema) => {
-
     const response = await fetch('https://64f8d138824680fd21801557.mockapi.io/users', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -69,6 +61,7 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+
         <CssBaseline />
         <Box
           sx={{

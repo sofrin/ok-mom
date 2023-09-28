@@ -3,15 +3,14 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import { Select, MenuItem, FormControlLabel, Switch, Paper, Grid } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import { Paper, Grid, Switch, FormControlLabel } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-import { taskSchema } from '../Components/AddTaskDialog';
+import { taskSchema } from '../../shared/types';
 import Box from '@mui/material/Box';
+import { TaskForm } from 'src/entities/TaskForm/TaskForm';
+
 
 
 
@@ -104,7 +103,7 @@ export const FullTask: React.FC = () => {
         // fullWidth
         >
           <DialogTitle>Редактировать задание</DialogTitle>
-          <DialogContent sx={{ width: 600 }} >
+          {/* <DialogContent sx={{ width: 600 }} >
             <FormControlLabel control={<Switch checked={checked}
               onChange={handleChange} />} label="edit" />
             {errors.description && (
@@ -233,7 +232,10 @@ export const FullTask: React.FC = () => {
                 {...register('tags')}
               />
             </div>
-          </DialogContent>
+          </DialogContent> */}
+          <FormControlLabel sx={{ ml: 2 }} control={<Switch checked={checked}
+            onChange={handleChange} />} label="edit" />
+          <TaskForm checked={checked} singleTask={singleTask} register={register} errors={errors} />
 
           <DialogActions sx={{ justifyContent: 'flex-start' }}>
             <Button
