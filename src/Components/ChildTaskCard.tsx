@@ -45,7 +45,6 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
     setOpen(true);
     setdefaultChild(child)
   };
-
   const handleClickCompleted = async (obj: taskSchema) => {
     console.log(obj);
     const completedObj = { ...obj, isCompleted: 'true' }
@@ -141,12 +140,10 @@ export const ChildTaskCard: React.FC<ChildTaskCardProps> = ({ child, tasks, setO
       setDraggableTask(undefined)
       console.log(`dropHandler`, filteredTasks);
     }
-
   }
 
   return (
     <>
-
       <Grid onDrop={(e) => dropHandler(e)} onDragOver={(e) => { dragOverHandler(e) }} item xs={12} md={12} lg={12}>
         <Paper
           sx={{
