@@ -17,7 +17,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { DragEvent } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { priorityCircle } from './PriorityCircle';
+import { priorityCircle } from '../features/PriorityCircle/PriorityCircle';
 import { taskSchema } from './AddTaskDialog';
 
 type CompletedTaskCardProps = {

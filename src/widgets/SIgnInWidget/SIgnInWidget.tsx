@@ -1,17 +1,20 @@
 import React from 'react';
-import { SignInUpTemplate } from 'src/shared/ui/SignInUpTemplate/SignInUpTemplate';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { SIgnInForm } from 'src/entities/SignInForm/SIgnInForm';
+
 import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const SIgnInWidget = () => {
+import { SignInUpTemplate } from 'shared/ui/SignInUpTemplate/SignInUpTemplate';
+import { SignInForm } from 'entities/SignInForm/SignInForm';
+
+export const SignInWidget = () => {
 	return (
 		<SignInUpTemplate
 			avatar={<LockOutlinedIcon />}
 			title={'Sign In'}
 		>
-			<SIgnInForm />
+			<SignInForm />
 			<Grid container>
 				<Grid
 					item

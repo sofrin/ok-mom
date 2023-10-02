@@ -5,8 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { taskSchema } from '../../../shared/types';
-import { TaskForm } from 'src/entities/TaskForm/TaskForm';
+import { TaskForm } from 'entities/TaskForm/TaskForm';
+import { taskSchema } from 'shared/types';
 
 type AddTaskDialogProps = {
 	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
@@ -27,10 +27,15 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
 		setOpen(false);
 	};
 	const onSubmit = async (data: taskSchema) => {
-		const maxIdObj: taskSchema = tasks.reduce(function (prev, current) {
-			return prev.id > current.id ? prev : current;
-		});
-		data.id = String(Number(maxIdObj.id) + 1);
+		if (tasks.length === 0) {
+			data.id = '1';
+		} else {
+			const maxIdObj: taskSchema = tasks.reduce((prev, current) => {
+				return prev.id > current.id ? prev : current;
+			});
+			data.id = String(Number(maxIdObj.id) + 1);
+		}
+
 		console.log(data);
 		setTasks((prev: taskSchema[]) => [...prev, data]);
 		const response = await fetch(

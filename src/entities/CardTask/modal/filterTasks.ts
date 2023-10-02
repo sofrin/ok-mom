@@ -1,4 +1,4 @@
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
 
 export const filteredTasks = (tasks: taskSchema[], child: string) => {
 	return tasks.filter(

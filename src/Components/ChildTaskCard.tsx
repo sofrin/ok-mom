@@ -20,7 +20,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragEvent } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { priorityCircle } from './PriorityCircle';
+import { priorityCircle } from '../features/PriorityCircle/PriorityCircle';
 import { taskSchema } from './AddTaskDialog';
 
 type ChildTaskCardProps = {

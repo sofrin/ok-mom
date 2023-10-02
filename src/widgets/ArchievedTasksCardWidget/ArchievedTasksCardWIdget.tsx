@@ -1,11 +1,11 @@
 import React from 'react';
-import { TaskCardTemplate } from 'src/shared/ui/TaskCardTemplate/TaskCardTemplate';
-import { Grid, Typography } from '@mui/material';
-import { Item } from 'src/shared/ui/Item/Item';
-import { filteredArchievedTasks } from 'src/entities/CardTask/modal/filterTasks';
-import { CardTaskList } from 'src/entities/CardTask/ui/CardTaskList';
 
-import { taskSchema } from '../../shared/types';
+import { Grid, Typography } from '@mui/material';
+import { taskSchema } from 'shared/types';
+import { filteredArchievedTasks } from 'entities/CardTask/modal/filterTasks';
+import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
+import { Item } from 'shared/ui/Item/Item';
+import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
 
 type Props = {
 	child: string;

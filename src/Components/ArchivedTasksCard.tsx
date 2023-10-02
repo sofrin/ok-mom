@@ -16,7 +16,7 @@ import { Item } from './ChildTaskCard';
 import UndoIcon from '@mui/icons-material/Undo';
 import { DragEvent } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { priorityCircle } from './PriorityCircle';
+import { priorityCircle } from '../features/PriorityCircle/PriorityCircle';
 import { taskSchema } from './AddTaskDialog';
 
 type ArchivedTasksCardProps = {

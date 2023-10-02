@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { taskSchema } from 'shared/types';
 
-import { taskSchema } from 'src/shared/types';
 
 type TaskFormProps = {
 	checked?: boolean;

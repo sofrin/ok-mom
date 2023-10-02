@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { TaskCardTemplate } from 'src/shared/ui/TaskCardTemplate/TaskCardTemplate';
 import { Grid, Typography } from '@mui/material';
-import { Item } from 'src/shared/ui/Item/Item';
-import { filteredCompletedTasks } from 'src/entities/CardTask/modal/filterTasks';
-import { CardTaskList } from 'src/entities/CardTask/ui/CardTaskList';
-import { points } from 'src/features/ProgressItem/modal/ProgressAlg';
-import { taskSchema } from '../../shared/types';
+import { taskSchema } from 'shared/types';
+import { filteredCompletedTasks } from 'entities/CardTask/modal/filterTasks';
+import { points } from 'features/ProgressItem/modal/ProgressAlg';
+import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
+import { Item } from 'shared/ui/Item/Item';
+import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
 
 type Props = {
 	child: string;

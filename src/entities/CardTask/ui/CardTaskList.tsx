@@ -13,11 +13,12 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { priorityCircle } from 'src/Components/PriorityCircle';
+
 import DoneIcon from '@mui/icons-material/Done';
 import UndoIcon from '@mui/icons-material/Undo';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
+import { priorityCircle } from 'features/PriorityCircle/PriorityCircle';
 
 type Props = {
 	tasks: taskSchema[];

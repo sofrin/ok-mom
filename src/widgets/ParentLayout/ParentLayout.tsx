@@ -13,16 +13,16 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { NavBar } from '../NavBar/NavBar';
 
 import { Outlet } from 'react-router-dom';
-import { AppBar } from '../../shared/ui/AppBar/AppBar';
-import { Drawer } from 'src/shared/ui/Drawer/Drawer';
+import { AppBar } from 'shared/ui/AppBar/AppBar';
+import { Drawer } from 'shared/ui/Drawer/Drawer';
+import { NavBar } from 'widgets/NavBar/NavBar';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function ParentLayout() {
+export function ParentLayout() {
 	const [open, setOpen] = React.useState(true);
 	const toggleDrawer = () => {
 		setOpen(!open);

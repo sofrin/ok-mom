@@ -2,8 +2,9 @@ import debounce from 'lodash.debounce';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
-import { taskSchema } from 'src/Components/AddTaskDialog';
+
 import { Box, InputAdornment } from '@mui/material';
+import { taskSchema } from 'shared/types';
 
 type SearchProps = {
 	setisLoading: React.Dispatch<React.SetStateAction<boolean>>;

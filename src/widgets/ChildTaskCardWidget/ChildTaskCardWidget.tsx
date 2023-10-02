@@ -1,13 +1,16 @@
 import React from 'react';
-import { TaskCardTemplate } from 'src/shared/ui/TaskCardTemplate/TaskCardTemplate';
+
 import { Button, Grid, Typography } from '@mui/material';
-import { Item } from 'src/shared/ui/Item/Item';
+
 import { ProgresItem } from '../../features/ProgressItem/ui/ProgressItem';
-import { filteredTasks } from 'src/entities/CardTask/modal/filterTasks';
-import { CardTaskList } from 'src/entities/CardTask/ui/CardTaskList';
+
 import { Link } from 'react-router-dom';
-import { points } from 'src/features/ProgressItem/modal/ProgressAlg';
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
+import { filteredTasks } from 'entities/CardTask/modal/filterTasks';
+import { points } from 'features/ProgressItem/modal/ProgressAlg';
+import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
+import { Item } from 'shared/ui/Item/Item';
+import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
 
 type Props = {
 	child: string;
@@ -22,7 +25,7 @@ type Props = {
 	draggableTask: taskSchema | undefined;
 };
 
-const ChildTaskCardWidget = ({
+export const ChildTaskCardWidget = ({
 	child,
 	tasks,
 	setOpen,
@@ -113,5 +116,3 @@ const ChildTaskCardWidget = ({
 		</TaskCardTemplate>
 	);
 };
-
-export default ChildTaskCardWidget;

@@ -6,11 +6,12 @@ import { Paper, Grid, Switch, FormControlLabel } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-import { taskSchema } from '../../shared/types';
-import Box from '@mui/material/Box';
-import { TaskForm } from 'src/entities/TaskForm/TaskForm';
 
-export const FullTask: React.FC = () => {
+import Box from '@mui/material/Box';
+import { taskSchema } from 'shared/types';
+import { TaskForm } from 'entities/TaskForm/TaskForm';
+
+ const FullTask: React.FC = () => {
 	const {
 		register,
 		handleSubmit,
@@ -262,3 +263,4 @@ export const FullTask: React.FC = () => {
 		</Grid>
 	);
 };
+ export default FullTask;

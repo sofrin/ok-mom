@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { progressValue } from '../modal/ProgressAlg';
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
 
 type Props = {
 	filteredTasks: taskSchema[];

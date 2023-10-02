@@ -1,0 +1,1 @@
+export  {ArchievedTaskCardWidget} from './ArchievedTasksCardWIdget';

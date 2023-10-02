@@ -1,11 +1,13 @@
 import React from 'react';
-import { SignInUpTemplate } from 'src/shared/ui/SignInUpTemplate/SignInUpTemplate';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { SignUpForm } from 'src/entities/SIgnUpForm/ui/SignUpForm';
+
 import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { SignInUpTemplate } from 'shared/ui/SignInUpTemplate/SignInUpTemplate';
+import { SignUpForm } from 'entities/SIgnUpForm/ui/SignUpForm';
 
-const SignUpWidget = () => {
+export const SignUpWidget = () => {
 	return (
 		<SignInUpTemplate
 			avatar={<LockOutlinedIcon />}
@@ -23,5 +25,3 @@ const SignUpWidget = () => {
 		</SignInUpTemplate>
 	);
 };
-
-export default SignUpWidget;

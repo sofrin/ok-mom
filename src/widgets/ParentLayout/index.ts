@@ -1,0 +1,1 @@
+export { ParentLayout } from './ParentLayout';

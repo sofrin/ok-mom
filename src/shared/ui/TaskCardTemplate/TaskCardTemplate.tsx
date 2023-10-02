@@ -1,6 +1,6 @@
 import React, { DragEvent, ReactNode } from 'react';
 import { Grid, Paper } from '@mui/material';
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
 
 type Props = {
 	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;

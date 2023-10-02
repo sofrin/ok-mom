@@ -1,4 +1,4 @@
-import { taskSchema } from 'src/shared/types';
+import { taskSchema } from 'shared/types';
 
 export const points = (filteredTasks: taskSchema[]) => {
 	return filteredTasks.reduce(

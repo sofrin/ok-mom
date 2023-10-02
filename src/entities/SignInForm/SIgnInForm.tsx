@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const SIgnInForm = () => {
+export const SignInForm = () => {
 	const navigate = useNavigate();
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

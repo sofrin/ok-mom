@@ -1,13 +1,11 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-
-import { SearchInput } from 'src/features/ui/Search/SearchInput';
-
-import ChildTaskCardWidget from 'src/widgets/ChildTaskCardWidget/ChildTaskCardWidget';
-import CompletedTaskCardWidget from '../widgets/CompletedCardWidget/CompletedCardWidget';
-import { ArchievedTaskCardWidget } from 'src/widgets/ArchievedTasksCardWidget/ArchievedTasksCardWIdget';
-import { taskSchema } from 'src/shared/types';
-import { AddTaskDialog } from 'src/widgets/AddTask/ui/AddTaskDialog';
+import { taskSchema } from 'shared/types';
+import { SearchInput } from 'features/ui/Search/SearchInput';
+import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
+import { CompletedTaskCardWidget } from 'widgets/CompletedCardWidget';
+import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
+import { AddTaskDialog } from 'widgets/AddTask';
 
 export default function Home() {
 	const [openForm, setOpenForm] = React.useState(false);
