@@ -3,11 +3,10 @@ import {
 	Button,
 	Checkbox,
 	FormControlLabel,
-	Grid,
 	TextField,
 } from '@mui/material';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const SignInForm = () => {
 	const navigate = useNavigate();
@@ -64,17 +63,6 @@ export const SignInForm = () => {
 			>
 				Sign In
 			</Button>
-			<Grid container>
-				<Grid
-					item
-					xs
-				>
-					<Link to='#'>Forgot password?</Link>
-				</Grid>
-				<Grid item>
-					<Link to='/SignUp'>{"Don't have an account? Sign Up"}</Link>
-				</Grid>
-			</Grid>
 		</Box>
 	);
 };
