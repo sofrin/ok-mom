@@ -1,3 +1,1 @@
-import { SignInWidget } from './SIgnInWidget';
-
-SignInWidget;
+export { SignInWidget } from './SignInWidget';

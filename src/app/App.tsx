@@ -1,12 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Landing } from 'pages/Landing';
-import { SignInWidget } from 'widgets/SignInWidget/SIgnInWidget';
+
 import { SignUpWidget } from 'widgets/SignUpWidget';
 import { ParentLayout } from 'widgets/ParentLayout';
 import Home from 'pages/Home';
 import FullTask from 'widgets/FullTask';
 import { NotFound } from 'widgets/NotFound';
+import { SignInWidget } from 'widgets/SignInWidget';
 
 function App() {
 	return (
