@@ -42,13 +42,12 @@ export const CompletedTaskCardWidget = ({
 				direction='row'
 				item
 				spacing={0}
-				justifyContent='space-between'
-				sx={{ flexGrow: 0 }}
+				sx={{ flexGrow: 0, height: 50 }}
 			>
 				<Grid
 					item
-					xs={5}
-					md={4}
+					xs={'auto'}
+					md={'auto'}
 				>
 					<Item>
 						<Typography
@@ -70,6 +69,13 @@ export const CompletedTaskCardWidget = ({
 				child={child}
 				filteredTasks={filteredChildTasks}
 			/>
+			{/* <Grid
+				item
+				xs={12}
+				sx={{ p: 4, visibility: 'hidden' }}
+			>
+				<div>Смотреть расписание →</div>
+			</Grid> */}
 			<Grid
 				container
 				item

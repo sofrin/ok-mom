@@ -44,8 +44,9 @@ export const ArchievedTaskCardWidget = ({
 			>
 				<Grid
 					item
-					xs={5}
-					md={4}
+					xs={'auto'}
+					md={'auto'}
+					sx={{ flexGrow: 0, height: 69 }}
 				>
 					<Item>
 						<Typography

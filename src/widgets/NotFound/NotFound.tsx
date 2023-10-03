@@ -4,24 +4,31 @@ import React from 'react';
 export const NotFound = () => {
 	return (
 		<Grid
-			item
-			sx={{ marginLeft: 'auto', marginRight: 'auto', width: 'fit-content' }}
+			container
+			sx={{ justifyContent: 'center', alignItems: 'center', height: '70vh' }}
 		>
-			<Paper
+			<Grid
+				item
 				sx={{
-					p: 3,
-					display: 'flex',
-					flexDirection: 'column',
 					width: 'fit-content',
 				}}
 			>
-				<h1>
-					<span>😔 </span>
-					<br />
-					Ничего не найдено
-				</h1>
-				<p>К сожалению данная страница отсуствует.</p>
-			</Paper>
+				<Paper
+					sx={{
+						p: 3,
+						display: 'flex',
+						flexDirection: 'column',
+						width: 'fit-content',
+					}}
+				>
+					<h1>
+						<span>😔 </span>
+						<br />
+						Ничего не найдено
+					</h1>
+					<p>К сожалению данная страница отсуствует.</p>
+				</Paper>
+			</Grid>
 		</Grid>
 	);
 };

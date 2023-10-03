@@ -1,6 +1,5 @@
 import React, { DragEvent } from 'react';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import {
 	ListItem,
@@ -35,6 +34,7 @@ type Props = {
 };
 
 export const CardTaskList = ({
+	child,
 	tasks,
 	setTasks,
 	isLoading,
@@ -44,6 +44,18 @@ export const CardTaskList = ({
 	completed = false,
 	archieved = false,
 }: Props) => {
+	let listHeight = 0;
+	switch (child) {
+		case 'Задания в архиве':
+			listHeight = 350;
+			break;
+		case 'Выполненные задания':
+			listHeight = 258;
+			break;
+		default:
+			listHeight = 150;
+			break;
+	}
 	const [parent] = useAutoAnimate();
 
 	const handleClickCompleted = async (obj: taskSchema) => {
@@ -197,21 +209,15 @@ export const CardTaskList = ({
 		<>
 			<Grid
 				item
-				xs={12}
-			>
-				<Typography>Список задач:</Typography>
-			</Grid>
-			<Grid
-				item
 				container
 				direction='column'
 				xs={12}
 				sx={{
 					p: 4,
-					height: 150,
+					height: listHeight,
 					overflowY: 'auto',
 					overflowX: 'hidden',
-					flexGrow: 0,
+					flexGrow: 1,
 				}}
 			>
 				<List

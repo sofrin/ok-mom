@@ -88,6 +88,7 @@ export const TaskCardTemplate = ({
 						spacing={1}
 						sx={{
 							height: 450,
+							alignItems: 'flex-start',
 						}}
 					>
 						{children}
