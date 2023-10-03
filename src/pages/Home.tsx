@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { taskSchema } from 'shared/types';
-import { SearchInput } from 'features/ui/Search/SearchInput';
+import { SearchInput } from 'features/Search/SearchInput';
 import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
 import { CompletedTaskCardWidget } from 'widgets/CompletedCardWidget';
 import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
