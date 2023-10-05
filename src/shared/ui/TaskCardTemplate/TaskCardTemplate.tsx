@@ -1,6 +1,7 @@
 import React, { DragEvent, ReactNode } from 'react';
 import { Grid, Paper } from '@mui/material';
 import { taskSchema } from 'shared/types';
+import { useSnackbar } from 'notistack';
 
 type Props = {
 	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
@@ -19,7 +20,8 @@ export const TaskCardTemplate = ({
 	child,
 	children,
 }: Props) => {
-	function dropHandler(e: DragEvent): void {
+	const { enqueueSnackbar } = useSnackbar();
+	async function dropHandler(e: DragEvent) {
 		e.preventDefault();
 
 		console.log(`draggableTask`, draggableTask);
@@ -41,8 +43,11 @@ export const TaskCardTemplate = ({
 					draggableTask.isCompleted = 'false';
 					break;
 			}
-
-			fetch(
+			setTasks((prev: taskSchema[]) =>
+				prev.filter((task) => task.id !== draggableTask.id),
+			);
+			setTasks((prev) => [...prev, draggableTask]);
+			const response = await fetch(
 				'https://64f8d138824680fd21801557.mockapi.io/tasks/' + draggableTask.id,
 				{
 					method: 'PUT',
@@ -51,11 +56,15 @@ export const TaskCardTemplate = ({
 					body: JSON.stringify(draggableTask),
 				},
 			);
-			setTasks((prev: taskSchema[]) =>
-				prev.filter((task) => task.id !== draggableTask.id),
-			);
-			setTasks((prev) => [...prev, draggableTask]);
+
 			setDraggableTask(undefined);
+			if (response.ok) {
+				enqueueSnackbar('Task updated successfully', { variant: 'success' });
+				return;
+			} else {
+				enqueueSnackbar('Something went wrong', { variant: 'error' });
+				return;
+			}
 		}
 	}
 	function dragOverHandler(e: DragEvent) {

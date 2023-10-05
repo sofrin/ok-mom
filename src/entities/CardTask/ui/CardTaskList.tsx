@@ -9,7 +9,7 @@ import {
 	ListItemText,
 } from '@mui/material';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-
+import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -57,15 +57,17 @@ export const CardTaskList = ({
 			break;
 	}
 	const [parent] = useAutoAnimate();
-	// type taskChange = Pick<taskSchema, 'isCompleted' | 'isArchived'>;
-	// const handleChange = (string: taskChange, value: boolean) => {
-
-	// };
-	const handleClickCompleted = async (obj: taskSchema) => {
+	const { enqueueSnackbar } = useSnackbar();
+	type taskChange = 'isCompleted' | 'isArchived';
+	const handleTaskChange = async (
+		string: taskChange,
+		value: boolean,
+		obj: taskSchema,
+	) => {
 		console.log(obj);
-		const completedObj = { ...obj, isCompleted: 'true' };
+		const chandedObj = { ...obj, [string]: String(value) };
 		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		setTasks((prev) => [...prev, completedObj]);
+		setTasks((prev) => [...prev, chandedObj]);
 
 		const response = await fetch(
 			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
@@ -73,83 +75,14 @@ export const CardTaskList = ({
 				method: 'PUT',
 				headers: { 'content-type': 'application/json' },
 				// Send your data in the request body as JSON
-				body: JSON.stringify({ isCompleted: 'true' }),
+				body: JSON.stringify({ [string]: String(value) }),
 			},
 		);
 		if (response.ok) {
-			alert('Task completed successfully');
+			enqueueSnackbar('Task updated successfully', { variant: 'success' });
 			return;
 		} else {
-			alert('failed');
-			return;
-		}
-	};
-	const handleClickUnArchive = async (obj: taskSchema) => {
-		console.log(obj);
-		const unCompletedObj = { ...obj, isArchived: 'false' };
-		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		setTasks((prev) => [...prev, unCompletedObj]);
-
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-			{
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify({ isArchived: 'false' }),
-			},
-		);
-		if (response.ok) {
-			alert('Task UnArchived successfully');
-			return;
-		} else {
-			alert('failed');
-			return;
-		}
-	};
-	const handleClickAchive = async (obj: taskSchema) => {
-		console.log(obj);
-		const completedObj = { ...obj, isArchived: 'true' };
-		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		setTasks((prev) => [...prev, completedObj]);
-
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-			{
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify({ isArchived: 'true' }),
-			},
-		);
-		if (response.ok) {
-			alert('Task archived successfully');
-			return;
-		} else {
-			alert('failed');
-			return;
-		}
-	};
-	const handleClickUndo = async (obj: taskSchema) => {
-		console.log(obj);
-		const unCompletedObj = { ...obj, isCompleted: 'false' };
-		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		setTasks((prev) => [...prev, unCompletedObj]);
-
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-			{
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify({ isCompleted: 'false' }),
-			},
-		);
-		if (response.ok) {
-			alert('Task Uncompleted successfully');
-			return;
-		} else {
-			alert('failed');
+			enqueueSnackbar('Something went wrong', { variant: 'error' });
 			return;
 		}
 	};
@@ -164,10 +97,10 @@ export const CardTaskList = ({
 			},
 		);
 		if (response.ok) {
-			alert('Task deleted successfully');
+			enqueueSnackbar('Task updated successfully', { variant: 'success' });
 			return;
 		} else {
-			alert('failed');
+			enqueueSnackbar('Something went wrong', { variant: 'error' });
 			return;
 		}
 	};
@@ -234,7 +167,7 @@ export const CardTaskList = ({
 									</Link>
 									{completed === false && archieved === false ? (
 										<ListItemButton
-											onClick={() => handleClickCompleted(obj)}
+											onClick={() => handleTaskChange('isCompleted', true, obj)}
 											sx={{ maxWidth: 24, padding: 0 }}
 										>
 											<DoneIcon
@@ -252,7 +185,9 @@ export const CardTaskList = ({
 									{completed ? (
 										<>
 											<ListItemButton
-												onClick={() => handleClickAchive(obj)}
+												onClick={() =>
+													handleTaskChange('isArchived', true, obj)
+												}
 												sx={{ maxWidth: 24, padding: 0 }}
 											>
 												<ThumbUpAltIcon
@@ -266,7 +201,9 @@ export const CardTaskList = ({
 												/>
 											</ListItemButton>{' '}
 											<ListItemButton
-												onClick={() => handleClickUndo(obj)}
+												onClick={() =>
+													handleTaskChange('isCompleted', false, obj)
+												}
 												sx={{ maxWidth: 24, padding: 0 }}
 											>
 												<UndoIcon
@@ -285,7 +222,7 @@ export const CardTaskList = ({
 									) : null}
 									{archieved ? (
 										<ListItemButton
-											onClick={() => handleClickUnArchive(obj)}
+											onClick={() => handleTaskChange('isArchived', false, obj)}
 											sx={{ maxWidth: 25, padding: 0 }}
 										>
 											<UndoIcon
