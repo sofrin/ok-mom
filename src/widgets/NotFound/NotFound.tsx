@@ -19,13 +19,11 @@ export const NotFound = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						width: 'fit-content',
+						alignItems: 'center',
+						justifyContent: 'center',
 					}}
 				>
-					<h1>
-						<span>😔 </span>
-						<br />
-						Ничего не найдено
-					</h1>
+					<h1>😔 Ничего не найдено 😔</h1>
 					<p>К сожалению данная страница отсуствует.</p>
 				</Paper>
 			</Grid>

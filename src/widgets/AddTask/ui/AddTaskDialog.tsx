@@ -27,15 +27,10 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
 		setOpen(false);
 	};
 	const onSubmit = async (data: taskSchema) => {
-		if (tasks.length === 0) {
-			data.id = '1';
-		} else {
-			const maxIdObj: taskSchema = tasks.reduce((prev, current) => {
-				return prev.id > current.id ? prev : current;
-			});
-			data.id = String(Number(maxIdObj.id) + 1);
-		}
-
+		const maxIdObj: taskSchema = tasks.reduce((prev, current) => {
+			return prev.id > current.id ? prev : current;
+		});
+		data.id = String(Number(maxIdObj.id) + 1);
 		console.log(data);
 		setTasks((prev: taskSchema[]) => [...prev, data]);
 		const response = await fetch(

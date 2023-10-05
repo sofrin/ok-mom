@@ -57,7 +57,10 @@ export const CardTaskList = ({
 			break;
 	}
 	const [parent] = useAutoAnimate();
+	// type taskChange = Pick<taskSchema, 'isCompleted' | 'isArchived'>;
+	// const handleChange = (string: taskChange, value: boolean) => {
 
+	// };
 	const handleClickCompleted = async (obj: taskSchema) => {
 		console.log(obj);
 		const completedObj = { ...obj, isCompleted: 'true' };
@@ -182,28 +185,6 @@ export const CardTaskList = ({
 
 		console.log(`dragStartHandler`, obj);
 	}
-	// function dropHandler(e: DragEvent<HTMLLIElement>,): void {
-	//   e.preventDefault()
-	//   console.log(`dropHandler`, filteredTasks);
-	//   console.log(`draggableTask`, draggableTask);
-	//   if (draggableTask) {
-	//     console.log(`child`, child);
-
-	//     fetch(
-	//       'https://64f8d138824680fd21801557.mockapi.io/tasks/' + draggableTask.id,
-	//       {
-	//         method: 'PUT',
-	//         headers: { 'content-type': 'application/json' },
-	//         // Send your data in the request body as JSON
-	//         body: JSON.stringify(draggableTask)
-	//       },
-	//     );
-	//     setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== draggableTask.id))
-	//     setTasks((prev) => [...prev, draggableTask])
-	//     setDraggableTask(undefined)
-	//     console.log(`dropHandler`, filteredTasks);
-	//   }
-	// }
 
 	return (
 		<>
