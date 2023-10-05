@@ -1,4 +1,4 @@
-import React, { DragEvent } from 'react';
+import React, { DragEvent, Fragment } from 'react';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import {
@@ -12,7 +12,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import DoneIcon from '@mui/icons-material/Done';
 import UndoIcon from '@mui/icons-material/Undo';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -121,115 +120,91 @@ export const CardTaskList = ({
 	}
 
 	return (
-		<>
-			<Grid
-				item
-				container
-				direction='column'
-				xs={12}
-				sx={{
-					p: 4,
-					height: listHeight,
-					overflowY: 'auto',
-					overflowX: 'hidden',
-					flexGrow: 1,
-				}}
+		<Grid
+			item
+			container
+			direction='column'
+			xs={12}
+			sx={{
+				p: 4,
+				height: listHeight,
+				overflowY: 'auto',
+				overflowX: 'hidden',
+				flexGrow: 1,
+			}}
+		>
+			<List
+				ref={parent}
+				disablePadding
 			>
-				<List
-					ref={parent}
-					disablePadding
-				>
-					{!isLoading ? (
-						filteredTasks.map((obj: taskSchema) => (
-							<>
-								<ListItem
-									draggable
-									onDragOver={(e) => {
-										dragOverHandler(e);
-									}}
-									onDragStart={(e) => {
-										dragStartHandler(e, obj);
-									}}
-									// onDrop={(e) => dropHandler(e)}
-									key={obj.id}
-									disablePadding
-									sx={{ width: 510 }}
-								>
-									<ListItemButton>
-										<Link
-											className='flex items-center flex-1'
-											to={`/Home/tasks/${obj.id}`}
-											state={{ tasks: tasks }}
-										>
-											<ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-												{priorityCircle(obj.priority)}
-											</ListItemIcon>
+				{!isLoading ? (
+					filteredTasks.map((obj: taskSchema) => (
+						<Fragment key={obj.id}>
+							<ListItem
+								draggable
+								onDragOver={(e) => {
+									dragOverHandler(e);
+								}}
+								onDragStart={(e) => {
+									dragStartHandler(e, obj);
+								}}
+								// onDrop={(e) => dropHandler(e)}
 
-											<ListItemText primary={obj.title} />
-										</Link>
-										{completed === false && archieved === false ? (
+								disablePadding
+								sx={{ width: 510 }}
+							>
+								<ListItemButton>
+									<Link
+										className='flex items-center flex-1'
+										to={`/Home/tasks/${obj.id}`}
+										state={{ tasks: tasks }}
+									>
+										<ListItemIcon sx={{ p: 0, minWidth: 20 }}>
+											{priorityCircle(obj.priority)}
+										</ListItemIcon>
+
+										<ListItemText primary={obj.title} />
+									</Link>
+									{completed === false && archieved === false ? (
+										<ListItemButton
+											onClick={() => handleTaskChange('isCompleted', true, obj)}
+											sx={{ maxWidth: 24, padding: 0 }}
+										>
+											<DoneIcon
+												sx={[
+													{
+														'&:hover': {
+															color: 'white',
+															background: 'green',
+														},
+													},
+												]}
+											/>
+										</ListItemButton>
+									) : null}
+									{completed ? (
+										<>
 											<ListItemButton
 												onClick={() =>
-													handleTaskChange('isCompleted', true, obj)
+													handleTaskChange('isArchived', true, obj)
 												}
 												sx={{ maxWidth: 24, padding: 0 }}
 											>
-												<DoneIcon
+												<ThumbUpAltIcon
 													sx={[
 														{
 															'&:hover': {
-																color: 'white',
-																background: 'green',
+																color: 'green',
 															},
 														},
 													]}
 												/>
-											</ListItemButton>
-										) : null}
-										{completed ? (
-											<>
-												<ListItemButton
-													onClick={() =>
-														handleTaskChange('isArchived', true, obj)
-													}
-													sx={{ maxWidth: 24, padding: 0 }}
-												>
-													<ThumbUpAltIcon
-														sx={[
-															{
-																'&:hover': {
-																	color: 'green',
-																},
-															},
-														]}
-													/>
-												</ListItemButton>{' '}
-												<ListItemButton
-													onClick={() =>
-														handleTaskChange('isCompleted', false, obj)
-													}
-													sx={{ maxWidth: 24, padding: 0 }}
-												>
-													<UndoIcon
-														sx={[
-															{
-																'&:hover': {
-																	color: 'white',
-																	background: 'green',
-																},
-															},
-															{ marginRight: 1 },
-														]}
-													/>
-												</ListItemButton>{' '}
-											</>
-										) : null}
-										{archieved ? (
+											</ListItemButton>{' '}
 											<ListItemButton
 												onClick={() =>
-													handleTaskChange('isArchived', false, obj)
+													handleTaskChange('isCompleted', false, obj)
 												}
-												sx={{ maxWidth: 25, padding: 0 }}
+												sx={{ maxWidth: 24, padding: 0 }}
 											>
 												<UndoIcon
 													sx={[
@@ -242,36 +217,55 @@ export const CardTaskList = ({
 														{ marginRight: 1 },
 													]}
 												/>
-											</ListItemButton>
-										) : null}
+											</ListItemButton>{' '}
+										</>
+									) : null}
+									{archieved ? (
 										<ListItemButton
-											onClick={() => handleClickDelete(obj)}
-											sx={{ maxWidth: 24, padding: 0 }}
+											onClick={() => handleTaskChange('isArchived', false, obj)}
+											sx={{ maxWidth: 25, padding: 0 }}
 										>
-											<DeleteIcon
+											<UndoIcon
 												sx={[
 													{
 														'&:hover': {
-															color: 'red',
+															color: 'white',
+															background: 'green',
 														},
 													},
+													{ marginRight: 1 },
 												]}
 											/>
 										</ListItemButton>
+									) : null}
+									<ListItemButton
+										onClick={() => handleClickDelete(obj)}
+										sx={{ maxWidth: 24, padding: 0 }}
+									>
+										<DeleteIcon
+											sx={[
+												{
+													'&:hover': {
+														color: 'red',
+													},
+												},
+											]}
+										/>
 									</ListItemButton>
-								</ListItem>
-								<Divider />
-							</>
-						))
-					) : (
-						<Skeleton
-							variant='rounded'
-							width={510}
-							height={144}
-						/>
-					)}
-				</List>
-			</Grid>
-		</>
+								</ListItemButton>
+							</ListItem>
+							<Divider />
+						</Fragment>
+					))
+				) : (
+					<Skeleton
+						variant='rounded'
+						width={510}
+						height={144}
+					/>
+				)}
+			</List>
+			<Divider />
+		</Grid>
 	);
 };
