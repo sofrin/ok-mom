@@ -18,6 +18,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { taskSchema } from 'shared/types';
 import { priorityCircle } from 'features/PriorityCircle/PriorityCircle';
+import Divider from '@mui/material/Divider';
 
 type Props = {
 	tasks: taskSchema[];
@@ -97,7 +98,7 @@ export const CardTaskList = ({
 			},
 		);
 		if (response.ok) {
-			enqueueSnackbar('Task updated successfully', { variant: 'success' });
+			enqueueSnackbar('Task updated successfully', { variant: 'info' });
 			return;
 		} else {
 			enqueueSnackbar('Something went wrong', { variant: 'error' });
@@ -140,71 +141,95 @@ export const CardTaskList = ({
 				>
 					{!isLoading ? (
 						filteredTasks.map((obj: taskSchema) => (
-							<ListItem
-								draggable
-								onDragOver={(e) => {
-									dragOverHandler(e);
-								}}
-								onDragStart={(e) => {
-									dragStartHandler(e, obj);
-								}}
-								// onDrop={(e) => dropHandler(e)}
-								key={obj.id}
-								disablePadding
-								sx={{ width: 510 }}
-							>
-								<ListItemButton>
-									<Link
-										className='flex items-center flex-1'
-										to={`/Home/tasks/${obj.id}`}
-										state={{ tasks: tasks }}
-									>
-										<ListItemIcon sx={{ p: 0, minWidth: 20 }}>
-											{priorityCircle(obj.priority)}
-										</ListItemIcon>
-
-										<ListItemText primary={obj.title} />
-									</Link>
-									{completed === false && archieved === false ? (
-										<ListItemButton
-											onClick={() => handleTaskChange('isCompleted', true, obj)}
-											sx={{ maxWidth: 24, padding: 0 }}
+							<>
+								<ListItem
+									draggable
+									onDragOver={(e) => {
+										dragOverHandler(e);
+									}}
+									onDragStart={(e) => {
+										dragStartHandler(e, obj);
+									}}
+									// onDrop={(e) => dropHandler(e)}
+									key={obj.id}
+									disablePadding
+									sx={{ width: 510 }}
+								>
+									<ListItemButton>
+										<Link
+											className='flex items-center flex-1'
+											to={`/Home/tasks/${obj.id}`}
+											state={{ tasks: tasks }}
 										>
-											<DoneIcon
-												sx={[
-													{
-														'&:hover': {
-															color: 'white',
-															background: 'green',
-														},
-													},
-												]}
-											/>
-										</ListItemButton>
-									) : null}
-									{completed ? (
-										<>
+											<ListItemIcon sx={{ p: 0, minWidth: 20 }}>
+												{priorityCircle(obj.priority)}
+											</ListItemIcon>
+
+											<ListItemText primary={obj.title} />
+										</Link>
+										{completed === false && archieved === false ? (
 											<ListItemButton
 												onClick={() =>
-													handleTaskChange('isArchived', true, obj)
+													handleTaskChange('isCompleted', true, obj)
 												}
 												sx={{ maxWidth: 24, padding: 0 }}
 											>
-												<ThumbUpAltIcon
+												<DoneIcon
 													sx={[
 														{
 															'&:hover': {
-																color: 'green',
+																color: 'white',
+																background: 'green',
 															},
 														},
 													]}
 												/>
-											</ListItemButton>{' '}
+											</ListItemButton>
+										) : null}
+										{completed ? (
+											<>
+												<ListItemButton
+													onClick={() =>
+														handleTaskChange('isArchived', true, obj)
+													}
+													sx={{ maxWidth: 24, padding: 0 }}
+												>
+													<ThumbUpAltIcon
+														sx={[
+															{
+																'&:hover': {
+																	color: 'green',
+																},
+															},
+														]}
+													/>
+												</ListItemButton>{' '}
+												<ListItemButton
+													onClick={() =>
+														handleTaskChange('isCompleted', false, obj)
+													}
+													sx={{ maxWidth: 24, padding: 0 }}
+												>
+													<UndoIcon
+														sx={[
+															{
+																'&:hover': {
+																	color: 'white',
+																	background: 'green',
+																},
+															},
+															{ marginRight: 1 },
+														]}
+													/>
+												</ListItemButton>{' '}
+											</>
+										) : null}
+										{archieved ? (
 											<ListItemButton
 												onClick={() =>
-													handleTaskChange('isCompleted', false, obj)
+													handleTaskChange('isArchived', false, obj)
 												}
-												sx={{ maxWidth: 24, padding: 0 }}
+												sx={{ maxWidth: 25, padding: 0 }}
 											>
 												<UndoIcon
 													sx={[
@@ -217,43 +242,26 @@ export const CardTaskList = ({
 														{ marginRight: 1 },
 													]}
 												/>
-											</ListItemButton>{' '}
-										</>
-									) : null}
-									{archieved ? (
+											</ListItemButton>
+										) : null}
 										<ListItemButton
-											onClick={() => handleTaskChange('isArchived', false, obj)}
-											sx={{ maxWidth: 25, padding: 0 }}
+											onClick={() => handleClickDelete(obj)}
+											sx={{ maxWidth: 24, padding: 0 }}
 										>
-											<UndoIcon
+											<DeleteIcon
 												sx={[
 													{
 														'&:hover': {
-															color: 'white',
-															background: 'green',
+															color: 'red',
 														},
 													},
-													{ marginRight: 1 },
 												]}
 											/>
 										</ListItemButton>
-									) : null}
-									<ListItemButton
-										onClick={() => handleClickDelete(obj)}
-										sx={{ maxWidth: 24, padding: 0 }}
-									>
-										<DeleteIcon
-											sx={[
-												{
-													'&:hover': {
-														color: 'red',
-													},
-												},
-											]}
-										/>
 									</ListItemButton>
-								</ListItemButton>
-							</ListItem>
+								</ListItem>
+								<Divider />
+							</>
 						))
 					) : (
 						<Skeleton
