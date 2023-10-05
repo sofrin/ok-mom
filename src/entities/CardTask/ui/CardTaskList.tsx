@@ -98,7 +98,7 @@ export const CardTaskList = ({
 			},
 		);
 		if (response.ok) {
-			enqueueSnackbar('Task updated successfully', { variant: 'info' });
+			enqueueSnackbar('Task deleted successfully', { variant: 'info' });
 			return;
 		} else {
 			enqueueSnackbar('Something went wrong', { variant: 'error' });
