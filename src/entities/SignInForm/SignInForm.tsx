@@ -5,46 +5,59 @@ import {
 	FormControlLabel,
 	TextField,
 } from '@mui/material';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { LoginSchema } from './modal/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 export const SignInForm = () => {
-	const navigate = useNavigate();
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get('email'),
-			password: data.get('password'),
-		});
-		navigate('/Home/tasks');
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<LoginSchema>({
+		resolver: zodResolver(LoginSchema),
+		mode: 'onChange',
+	});
+	const onSubmit = async (values: LoginSchema) => {
+		console.log(values);
+		// const data = await dispatch(fetchAuth(values));
+		// if ('token' in data) {
+		// 	window.localStorage.setItem('token', data.payload.token);
+		// }
 	};
+	// if (isAuth) {
+	// 	return <Navigate to={'/Home'} />;
+	// }
 	return (
 		<Box
 			component='form'
-			onSubmit={handleSubmit}
+			onSubmit={handleSubmit(onSubmit)}
 			noValidate
 			sx={{ mt: 1 }}
 		>
 			<TextField
 				margin='normal'
+				error={Boolean(errors.email)}
+				helperText={errors.email?.message}
 				required
 				fullWidth
 				id='email'
 				label='Email Address'
-				name='email'
 				autoComplete='email'
 				autoFocus
+				{...register('email', { required: 'Поле обязательно' })}
 			/>
 			<TextField
 				margin='normal'
 				required
 				fullWidth
-				name='password'
 				label='Password'
 				type='password'
 				id='password'
+				helperText={errors.password?.message}
 				autoComplete='current-password'
+				{...register('password', { required: 'Поле обязательно' })}
 			/>
 			<FormControlLabel
 				control={

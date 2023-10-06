@@ -23,7 +23,6 @@ export const TaskCardTemplate = ({
 	const { enqueueSnackbar } = useSnackbar();
 	async function dropHandler(e: DragEvent) {
 		e.preventDefault();
-
 		console.log(`draggableTask`, draggableTask);
 		if (draggableTask) {
 			console.log(`child`, child);
@@ -31,7 +30,6 @@ export const TaskCardTemplate = ({
 				case 'Выполненые задания':
 					draggableTask.isArchived = 'false';
 					draggableTask.isCompleted = 'true';
-
 					break;
 				case 'Задания в архиве':
 					draggableTask.isArchived = 'true';
@@ -56,7 +54,6 @@ export const TaskCardTemplate = ({
 					body: JSON.stringify(draggableTask),
 				},
 			);
-
 			setDraggableTask(undefined);
 			if (response.ok) {
 				enqueueSnackbar('Task updated successfully', { variant: 'success' });
@@ -70,7 +67,6 @@ export const TaskCardTemplate = ({
 	function dragOverHandler(e: DragEvent) {
 		e.preventDefault();
 	}
-
 	return (
 		<>
 			<Grid

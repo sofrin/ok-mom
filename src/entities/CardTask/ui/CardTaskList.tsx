@@ -148,8 +148,6 @@ export const CardTaskList = ({
 								onDragStart={(e) => {
 									dragStartHandler(e, obj);
 								}}
-								// onDrop={(e) => dropHandler(e)}
-
 								disablePadding
 								sx={{ width: 510 }}
 							>
