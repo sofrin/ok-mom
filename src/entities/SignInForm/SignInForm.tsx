@@ -6,9 +6,9 @@ import {
 	TextField,
 } from '@mui/material';
 
-import { LoginSchema } from './modal/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { LoginSchema } from 'shared/types';
 
 export const SignInForm = () => {
 	const {

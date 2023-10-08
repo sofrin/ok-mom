@@ -8,18 +8,19 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { signUpSchema } from '../modal/submit';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { registerSchema } from 'shared/types';
 
 export const SignUpForm = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<signUpSchema>({ resolver: zodResolver(signUpSchema) });
+	} = useForm<registerSchema>({ resolver: zodResolver(registerSchema) });
 	const navigate = useNavigate();
-	const OnSubmitSignUp = async (data: signUpSchema) => {
+	const OnSubmitSignUp = async (data: registerSchema) => {
 		const response = await fetch(
 			'https://64f8d138824680fd21801557.mockapi.io/users',
 			{
