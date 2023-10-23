@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 import { taskSchema } from 'shared/types';
-import { filteredArchievedTasks } from 'entities/CardTask/modal/filterTasks';
+import { filteredArchievedTasks } from 'entities/CardTask/model/filterTasks';
 import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
 import { Item } from 'shared/ui/Item/Item';
 import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';

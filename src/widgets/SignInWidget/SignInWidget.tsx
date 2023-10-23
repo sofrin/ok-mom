@@ -6,7 +6,7 @@ import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { SignInUpTemplate } from 'shared/ui/SignInUpTemplate/SignInUpTemplate';
-import { SignInForm } from 'entities/SignInForm/SignInForm';
+import { SignInForm } from 'features/authentication/SignInForm';
 
 export const SignInWidget = () => {
 	return (

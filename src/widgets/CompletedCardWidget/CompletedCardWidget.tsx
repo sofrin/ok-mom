@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 import { taskSchema } from 'shared/types';
-import { filteredCompletedTasks } from 'entities/CardTask/modal/filterTasks';
-import { points } from 'features/ProgressItem/modal/ProgressAlg';
+import { filteredCompletedTasks } from 'entities/CardTask/model/filterTasks';
+import { points } from 'features/ProgressItem/model/ProgressAlg';
 import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
 import { Item } from 'shared/ui/Item/Item';
 import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';

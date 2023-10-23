@@ -9,9 +9,14 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LoginSchema } from 'shared/types';
+import { useCallback } from 'react';
+import { loginThunk } from '../model/authSlice';
+import { useAppDispatch } from 'shared/model/hooks';
 
 export const SignInForm = () => {
+	const dispatch = useAppDispatch();
 	const {
+		setError,
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -19,20 +24,23 @@ export const SignInForm = () => {
 		resolver: zodResolver(LoginSchema),
 		mode: 'onChange',
 	});
-	const onSubmit = async (values: LoginSchema) => {
-		console.log(values);
-		// const data = await dispatch(fetchAuth(values));
-		// if ('token' in data) {
-		// 	window.localStorage.setItem('token', data.payload.token);
-		// }
-	};
+	const onSubmitHandler = useCallback(
+		({ email, password }: LoginSchema) => {
+			dispatch(loginThunk({ email, password }))
+				.unwrap()
+				.catch((error) => {
+					setError('email', { type: 'server', message: error.message });
+				});
+		},
+		[setError, dispatch],
+	);
 	// if (isAuth) {
 	// 	return <Navigate to={'/Home'} />;
 	// }
 	return (
 		<Box
 			component='form'
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={handleSubmit(onSubmitHandler)}
 			noValidate
 			sx={{ mt: 1 }}
 		>

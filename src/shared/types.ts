@@ -28,11 +28,6 @@ export const LoginSchema = z.object({
 	email: z.string().email(),
 	password: z.string().min(10, 'Password must be atleast 10 characters'),
 });
-//todo поменять юзера
-export interface User {
-	first_name: string;
-	last_name: string;
-}
 
 export type LoginSchema = z.infer<typeof LoginSchema>;
 

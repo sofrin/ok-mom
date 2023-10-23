@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { useDispatch } from 'react-redux';
-import { api } from 'shared/api/auth';
-import auth from './authSlice';
+import { authReducer } from 'features/authentication/model/authSlice';
+
+import { api } from 'shared/api/baseApi';
+import { taskReducer } from 'entities/CardTask/model/taskSlice';
 const store = configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,
-		auth,
+		auth: authReducer,
+		task: taskReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(api.middleware),
@@ -14,5 +16,5 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch: () => AppDispatch = useDispatch;
+
 export default store;
