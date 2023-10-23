@@ -1,0 +1,1 @@
+export { CompletedTaskCardWidget } from './CompletedCardWidget';

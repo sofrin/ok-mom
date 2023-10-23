@@ -1,58 +1,97 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import { AddTaskDialog, taskSchema } from '../Components/AddTaskDialog';
-import { ChildTaskCard } from '../Components/ChildTaskCard';
-import { CompletedTaskCard } from '../Components/CompletedTaskCard';
-import { ArchivedTasksCard } from '../Components/ArchivedTasksCard';
-import { Search } from '../Components/Search';
-
-
-
-
+import { SearchInput } from 'features/Search/SearchInput';
+import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
+import { CompletedTaskCardWidget } from 'widgets/CompletedCardWidget';
+import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
+import { AddTaskDialog } from 'widgets/AddTask';
+import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 
 export default function Home() {
-  const [openForm, setOpenForm] = React.useState(false);
-  const [defaultChild, setdefaultChild] = React.useState('Ребёнок 1');
-  const [isLoading, setisLoading] = React.useState(false);
+	const dispatch = useAppDispatch();
+	const [openForm, setOpenForm] = React.useState(false);
+	const [defaultChild, setdefaultChild] = React.useState('Ребёнок 1');
 
-  const [tasks, setTasks] = React.useState<taskSchema[]>([]);
-  const [draggableTask, setDraggableTask] = React.useState<taskSchema>();
-  React.useEffect(() => {
-    const fetchTasks = async () => {
-      setisLoading(true)
-      const response = await fetch(`https://64f8d138824680fd21801557.mockapi.io/tasks`, {
-        method: 'GET',
-        headers: { 'content-type': 'application/json' },
-      })
-      const tasks = await response.json()
-      // console.log(tasks);
-      setTasks(tasks)
-      setisLoading(false)
+	React.useEffect(() => {
+		const fetchTasks = async () => {
+			dispatch(getTasksThunk('')).unwrap();
+		};
+		fetchTasks();
+	}, [dispatch]);
+	const tasks = useAppSelector(selectTasks);
 
-    };
-    fetchTasks()
+	console.log(tasks);
 
-  }, []);
-  console.log(tasks);
+	return (
+		<>
+			<SearchInput />
+			<Grid
+				container
+				spacing={3}
+			>
+				<Grid
+					item
+					xs={6}
+					md={4}
+					lg={6}
+				>
+					{' '}
+					<ChildTaskCardWidget
+						key={`Ребёнок 1`}
+						child='Ребёнок 1'
+						setOpen={setOpenForm}
+						setdefaultChild={setdefaultChild}
+					/>
+				</Grid>
+				<Grid
+					item
+					xs={6}
+					md={4}
+					lg={6}
+				>
+					{' '}
+					<ChildTaskCardWidget
+						key={`Ребёнок 2`}
+						child='Ребёнок 2'
+						setOpen={setOpenForm}
+						setdefaultChild={setdefaultChild}
+					/>
+				</Grid>
 
-  return (
-    <>
-      <Search setTasks={setTasks} setisLoading={setisLoading} tasks={tasks} />
-
-      <Grid container spacing={3}>
-
-        <Grid item xs={6} md={4} lg={6} > <ChildTaskCard key={`Ребёнок 1`} child='Ребёнок 1' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks}
-          setdefaultChild={setdefaultChild} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
-        <Grid item xs={6} md={4} lg={6}> <ChildTaskCard key={`Ребёнок 2`} child='Ребёнок 2' tasks={tasks} setOpen={setOpenForm} setTasks={setTasks}
-          setdefaultChild={setdefaultChild} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
-
-        <Grid item xs={6} md={4} lg={6}>  <CompletedTaskCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
-        <Grid item xs={6} md={4} lg={6}>  <ArchivedTasksCard tasks={tasks} setTasks={setTasks} isLoading={isLoading} setDraggableTask={setDraggableTask} draggableTask={draggableTask} /></Grid>
-        <Grid item xs={6} md={4} lg={6}>
-          {openForm && <AddTaskDialog setTasks={setTasks} open={openForm} setOpen={setOpenForm} tasks={tasks} defaultChild={defaultChild} />}
-        </Grid>
-      </Grid></>
-
-
-  );
+				<Grid
+					item
+					xs={6}
+					md={4}
+					lg={6}
+				>
+					{' '}
+					<CompletedTaskCardWidget child='Выполненные задания' />
+				</Grid>
+				<Grid
+					item
+					xs={6}
+					md={4}
+					lg={6}
+				>
+					{' '}
+					<ArchievedTaskCardWidget child='Задания в архиве' />
+				</Grid>
+				<Grid
+					item
+					xs={6}
+					md={4}
+					lg={6}
+				>
+					{openForm && (
+						<AddTaskDialog
+							open={openForm}
+							setOpen={setOpenForm}
+							defaultChild={defaultChild}
+						/>
+					)}
+				</Grid>
+			</Grid>
+		</>
+	);
 }
