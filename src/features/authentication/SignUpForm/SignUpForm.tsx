@@ -6,44 +6,40 @@ import {
 	Grid,
 	TextField,
 } from '@mui/material';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { signUpSchema } from '../modal/submit';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { registerSchema } from 'shared/types';
+import { registerThunk } from 'features/authentication/model/authSlice';
+import { useAppDispatch } from 'shared/model/hooks';
 
 export const SignUpForm = () => {
+	const dispatch = useAppDispatch();
 	const {
+		setError,
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<signUpSchema>({ resolver: zodResolver(signUpSchema) });
+	} = useForm<registerSchema>({ resolver: zodResolver(registerSchema) });
 	const navigate = useNavigate();
-	const OnSubmitSignUp = async (data: signUpSchema) => {
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/users',
-			{
-				method: 'POST',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify(data),
-			},
-		);
-		if (response.ok) {
-			alert('Form submited successfully');
-			navigate('/Home/tasks');
-			return;
-		} else {
-			alert('Form submition failed');
-			return;
-		}
-	};
+	const onSubmitHandler = useCallback(
+		({ email, password, login, confirmPassword }: registerSchema) => {
+			dispatch(registerThunk({ email, password, login, confirmPassword }))
+				.unwrap()
+				.then(() => navigate('/Home/tasks'))
+				.catch((error) => {
+					setError('email', { type: 'server', message: error.message });
+				});
+		},
+		[setError, dispatch, navigate],
+	);
 
 	return (
 		<Box
 			component='form'
 			noValidate
-			onSubmit={handleSubmit(OnSubmitSignUp)}
+			onSubmit={handleSubmit(onSubmitHandler)}
 			sx={{ mt: 3 }}
 		>
 			<Grid

@@ -6,7 +6,7 @@ import {
 	Typography,
 } from '@mui/material';
 import React from 'react';
-import { progressValue } from '../modal/ProgressAlg';
+import { progressValue } from '../model/ProgressAlg';
 import { taskSchema } from 'shared/types';
 
 type Props = {

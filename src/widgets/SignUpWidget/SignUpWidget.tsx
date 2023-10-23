@@ -5,7 +5,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SignInUpTemplate } from 'shared/ui/SignInUpTemplate/SignInUpTemplate';
-import { SignUpForm } from 'entities/SignUpForm/ui/SignUpForm';
+import { SignUpForm } from 'features/authentication/SignUpForm';
 
 export const SignUpWidget = () => {
 	return (
