@@ -7,50 +7,64 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TaskForm } from 'entities/TaskForm/TaskForm';
 import { taskSchema } from 'shared/types';
+import { useAppDispatch } from 'shared/model/hooks';
 
+import { useSnackbar } from 'notistack';
+import { createTaskThunk } from 'entities/CardTask/model/taskSlice';
 type AddTaskDialogProps = {
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	tasks: taskSchema[];
 	defaultChild: string;
 };
 
 export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
-	setTasks,
 	open,
 	setOpen,
-	tasks,
+
 	defaultChild,
 }) => {
+	const { enqueueSnackbar } = useSnackbar();
+	const dispatch = useAppDispatch();
 	const handleClose = () => {
 		setOpen(false);
 	};
+	// const onSubmit = async (data: taskSchema) => {
+	// 	const maxIdObj: taskSchema = tasks.reduce((prev, current) => {
+	// 		return prev.id > current.id ? prev : current;
+	// 	});
+	// 	data.id = String(Number(maxIdObj.id) + 1);
+	// 	console.log(data);
+	// 	setTasks((prev: taskSchema[]) => [...prev, data]);
+	// 	const response = await fetch(
+	// 		'https://64f8d138824680fd21801557.mockapi.io/tasks',
+	// 		{
+	// 			method: 'POST',
+	// 			headers: { 'content-type': 'application/json' },
+	// 			// Send your data in the request body as JSON
+	// 			body: JSON.stringify(data),
+	// 		},
+	// 	);
+	// 	if (response.ok) {
+	// 		alert('Form submited successfully');
+	// 		reset();
+	// 		handleClose();
+	// 		return;
+	// 	} else {
+	// 		alert('Form submition failed');
+	// 		return;
+	// 	}
+	// };
 	const onSubmit = async (data: taskSchema) => {
-		const maxIdObj: taskSchema = tasks.reduce((prev, current) => {
-			return prev.id > current.id ? prev : current;
-		});
-		data.id = String(Number(maxIdObj.id) + 1);
-		console.log(data);
-		setTasks((prev: taskSchema[]) => [...prev, data]);
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks',
-			{
-				method: 'POST',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify(data),
-			},
-		);
-		if (response.ok) {
-			alert('Form submited successfully');
-			reset();
-			handleClose();
-			return;
-		} else {
-			alert('Form submition failed');
-			return;
-		}
+		dispatch(createTaskThunk(data))
+			.unwrap()
+			.then(() => {
+				enqueueSnackbar('Task created successfully', { variant: 'success' });
+				reset();
+				handleClose();
+			})
+			.catch((error) => {
+				enqueueSnackbar(error, { variant: 'error' });
+			});
 	};
 
 	const {

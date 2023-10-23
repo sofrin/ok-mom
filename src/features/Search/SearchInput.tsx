@@ -4,34 +4,23 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 
 import { Box, InputAdornment } from '@mui/material';
-import { taskSchema } from 'shared/types';
+import { useAppDispatch } from 'shared/model/hooks';
+import { tasksApi } from 'entities/CardTask/api/tasksApi';
 
-type SearchProps = {
-	setisLoading: React.Dispatch<React.SetStateAction<boolean>>;
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
-};
-
-export const SearchInput: React.FC<SearchProps> = ({
-	setisLoading,
-	setTasks,
-}) => {
+export const SearchInput: React.FC = () => {
 	const [value, setValue] = useState<string>('');
-
+	const dispatch = useAppDispatch();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const updateSearchValue = useCallback(
 		debounce((str: string) => {
 			const fetchTasks = async () => {
-				setisLoading(true);
-				const response = await fetch(
-					`https://64f8d138824680fd21801557.mockapi.io/tasks?title=${str}`,
-					{
-						method: 'GET',
-						headers: { 'content-type': 'application/json' },
-					},
+				str = `?title=${str}`;
+				dispatch(
+					tasksApi.endpoints.getTasks.initiate(str, {
+						subscribe: false,
+						forceRefetch: true,
+					}),
 				);
-				const tasks = await response.json();
-				setTasks(tasks);
-				setisLoading(false);
 			};
 			fetchTasks();
 		}, 1000),

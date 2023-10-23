@@ -5,36 +5,27 @@ import { Button, Grid, Typography } from '@mui/material';
 import { ProgresItem } from '../../features/ProgressItem/ui/ProgressItem';
 
 import { Link } from 'react-router-dom';
-import { taskSchema } from 'shared/types';
-import { filteredTasks } from 'entities/CardTask/modal/filterTasks';
-import { points } from 'features/ProgressItem/modal/ProgressAlg';
+
+import { points } from 'features/ProgressItem/model/ProgressAlg';
 import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
 import { Item } from 'shared/ui/Item/Item';
 import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
+import { filteredTasks } from 'entities/CardTask/model/filterTasks';
+import { useAppSelector } from 'shared/model/hooks';
+import { selectTasks } from 'entities/CardTask/model/taskSlice';
 
 type Props = {
 	child: string;
-	tasks: taskSchema[];
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
 	setdefaultChild: React.Dispatch<React.SetStateAction<string>>;
-	isLoading: boolean;
-	setDraggableTask: React.Dispatch<
-		React.SetStateAction<taskSchema | undefined>
-	>;
-	draggableTask: taskSchema | undefined;
 };
 
 export const ChildTaskCardWidget = ({
 	child,
-	tasks,
 	setOpen,
-	setTasks,
 	setdefaultChild,
-	isLoading,
-	setDraggableTask,
-	draggableTask,
 }: Props) => {
+	const tasks = useAppSelector(selectTasks);
 	const handleClickOpen = () => {
 		setOpen(true);
 		setdefaultChild(child);
@@ -42,12 +33,7 @@ export const ChildTaskCardWidget = ({
 	const filteredChildTasks = filteredTasks(tasks, child);
 	const totalPoints = points(filteredChildTasks);
 	return (
-		<TaskCardTemplate
-			setTasks={setTasks}
-			child={child}
-			setDraggableTask={setDraggableTask}
-			draggableTask={draggableTask}
-		>
+		<TaskCardTemplate child={child}>
 			<Grid
 				container
 				direction='row'
@@ -75,11 +61,6 @@ export const ChildTaskCardWidget = ({
 				/>
 			</Grid>
 			<CardTaskList
-				isLoading={isLoading}
-				tasks={tasks}
-				setTasks={setTasks}
-				setDraggableTask={setDraggableTask}
-				draggableTask={draggableTask}
 				child={child}
 				filteredTasks={filteredChildTasks}
 			/>

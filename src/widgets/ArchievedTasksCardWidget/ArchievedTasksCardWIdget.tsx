@@ -1,40 +1,23 @@
 import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
-import { taskSchema } from 'shared/types';
-import { filteredArchievedTasks } from 'entities/CardTask/modal/filterTasks';
+
 import { TaskCardTemplate } from 'shared/ui/TaskCardTemplate/TaskCardTemplate';
 import { Item } from 'shared/ui/Item/Item';
 import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
+import { filteredArchievedTasks } from 'entities/CardTask/model/filterTasks';
+import { useAppSelector } from 'shared/model/hooks';
+import { selectTasks } from 'entities/CardTask/model/taskSlice';
 
 type Props = {
 	child: string;
-	tasks: taskSchema[];
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
-	isLoading: boolean;
-	setDraggableTask: React.Dispatch<
-		React.SetStateAction<taskSchema | undefined>
-	>;
-	draggableTask: taskSchema | undefined;
 };
 
-export const ArchievedTaskCardWidget = ({
-	child,
-	tasks,
-	setTasks,
-	isLoading,
-	setDraggableTask,
-	draggableTask,
-}: Props) => {
+export const ArchievedTaskCardWidget = ({ child }: Props) => {
+	const tasks = useAppSelector(selectTasks);
 	const filteredChildTasks = filteredArchievedTasks(tasks);
-
 	return (
-		<TaskCardTemplate
-			setTasks={setTasks}
-			child={'Задания в архиве'}
-			setDraggableTask={setDraggableTask}
-			draggableTask={draggableTask}
-		>
+		<TaskCardTemplate child={'Задания в архиве'}>
 			<Grid
 				container
 				direction='row'
@@ -60,11 +43,6 @@ export const ArchievedTaskCardWidget = ({
 			</Grid>
 			<CardTaskList
 				archieved
-				isLoading={isLoading}
-				tasks={tasks}
-				setTasks={setTasks}
-				setDraggableTask={setDraggableTask}
-				draggableTask={draggableTask}
 				child={child}
 				filteredTasks={filteredChildTasks}
 			/>
