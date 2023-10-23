@@ -4,7 +4,6 @@ import List from '@mui/material/List';
 import {
 	ListItem,
 	ListItemButton,
-	Skeleton,
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
@@ -18,15 +17,17 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { taskSchema } from 'shared/types';
 import { priorityCircle } from 'features/PriorityCircle/PriorityCircle';
 import Divider from '@mui/material/Divider';
+import {
+	deleteTaskThunk,
+	removeTask,
+	selectDraggableTask,
+	selectTasks,
+	setDraggableTask,
+	updateTaskThunk,
+} from '../model/taskSlice';
+import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 
 type Props = {
-	tasks: taskSchema[];
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
-	isLoading: boolean;
-	setDraggableTask: React.Dispatch<
-		React.SetStateAction<taskSchema | undefined>
-	>;
-	draggableTask: taskSchema | undefined;
 	child: string;
 	filteredTasks: taskSchema[];
 	completed?: boolean;
@@ -35,15 +36,14 @@ type Props = {
 
 export const CardTaskList = ({
 	child,
-	tasks,
-	setTasks,
-	isLoading,
-	setDraggableTask,
-	draggableTask,
 	filteredTasks,
 	completed = false,
 	archieved = false,
 }: Props) => {
+	const tasks = useAppSelector(selectTasks);
+	const draggableTask = useAppSelector(selectDraggableTask);
+	const dispatch = useAppDispatch();
+	// const isLoading = useAppSelector(selectLoading);
 	let listHeight = 0;
 	switch (child) {
 		case 'Задания в архиве':
@@ -66,57 +66,37 @@ export const CardTaskList = ({
 	) => {
 		console.log(obj);
 		const chandedObj = { ...obj, [string]: String(value) };
-		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		setTasks((prev) => [...prev, chandedObj]);
-
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-			{
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify({ [string]: String(value) }),
-			},
-		);
-		if (response.ok) {
-			enqueueSnackbar('Task updated successfully', { variant: 'success' });
-			return;
-		} else {
-			enqueueSnackbar('Something went wrong', { variant: 'error' });
-			return;
-		}
+		// setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
+		// setTasks((prev) => [...prev, chandedObj]);
+		// dispatch(removeTask(obj.id));
+		// dispatch(addTask(chandedObj));
+		dispatch(updateTaskThunk(chandedObj))
+			.unwrap()
+			.then(() =>
+				enqueueSnackbar('Task updated successfully', { variant: 'success' }),
+			)
+			.catch((error) => enqueueSnackbar(error, { variant: 'error' }));
 	};
 	const handleClickDelete = async (obj: taskSchema) => {
 		console.log(obj);
-		setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-
-		const response = await fetch(
-			'https://64f8d138824680fd21801557.mockapi.io/tasks/' + obj.id,
-			{
-				method: 'DELETE',
-			},
-		);
-		if (response.ok) {
-			enqueueSnackbar('Task deleted successfully', { variant: 'info' });
-			return;
-		} else {
-			enqueueSnackbar('Something went wrong', { variant: 'error' });
-			return;
-		}
+		// setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
+		dispatch(removeTask(obj.id));
+		dispatch(deleteTaskThunk(obj.id))
+			.unwrap()
+			.then(() => {
+				enqueueSnackbar('Task deleted successfully', { variant: 'info' });
+			})
+			.catch((error) => {
+				enqueueSnackbar(error, { variant: 'error' });
+			});
 	};
 	function dragOverHandler(e: DragEvent<HTMLLIElement>) {
 		e.preventDefault();
 	}
 	function dragStartHandler(e: DragEvent<HTMLLIElement>, obj: taskSchema) {
 		console.log(`dragStartHandler`, obj);
-		setDraggableTask(obj);
+		dispatch(setDraggableTask(obj));
 		console.log(`DraggableTask`, draggableTask);
-		// obj.child = ''
-		// obj.isArchived = 'false'
-		// obj.isCompleted = 'false'
-		// setTasks((prev) => prev.filter((task) => task.id !== obj.id))
-
-		console.log(`dragStartHandler`, obj);
 	}
 
 	return (
@@ -137,7 +117,8 @@ export const CardTaskList = ({
 				ref={parent}
 				disablePadding
 			>
-				{!isLoading ? (
+				{
+					// !isLoading ?
 					filteredTasks.map((obj: taskSchema) => (
 						<Fragment key={obj.id}>
 							<ListItem
@@ -255,13 +236,14 @@ export const CardTaskList = ({
 							<Divider />
 						</Fragment>
 					))
-				) : (
-					<Skeleton
-						variant='rounded'
-						width={510}
-						height={144}
-					/>
-				)}
+					// : (
+					// 	<Skeleton
+					// 		variant='rounded'
+					// 		width={510}
+					// 		height={144}
+					// 	/>
+					// )
+				}
 			</List>
 			<Divider />
 		</Grid>

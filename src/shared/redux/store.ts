@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { taskReducer } from 'entities/CardTask/model/taskSlice';
 
 import { authReducer } from 'features/authentication/model/authSlice';
 
 import { api } from 'shared/api/baseApi';
-import { taskReducer } from 'entities/CardTask/model/taskSlice';
+
 const store = configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,

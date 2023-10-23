@@ -1,11 +1,12 @@
 import { api } from 'shared/api/baseApi';
 import { TASK_TAG } from 'shared/api/tags';
 import { taskSchema } from 'shared/types';
+import { updateTaskRequest } from '../model/taskSlice';
 
 export const tasksApi = api.injectEndpoints({
 	endpoints: (build) => ({
-		getTasks: build.query<taskSchema[], void>({
-			query: () => 'https://64f8d138824680fd21801557.mockapi.io/tasks',
+		getTasks: build.query<taskSchema[], void | string>({
+			query: (str) => `https://64f8d138824680fd21801557.mockapi.io/tasks${str}`,
 			providesTags: (result) => {
 				return result
 					? [
@@ -16,6 +17,10 @@ export const tasksApi = api.injectEndpoints({
 					: [{ type: TASK_TAG, id: 'LIST' }];
 			},
 		}),
+		getOneTask: build.query<taskSchema, string>({
+			query: (id) => `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
+			providesTags: (result, error, id) => [{ type: TASK_TAG, id }],
+		}),
 		createTask: build.mutation<void, taskSchema>({
 			query: (body) => ({
 				url: 'https://64f8d138824680fd21801557.mockapi.io/tasks',
@@ -24,20 +29,35 @@ export const tasksApi = api.injectEndpoints({
 			}),
 			invalidatesTags: [{ type: TASK_TAG, id: 'LIST' }],
 		}),
-		updateTask: build.mutation<void, taskSchema>({
+		updateTask: build.mutation<void, updateTaskRequest>({
 			query: (body) => ({
 				url: `https://64f8d138824680fd21801557.mockapi.io/tasks/${body.id}`,
 				method: 'PUT',
-				body,
+				body: body,
 			}),
 			invalidatesTags: [{ type: TASK_TAG, id: 'LIST' }],
+			async onQueryStarted(body, { dispatch, queryFulfilled }) {
+				console.log('PATCH', body);
+				const patchResult = dispatch(
+					tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
+						// Object.assign(draft, patch);
+						draft.push(body as taskSchema);
+					}),
+				);
+				console.log('PATCH RESULT', patchResult);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 		deleteTask: build.mutation<void, string>({
 			query: (id) => ({
 				url: `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: [{ type: TASK_TAG, id: 'LIST' }],
+			invalidatesTags: (result, error, id) => [{ type: TASK_TAG, id }],
 		}),
 	}),
 });
@@ -47,4 +67,5 @@ export const {
 	useCreateTaskMutation,
 	useUpdateTaskMutation,
 	useDeleteTaskMutation,
+	useGetOneTaskQuery,
 } = tasksApi;

@@ -1,68 +1,68 @@
 import React, { DragEvent, ReactNode } from 'react';
 import { Grid, Paper } from '@mui/material';
-import { taskSchema } from 'shared/types';
 import { useSnackbar } from 'notistack';
+import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import {
+	selectDraggableTask,
+	setDraggableTask,
+} from '../../../entities/CardTask/model/taskSlice';
+import {
+	addTask,
+	removeTask,
+	updateTaskThunk,
+} from 'entities/CardTask/model/taskSlice';
+import { taskSchema } from 'shared/types';
 
 type Props = {
-	setTasks: React.Dispatch<React.SetStateAction<taskSchema[]>>;
-	setDraggableTask: React.Dispatch<
-		React.SetStateAction<taskSchema | undefined>
-	>;
-	draggableTask: taskSchema | undefined;
 	child: string;
 	children: ReactNode;
 };
 
-export const TaskCardTemplate = ({
-	setTasks,
-	setDraggableTask,
-	draggableTask,
-	child,
-	children,
-}: Props) => {
+export const TaskCardTemplate = ({ child, children }: Props) => {
+	const draggableTask = useAppSelector(selectDraggableTask);
+	const dispatch = useAppDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 	async function dropHandler(e: DragEvent) {
 		e.preventDefault();
 		console.log(`draggableTask`, draggableTask);
-		if (draggableTask) {
-			console.log(`child`, child);
-			switch (child) {
-				case 'Выполненые задания':
-					draggableTask.isArchived = 'false';
-					draggableTask.isCompleted = 'true';
-					break;
-				case 'Задания в архиве':
-					draggableTask.isArchived = 'true';
-					draggableTask.isCompleted = 'true';
-					break;
-				default:
-					draggableTask.child = child;
-					draggableTask.isArchived = 'false';
-					draggableTask.isCompleted = 'false';
-					break;
-			}
-			setTasks((prev: taskSchema[]) =>
-				prev.filter((task) => task.id !== draggableTask.id),
-			);
-			setTasks((prev) => [...prev, draggableTask]);
-			const response = await fetch(
-				'https://64f8d138824680fd21801557.mockapi.io/tasks/' + draggableTask.id,
-				{
-					method: 'PUT',
-					headers: { 'content-type': 'application/json' },
-					// Send your data in the request body as JSON
-					body: JSON.stringify(draggableTask),
-				},
-			);
-			setDraggableTask(undefined);
-			if (response.ok) {
-				enqueueSnackbar('Task updated successfully', { variant: 'success' });
-				return;
-			} else {
-				enqueueSnackbar('Something went wrong', { variant: 'error' });
-				return;
-			}
+		let chandedObj = {};
+		console.log(`child`, child);
+		switch (child) {
+			case 'Выполненые задания':
+				chandedObj = {
+					...draggableTask,
+					isArchived: 'false',
+					isCompleted: 'true',
+				};
+				break;
+			case 'Задания в архиве':
+				chandedObj = {
+					...draggableTask,
+					isArchived: 'true',
+					isCompleted: 'true',
+				};
+				break;
+			default:
+				chandedObj = {
+					...draggableTask,
+					child: child,
+					isArchived: 'false',
+					isCompleted: 'false',
+				};
+				break;
 		}
+		dispatch(removeTask(draggableTask?.id));
+		console.log(draggableTask);
+		dispatch(addTask(chandedObj));
+		dispatch(updateTaskThunk(chandedObj as taskSchema))
+			.unwrap()
+			.then(() => {
+				dispatch(setDraggableTask(null));
+				enqueueSnackbar('Task updated successfully', { variant: 'success' });
+			})
+			.catch((error) => {
+				enqueueSnackbar(error, { variant: 'error' });
+			});
 	}
 	function dragOverHandler(e: DragEvent) {
 		e.preventDefault();

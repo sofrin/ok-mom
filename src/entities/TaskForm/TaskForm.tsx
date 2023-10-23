@@ -9,7 +9,6 @@ import React from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { taskSchema } from 'shared/types';
 
-
 type TaskFormProps = {
 	checked?: boolean;
 	singleTask?: taskSchema;
