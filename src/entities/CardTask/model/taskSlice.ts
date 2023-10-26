@@ -115,25 +115,21 @@ const taskSlice = createSlice({
 		setDraggableTask(state, action) {
 			state.draggableTask = action.payload;
 		},
-		setDraggableTaskCompleted(state) {
-			if (state.draggableTask) {
-				state.draggableTask.isArchived = 'false';
-				state.draggableTask.isCompleted = 'true';
-			}
-		},
-		setDraggableTaskArchieved(state) {
-			if (state.draggableTask) {
-				state.draggableTask.isArchived = 'true';
-				state.draggableTask.isCompleted = 'true';
-			}
-		},
-		setDraggableTaskChild(state, action) {
-			if (state.draggableTask) {
-				state.draggableTask.title = action.payload;
-				state.draggableTask.child = action.payload;
-				state.draggableTask.isArchived = 'false';
-				state.draggableTask.isCompleted = 'false';
-				addTask(state.draggableTask);
+		changeDraggableTask(state, action) {
+			switch (action.payload) {
+				case 'Выполненые задания':
+					state.draggableTask?.isCompleted === 'true';
+					state.draggableTask?.isArchived === 'false';
+					break;
+				case 'Задания в архиве':
+					state.draggableTask?.isCompleted === 'true';
+					state.draggableTask?.isArchived === 'true';
+					break;
+				default:
+					state.draggableTask?.child === action.payload;
+					state.draggableTask?.isCompleted === 'true';
+					state.draggableTask?.isArchived === 'false';
+					break;
 			}
 		},
 	},
@@ -156,11 +152,5 @@ export const selectTasks = (state: RootState) => state.task.items;
 export const selectLoading = (state: RootState) => state.task.isLoading;
 export const selectDraggableTask = (state: RootState) =>
 	state.task.draggableTask;
-export const {
-	addTask,
-	removeTask,
-	setDraggableTask,
-	setDraggableTaskCompleted,
-	setDraggableTaskArchieved,
-	setDraggableTaskChild,
-} = taskSlice.actions;
+export const { addTask, removeTask, setDraggableTask, changeDraggableTask } =
+	taskSlice.actions;
