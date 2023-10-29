@@ -84,14 +84,15 @@ export const TaskForm = ({
 				/>
 				<DialogContentText>Тип задания:</DialogContentText>
 				<Select
-					defaultValue={singleTask ? singleTask.taskType : 'Ежедневно'}
+					defaultValue={singleTask ? singleTask.taskType : 'daily'}
 					disabled={!checked}
 					id='taskType'
 					label='Type'
 					{...register('taskType')}
 				>
-					<MenuItem value={'Ежедневно'}>Ежедневно</MenuItem>
-					<MenuItem value={'Единоразово'}>Единоразово</MenuItem>
+					<MenuItem value={'daily'}>Ежедневно</MenuItem>
+					<MenuItem value={'habit'}>Привычка</MenuItem>
+					<MenuItem value={'todo'}>Единоразово</MenuItem>
 				</Select>
 				<TextField
 					defaultValue={singleTask && singleTask.description}
@@ -116,17 +117,17 @@ export const TaskForm = ({
 				/>
 				<DialogContentText>Приоритет задания:</DialogContentText>
 				<Select
-					defaultValue={singleTask ? singleTask.priority : 'Средний'}
+					defaultValue={singleTask ? singleTask.priority : 'mid'}
 					disabled={!checked}
 					id='priority'
 					label='Приоритет'
 					variant='outlined'
 					{...register('priority')}
 				>
-					<MenuItem value={'Низкий'}>Низкий</MenuItem>
-					<MenuItem value={'Средний'}>Средний</MenuItem>
-					<MenuItem value={'Высокий'}>Высокий</MenuItem>
-					<MenuItem value={'Критический'}>Критический</MenuItem>
+					<MenuItem value={'low'}>Низкий</MenuItem>
+					<MenuItem value={'mid'}>Средний</MenuItem>
+					<MenuItem value={'high'}>Высокий</MenuItem>
+					<MenuItem value={'critical'}>Критический</MenuItem>
 				</Select>
 				<TextField
 					defaultValue={singleTask && singleTask.date}

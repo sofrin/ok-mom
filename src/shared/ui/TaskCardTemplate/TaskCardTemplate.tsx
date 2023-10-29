@@ -26,32 +26,6 @@ export const TaskCardTemplate = ({ child, children }: Props) => {
 	async function dropHandler(e: DragEvent) {
 		e.preventDefault();
 		console.log(`draggableTask`, draggableTask);
-		// let chandedObj = {};
-		// console.log(`child`, child);
-		// switch (child) {
-		// 	case 'Выполненые задания':
-		// 		chandedObj = {
-		// 			...draggableTask,
-		// 			isArchived: 'false',
-		// 			isCompleted: 'true',
-		// 		};
-		// 		break;
-		// 	case 'Задания в архиве':
-		// 		chandedObj = {
-		// 			...draggableTask,
-		// 			isArchived: 'true',
-		// 			isCompleted: 'true',
-		// 		};
-		// 		break;
-		// 	default:
-		// 		chandedObj = {
-		// 			...draggableTask,
-		// 			child: child,
-		// 			isArchived: 'false',
-		// 			isCompleted: 'false',
-		// 		};
-		// 		break;
-		// }
 		dispatch(changeDraggableTask(child));
 		dispatch(removeTask(draggableTask?.id));
 		console.log(draggableTask);
@@ -96,6 +70,7 @@ export const TaskCardTemplate = ({ child, children }: Props) => {
 						sx={{
 							height: 450,
 							alignItems: 'flex-start',
+							marginLeft: '-4px',
 						}}
 					>
 						{children}

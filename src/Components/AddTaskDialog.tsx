@@ -15,7 +15,7 @@ const taskSchema = z.object({
 	child: z.string(),
 	title: z.string(),
 	points: z.number(),
-	taskType: z.string(),
+	taskType: z.enum(['daily', 'todo', 'habit']),
 	description: z.string(),
 	priority: z.string(),
 	date: z.string().optional(),
@@ -149,8 +149,9 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
 							defaultValue={'Ежедневно'}
 							{...register('taskType')}
 						>
-							<MenuItem value={'Ежедневно'}>Ежедневно</MenuItem>
-							<MenuItem value={'Единоразово'}>Единоразово</MenuItem>
+							<MenuItem value={'daily'}>Ежедневно</MenuItem>
+							<MenuItem value={'todo'}>Единоразово</MenuItem>
+							<MenuItem value={'habit'}>Привычка</MenuItem>
 						</Select>
 						<TextField
 							minRows='3'

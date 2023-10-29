@@ -8,6 +8,8 @@ import Home from 'pages/Home';
 import FullTask from 'widgets/FullTask';
 import { NotFound } from 'widgets/NotFound';
 import { SignInWidget } from 'widgets/SignInWidget';
+import { ChildLayout } from 'widgets/ChildLayout';
+import { ChildTasks } from 'pages/ChildTasks';
 
 function App() {
 	return (
@@ -35,6 +37,19 @@ function App() {
 				<Route
 					path='/Home/tasks/:id'
 					element={<FullTask />}
+				/>
+				<Route
+					path='*'
+					element={<NotFound />}
+				/>
+			</Route>
+			<Route
+				path='/child'
+				element={<ChildLayout />}
+			>
+				<Route
+					path='/child/tasks'
+					element={<ChildTasks />}
 				/>
 				<Route
 					path='*'

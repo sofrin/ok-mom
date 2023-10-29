@@ -4,14 +4,14 @@ export const taskSchema = z.object({
 	child: z.string(),
 	title: z.string(),
 	points: z.number(),
-	taskType: z.string(),
+	taskType: z.enum(['daily', 'todo', 'habit']),
 	description: z.string(),
-	priority: z.string(),
+	priority: z.enum(['low', 'mid', 'high', 'critical']).default('mid'),
 	date: z.string().optional(),
 	tags: z.string().optional(),
 	id: z.string().default('0'),
-	isCompleted: z.string().default('false'),
-	isArchived: z.string().default('false'),
+	isCompleted: z.enum(['true', 'false']).default('false'),
+	isArchived: z.enum(['true', 'false']).default('false'),
 });
 export const registerSchema = z
 	.object({

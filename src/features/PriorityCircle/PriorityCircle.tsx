@@ -1,14 +1,14 @@
 import CircleIcon from '@mui/icons-material/Circle';
 export const priorityCircle = (priority: string) => {
 	switch (priority) {
-		case 'Низкий':
+		case 'low':
 			return (
 				<CircleIcon
 					fontSize={'small'}
 					sx={{ fontSize: 10 }}
 				/>
 			);
-		case 'Средний':
+		case 'mid':
 			return (
 				<CircleIcon
 					color='secondary'
@@ -16,7 +16,7 @@ export const priorityCircle = (priority: string) => {
 					sx={{ fontSize: 10 }}
 				/>
 			);
-		case 'Высокий':
+		case 'high':
 			return (
 				<CircleIcon
 					color='primary'
@@ -24,7 +24,7 @@ export const priorityCircle = (priority: string) => {
 					sx={{ fontSize: 10 }}
 				/>
 			);
-		case 'Критический':
+		case 'critical':
 			return (
 				<CircleIcon
 					color='error'
