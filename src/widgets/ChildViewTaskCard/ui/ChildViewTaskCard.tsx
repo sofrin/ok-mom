@@ -56,7 +56,7 @@ export const ChildViewTaskCard: React.FC<Props> = ({
 	const color = priorityColor(priority);
 	return (
 		<>
-			<Card sx={{ width: '100%', borderRadius: '10px' }}>
+			<Card sx={{ width: '100%', borderRadius: '10px', marginBottom: '5px' }}>
 				<Box
 					sx={{
 						height: '15px',
