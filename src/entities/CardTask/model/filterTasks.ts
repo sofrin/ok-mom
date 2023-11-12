@@ -18,3 +18,16 @@ export const filteredCompletedTasks = (tasks: taskSchema[]) => {
 export const filteredArchievedTasks = (tasks: taskSchema[]) => {
 	return tasks.filter((obj: taskSchema) => obj.isArchived === 'true');
 };
+export const childArchievedTasks = (tasks: taskSchema[], child: string) => {
+	return tasks.filter(
+		(obj: taskSchema) => obj.child === child && obj.isArchived === 'true',
+	);
+};
+export const childCompletedTasks = (tasks: taskSchema[], child: string) => {
+	return tasks.filter(
+		(obj: taskSchema) =>
+			obj.child === child &&
+			obj.isCompleted === 'true' &&
+			obj.isArchived === 'false',
+	);
+};

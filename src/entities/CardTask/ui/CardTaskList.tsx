@@ -241,7 +241,6 @@ export const CardTaskList = ({
 					// )
 				}
 			</List>
-			<Divider />
 		</Grid>
 	);
 };

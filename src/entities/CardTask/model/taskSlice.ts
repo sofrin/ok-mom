@@ -127,7 +127,7 @@ const taskSlice = createSlice({
 					break;
 				default:
 					state.draggableTask?.child === action.payload;
-					state.draggableTask?.isCompleted === 'true';
+					state.draggableTask?.isCompleted === 'false';
 					state.draggableTask?.isArchived === 'false';
 					break;
 			}

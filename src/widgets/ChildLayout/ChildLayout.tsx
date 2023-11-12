@@ -17,7 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Outlet } from 'react-router-dom';
 import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
-import { NavBar } from 'widgets/NavBar/NavBar';
+import { ChildNavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -90,7 +90,7 @@ export function ChildLayout() {
 					</Toolbar>
 					<Divider />
 					<List component='nav'>
-						{NavBar}
+						{ChildNavBar}
 						<Divider sx={{ my: 1 }} />
 						{secondaryListItems}
 					</List>

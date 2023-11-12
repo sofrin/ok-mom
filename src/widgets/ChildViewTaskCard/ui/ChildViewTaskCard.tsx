@@ -1,6 +1,6 @@
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 
-import { CardActionArea, TextField, Grid } from '@mui/material';
+import { CardActionArea, TextField, Grid, CardMedia } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -73,29 +73,41 @@ export const ChildViewTaskCard: React.FC<Props> = ({
 						justifyContent='space-between'
 						alignItems='center'
 					>
-						<Typography variant='h5'>{title}</Typography>
+						<Typography
+							variant='h5'
+							sx={{ fontWeight: 'bold', maxWidth: '260px' }}
+						>
+							{title}
+						</Typography>
 
 						<Chip
 							icon={<CurrencyBitcoinIcon />}
 							label={points}
 						/>
 					</Grid>
+
+					<CardMedia
+						component='img'
+						sx={{
+							height: 100,
+							objectFit: 'fill',
+						}}
+						image='https://source.unsplash.com/random'
+						alt='img'
+					/>
 				</CardActionArea>
-
-				{/* <CardMedia
-				component='img'
-				height='194'
-				image='/static/images/cards/paella.jpg'
-				alt='Paella dish'
-			/> */}
-
 				<Collapse
 					in={expanded}
-					collapsedSize={40}
+					collapsedSize={45}
 					timeout='auto'
 				>
-					<CardContent sx={{}}>
-						<Typography>{description}</Typography>
+					<CardContent sx={{ width: '100%' }}>
+						<Typography
+							variant='body2'
+							sx={{ fontSize: 20 }}
+						>
+							{description}
+						</Typography>
 
 						<TextField
 							variant='filled'

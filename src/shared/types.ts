@@ -28,7 +28,13 @@ export const LoginSchema = z.object({
 	email: z.string().email(),
 	password: z.string().min(10, 'Password must be atleast 10 characters'),
 });
+export const SuggestionSchema = z.object({
+	title: z.string(),
+	description: z.string(),
+	price: z.number(),
+});
 
+export type SuggestionSchema = z.infer<typeof SuggestionSchema>;
 export type LoginSchema = z.infer<typeof LoginSchema>;
 
 export type registerSchema = z.infer<typeof registerSchema>;
