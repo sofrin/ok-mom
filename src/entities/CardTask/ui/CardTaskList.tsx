@@ -66,10 +66,6 @@ export const CardTaskList = ({
 	) => {
 		console.log(obj);
 		const chandedObj = { ...obj, [string]: String(value) };
-		// setTasks((prev: taskSchema[]) => prev.filter((task) => task.id !== obj.id));
-		// setTasks((prev) => [...prev, chandedObj]);
-		// dispatch(removeTask(obj.id));
-		// dispatch(addTask(chandedObj));
 		dispatch(updateTaskThunk(chandedObj))
 			.unwrap()
 			.then(() =>
@@ -245,7 +241,6 @@ export const CardTaskList = ({
 					// )
 				}
 			</List>
-			<Divider />
 		</Grid>
 	);
 };

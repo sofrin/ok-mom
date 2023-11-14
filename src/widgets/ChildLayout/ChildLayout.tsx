@@ -1,34 +1,33 @@
-import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
+import List from '@mui/material/List';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import { Outlet } from 'react-router-dom';
 import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
-import { NavBar } from 'widgets/NavBar/NavBar';
+import { ChildNavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export function ParentLayout() {
+export function ChildLayout() {
 	const [open, setOpen] = React.useState(true);
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
-
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Box sx={{ display: 'flex' }}>
@@ -61,7 +60,7 @@ export function ParentLayout() {
 							noWrap
 							sx={{ flexGrow: 1 }}
 						>
-							Parent home page
+							Child home page
 						</Typography>
 						<IconButton color='inherit'>
 							<Badge
@@ -91,7 +90,7 @@ export function ParentLayout() {
 					</Toolbar>
 					<Divider />
 					<List component='nav'>
-						{NavBar}
+						{ChildNavBar}
 						<Divider sx={{ my: 1 }} />
 						{secondaryListItems}
 					</List>

@@ -8,6 +8,11 @@ import Home from 'pages/Home';
 import FullTask from 'widgets/FullTask';
 import { NotFound } from 'widgets/NotFound';
 import { SignInWidget } from 'widgets/SignInWidget';
+import { ChildLayout } from 'widgets/ChildLayout';
+import { ChildTasks } from 'pages/ChildTasks';
+import { ChildSuggestions } from 'pages/ChildSuggestions';
+import { ChildHistory } from 'pages/ChildHistory';
+import { ChildGifts } from 'pages/ChildGifts';
 
 function App() {
 	return (
@@ -35,6 +40,31 @@ function App() {
 				<Route
 					path='/Home/tasks/:id'
 					element={<FullTask />}
+				/>
+				<Route
+					path='*'
+					element={<NotFound />}
+				/>
+			</Route>
+			<Route
+				path='/child'
+				element={<ChildLayout />}
+			>
+				<Route
+					path='/child/tasks'
+					element={<ChildTasks />}
+				/>
+				<Route
+					path='/child/suggestions'
+					element={<ChildSuggestions />}
+				/>
+				<Route
+					path='/child/history'
+					element={<ChildHistory />}
+				/>
+				<Route
+					path='/child/gifts'
+					element={<ChildGifts />}
 				/>
 				<Route
 					path='*'
