@@ -35,9 +35,13 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 				overflowY: 'auto',
 			}}
 		>
-			<List
-				ref={parent}
-				disablePadding
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '400px',
+				}}
 			>
 				<Typography
 					variant='h5'
@@ -45,24 +49,32 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 				>
 					Задания на проверке:
 				</Typography>
-
-				{completedTasks.map((obj: taskSchema) => (
-					<ListItem
-						disablePadding
-						key={obj.id}
-						sx={{ width: 400 }}
-					>
-						<HistoryChildCard {...obj} />
-					</ListItem>
-				))}
-			</List>
+				<List
+					ref={parent}
+					disablePadding
+				>
+					{completedTasks.map((obj: taskSchema) => (
+						<ListItem
+							disablePadding
+							key={obj.id}
+							sx={{ width: 400 }}
+						>
+							<HistoryChildCard {...obj} />
+						</ListItem>
+					))}
+				</List>
+			</Box>
 
 			<Box sx={{ height: 'auto', margin: '0 30px' }}>
 				<Divider orientation='vertical' />
 			</Box>
-			<List
-				ref={parent}
-				disablePadding
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '400px',
+				}}
 			>
 				<Typography
 					variant='h5'
@@ -70,16 +82,21 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 				>
 					Подтвержденные задания:
 				</Typography>
-				{archievedTasks.map((obj: taskSchema) => (
-					<ListItem
-						disablePadding
-						key={obj.id}
-						sx={{ width: 400 }}
-					>
-						<HistoryChildCard {...obj} />
-					</ListItem>
-				))}
-			</List>
+				<List
+					ref={parent}
+					disablePadding
+				>
+					{archievedTasks.map((obj: taskSchema) => (
+						<ListItem
+							disablePadding
+							key={obj.id}
+							sx={{ width: 400 }}
+						>
+							<HistoryChildCard {...obj} />
+						</ListItem>
+					))}
+				</List>
+			</Box>
 		</Box>
 	);
 };
