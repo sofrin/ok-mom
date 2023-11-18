@@ -66,7 +66,13 @@ export const ParentSuggestCard = ({
 				>
 					{description}
 				</Typography>
-				<CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+				<CardActions
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						padding: '10px 0px 0px 0px',
+					}}
+				>
 					<Button
 						variant='contained'
 						color='success'

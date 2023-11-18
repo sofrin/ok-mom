@@ -9,7 +9,7 @@ import { Gift } from '../model/types';
 import Chip from '@mui/material/Chip';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { useAppDispatch } from 'shared/model/hooks';
-import { removeGift } from '../model/GiftsSlice';
+import { removeGift } from '../model/giftsSlice';
 
 export const ChildGiftItem = ({
 	id,
