@@ -16,6 +16,7 @@ import { ChildGifts } from 'pages/ChildGifts';
 import { ParentSuggestions } from 'pages/ParentSuggestions';
 import { ParentGifts } from 'pages/ParentGifts';
 import { ParentChildren } from 'pages/ParentChildren';
+import { ParentStatistics } from 'pages/ParentStatistics';
 
 function App() {
 	return (
@@ -47,6 +48,10 @@ function App() {
 				<Route
 					path='/Home/suggestions'
 					element={<ParentSuggestions />}
+				/>
+				<Route
+					path='/Home/statistics'
+					element={<ParentStatistics />}
 				/>
 				<Route
 					path='/Home/gifts'

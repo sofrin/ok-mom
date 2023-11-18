@@ -3,8 +3,9 @@ import { Chip, Grid, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
-import { ChildViewTaskCard } from 'widgets/ChildViewTaskCard/ChildViewTaskCard';
+
 import { GetFilteredChildTasks } from 'widgets/ChildViewTaskCard/model/filters';
+import { ChildViewTaskCard } from 'widgets/ChildViewTaskCard/ui/ChildViewTaskCard';
 
 export const ChildTasks = () => {
 	const dispatch = useAppDispatch();
@@ -77,6 +78,7 @@ export const ChildTasks = () => {
 									{habitTasks
 										? habitTasks.map((task) => (
 												<ChildViewTaskCard
+													task={task}
 													title={task.title}
 													description={task.description}
 													points={task.points}

@@ -12,6 +12,7 @@ export const taskSchema = z.object({
 	id: z.string().default('0'),
 	isCompleted: z.enum(['true', 'false']).default('false'),
 	isArchived: z.enum(['true', 'false']).default('false'),
+	completedAt: z.date().optional(),
 });
 export const registerSchema = z
 	.object({
