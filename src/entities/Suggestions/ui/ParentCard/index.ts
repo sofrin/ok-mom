@@ -1,0 +1,1 @@
+export { ParentGiftCard } from './ParentSuggestCard';

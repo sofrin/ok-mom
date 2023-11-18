@@ -10,7 +10,7 @@ import {
 	Typography,
 } from '@mui/material';
 import { useAppDispatch } from 'shared/model/hooks';
-import { addGift } from 'entities/Gifts/model/giftsSlice';
+import { addGift, removeRedeemedGift } from 'entities/Gifts/model/giftsSlice';
 import { removeSuggestion } from 'entities/Suggestions/model/suggestionSlice';
 type Props = {
 	id: string;
@@ -18,15 +18,33 @@ type Props = {
 	price: number;
 	description: string;
 	image?: string;
+	redeemedGift?: boolean;
+	gift?: boolean;
 };
 
-export const ParentSuggestCard = ({
+export const ParentGiftCard = ({
 	title,
 	price,
 	description,
 	id,
 	image,
+	redeemedGift,
+	gift,
 }: Props) => {
+	const onClickSuccess = () => {
+		if (redeemedGift) {
+			dispatch(removeRedeemedGift(id));
+		} else {
+			dispatch(addGift(id));
+		}
+	};
+	const onClickCancel = () => {
+		if (redeemedGift) {
+			dispatch(removeRedeemedGift(id));
+		} else {
+			dispatch(removeSuggestion(id));
+		}
+	};
 	const dispatch = useAppDispatch();
 	return (
 		<Card sx={{ width: '400px', borderRadius: '10px', marginBottom: '5px' }}>
@@ -76,20 +94,16 @@ export const ParentSuggestCard = ({
 					<Button
 						variant='contained'
 						color='success'
-						onClick={() => {
-							dispatch(addGift({ title, price, description, id, image }));
-						}}
+						onClick={() => onClickSuccess()}
 					>
-						Принять
+						{redeemedGift ? 'Выполнено' : gift ? 'Редактировать' : 'Принять'}
 					</Button>
 					<Button
 						variant='contained'
 						color='error'
-						onClick={() => {
-							dispatch(removeSuggestion({ id }));
-						}}
+						onClick={() => onClickCancel()}
 					>
-						Отклонить
+						{redeemedGift ? 'Отменить' : gift ? 'Удалить' : 'Отклонить'}
 					</Button>
 				</CardActions>
 			</CardContent>

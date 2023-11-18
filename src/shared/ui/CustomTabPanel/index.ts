@@ -1,0 +1,1 @@
+export { CustomTabPanel } from "./CustomTabPanel";

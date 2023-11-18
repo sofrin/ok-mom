@@ -9,7 +9,7 @@ import { Gift } from '../model/types';
 import Chip from '@mui/material/Chip';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { useAppDispatch } from 'shared/model/hooks';
-import { removeGift } from '../model/giftsSlice';
+import { addRedeemedGift, decrementBalance } from '../model/giftsSlice';
 
 export const ChildGiftItem = ({
 	id,
@@ -18,6 +18,10 @@ export const ChildGiftItem = ({
 	price,
 	image,
 }: Gift): JSX.Element => {
+	const onClickBuy = () => {
+		dispatch(addRedeemedGift({ id, title, description, price, image }));
+		dispatch(decrementBalance(price));
+	};
 	const dispatch = useAppDispatch();
 	return (
 		<Card sx={{ width: 345, borderRadius: '10px', marginBottom: '5px' }}>
@@ -40,7 +44,7 @@ export const ChildGiftItem = ({
 				>
 					{description}
 				</Typography>
-				<CardActionArea onClick={() => dispatch(removeGift(id))}>
+				<CardActionArea onClick={() => onClickBuy()}>
 					<Chip
 						icon={<CurrencyBitcoinIcon />}
 						label={price}

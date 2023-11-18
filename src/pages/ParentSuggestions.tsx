@@ -1,6 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import { selectSuggestions } from 'entities/Suggestions/model/suggestionSlice';
-import { ParentSuggestCard } from 'entities/Suggestions/ui/ParentSuggestCard/ParentSuggestCard';
+import { ParentGiftCard } from 'entities/Suggestions/ui/ParentCard';
 import { useAppSelector } from 'shared/model/hooks';
 
 export const ParentSuggestions = () => {
@@ -35,11 +35,15 @@ export const ParentSuggestions = () => {
 						spacing={2}
 						sx={{
 							padding: '10px',
+							height: '70vh',
+							overflow: 'auto',
+							width: '60vw',
+							justifyContent: 'center',
 						}}
 					>
 						{suggestions.map((suggestion) => (
 							<Grid item>
-								<ParentSuggestCard
+								<ParentGiftCard
 									key={suggestion.id}
 									id={suggestion.id}
 									title={suggestion.title}

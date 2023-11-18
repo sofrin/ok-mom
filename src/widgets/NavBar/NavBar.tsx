@@ -26,7 +26,7 @@ const parentLinks = [
 		icon: <PeopleIcon />,
 	},
 	{
-		to: '/Home/statistica',
+		to: '/Home/statistics',
 		text: 'Статистика',
 		icon: <BarChartIcon />,
 	},
@@ -75,11 +75,18 @@ export const NavBar = (
 			<NavLink
 				key={link.to}
 				to={link.to}
-				className={({ isActive }) =>
-					isActive ? 'text-blue-800 font-bold' : ''
-				}
+				className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
 			>
-				<ListItemButton>
+				<ListItemButton
+					sx={[
+						{
+							'&:hover': {
+								color: 'white',
+								background: 'lightblue',
+							},
+						},
+					]}
+				>
 					<ListItemIcon>{link.icon}</ListItemIcon>
 					<ListItemText primary={link.text} />
 				</ListItemButton>
