@@ -13,6 +13,7 @@ import { ChildTasks } from 'pages/ChildTasks';
 import { ChildSuggestions } from 'pages/ChildSuggestions';
 import { ChildHistory } from 'pages/ChildHistory';
 import { ChildGifts } from 'pages/ChildGifts';
+import { ParentSuggestions } from 'pages/ParentSuggestions';
 
 function App() {
 	return (
@@ -40,6 +41,10 @@ function App() {
 				<Route
 					path='/Home/tasks/:id'
 					element={<FullTask />}
+				/>
+				<Route
+					path='/Home/suggestions'
+					element={<ParentSuggestions />}
 				/>
 				<Route
 					path='*'

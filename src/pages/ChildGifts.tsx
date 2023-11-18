@@ -1,5 +1,5 @@
 import { Grid, Paper, Box, Typography } from '@mui/material';
-import { selectBalance, selectGifts } from 'entities/Gifts/model/GiftsSlice';
+import { selectBalance, selectGifts } from 'entities/Gifts/model/giftsSlice';
 import { ChildGiftItem } from 'entities/Gifts/ui/ChildGiftItem';
 import { useAppSelector } from 'shared/model/hooks';
 

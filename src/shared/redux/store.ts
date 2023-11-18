@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { taskReducer } from 'entities/CardTask/model/taskSlice';
-import { giftReducer } from 'entities/Gifts/model/GiftsSlice';
+import { giftReducer } from 'entities/Gifts/model/giftsSlice';
+import { suggestionsReducer } from 'entities/Suggestions/model/suggestionSlice';
 
 import { authReducer } from 'features/authentication/model/authSlice';
 
@@ -12,6 +13,7 @@ const store = configureStore({
 		auth: authReducer,
 		task: taskReducer,
 		gift: giftReducer,
+		suggestions: suggestionsReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(api.middleware),
