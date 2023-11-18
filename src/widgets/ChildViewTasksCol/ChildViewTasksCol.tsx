@@ -45,6 +45,8 @@ export const ChildViewTasksCol = ({ tasksList, colTitle }: Props) => {
 								flexDirection: 'column',
 								height: 700,
 								padding: 2,
+								overflowY: 'auto',
+								overflowX: 'hidden',
 							}}
 						>
 							<Grid
