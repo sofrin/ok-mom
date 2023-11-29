@@ -77,16 +77,7 @@ export const NavBar = (
 				to={link.to}
 				className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
 			>
-				<ListItemButton
-					sx={[
-						{
-							'&:hover': {
-								color: 'white',
-								background: 'lightblue',
-							},
-						},
-					]}
-				>
+				<ListItemButton>
 					<ListItemIcon>{link.icon}</ListItemIcon>
 					<ListItemText primary={link.text} />
 				</ListItemButton>
