@@ -82,7 +82,7 @@ export default function Chart({ tasks, child }: Props) {
 								...theme.typography.body1,
 							}}
 						>
-							Sales ($)
+							Баллы
 						</Label>
 					</YAxis>
 					<Line

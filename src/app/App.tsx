@@ -17,6 +17,10 @@ import { ParentSuggestions } from 'pages/ParentSuggestions';
 import { ParentGifts } from 'pages/ParentGifts';
 import { ParentChildren } from 'pages/ParentChildren';
 import { ParentStatistics } from 'pages/ParentStatistics';
+import { ParentSchedule } from 'pages/ParentSchedule';
+import { tasksApi } from 'entities/CardTask/api/tasksApi';
+
+tasksApi.endpoints.getTasks.initiate('');
 
 function App() {
 	return (
@@ -52,6 +56,10 @@ function App() {
 				<Route
 					path='/Home/statistics'
 					element={<ParentStatistics />}
+				/>
+				<Route
+					path='/Home/schedule'
+					element={<ParentSchedule />}
 				/>
 				<Route
 					path='/Home/gifts'

@@ -10,9 +10,16 @@ import {
 	Typography,
 } from '@mui/material';
 import { useAppDispatch } from 'shared/model/hooks';
-import { addGift, removeRedeemedGift } from 'entities/Gifts/model/giftsSlice';
+import {
+	addGift,
+	incrementBalance,
+	removeGift,
+	removeRedeemedGift,
+} from 'entities/Gifts/model/giftsSlice';
 import { removeSuggestion } from 'entities/Suggestions/model/suggestionSlice';
+
 type Props = {
+	setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 	id: string;
 	title: string;
 	price: number;
@@ -35,78 +42,90 @@ export const ParentGiftCard = ({
 		if (redeemedGift) {
 			dispatch(removeRedeemedGift(id));
 		} else {
-			dispatch(addGift(id));
+			dispatch(addGift({ id, title, price, description, image }));
+			dispatch(removeSuggestion(id));
 		}
 	};
 	const onClickCancel = () => {
 		if (redeemedGift) {
 			dispatch(removeRedeemedGift(id));
+			dispatch(incrementBalance(price));
+		} else if (gift) {
+			dispatch(removeGift(id));
 		} else {
 			dispatch(removeSuggestion(id));
 		}
 	};
 	const dispatch = useAppDispatch();
 	return (
-		<Card sx={{ width: '400px', borderRadius: '10px', marginBottom: '5px' }}>
-			<Grid
-				container
-				sx={{ padding: '10px' }}
-				direction='row'
-				justifyContent='space-between'
-				alignItems='center'
-			>
-				<Typography
-					variant='h5'
-					sx={{ fontWeight: 'bold', maxWidth: '260px' }}
+		<>
+			<Card sx={{ width: '400px', borderRadius: '10px', marginBottom: '5px' }}>
+				<Grid
+					container
+					sx={{ padding: '10px' }}
+					direction='row'
+					justifyContent='space-between'
+					alignItems='center'
 				>
-					{title}
-				</Typography>
+					<Typography
+						variant='h5'
+						sx={{ fontWeight: 'bold', maxWidth: '260px' }}
+					>
+						{title}
+					</Typography>
 
-				<Chip
-					icon={<CurrencyBitcoinIcon />}
-					label={price}
-				/>
-			</Grid>
+					<Chip
+						icon={<CurrencyBitcoinIcon />}
+						label={price}
+					/>
+				</Grid>
 
-			<CardMedia
-				component='img'
-				sx={{
-					height: 100,
-					objectFit: 'fill',
-				}}
-				image={image ? image : 'https://source.unsplash.com/random'}
-				alt='img'
-			/>
-			<CardContent sx={{ width: '100%' }}>
-				<Typography
-					variant='body2'
-					sx={{ fontSize: 20 }}
-				>
-					{description}
-				</Typography>
-				<CardActions
+				<CardMedia
+					component='img'
 					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						padding: '10px 0px 0px 0px',
+						height: 100,
+						objectFit: 'fill',
 					}}
-				>
-					<Button
-						variant='contained'
-						color='success'
-						onClick={() => onClickSuccess()}
+					image={image ? image : 'https://source.unsplash.com/random'}
+					alt='img'
+				/>
+				<CardContent sx={{ width: '100%' }}>
+					<Typography
+						variant='body2'
+						sx={{ fontSize: 20 }}
 					>
-						{redeemedGift ? 'Выполнено' : gift ? 'Редактировать' : 'Принять'}
-					</Button>
-					<Button
-						variant='contained'
-						color='error'
-						onClick={() => onClickCancel()}
+						{description}
+					</Typography>
+					<CardActions
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							padding: '10px 0px 0px 0px',
+						}}
 					>
-						{redeemedGift ? 'Отменить' : gift ? 'Удалить' : 'Отклонить'}
-					</Button>
-				</CardActions>
-			</CardContent>
-		</Card>
+						{gift ? null : (
+							<Button
+								variant='contained'
+								color='success'
+								onClick={() => onClickSuccess()}
+							>
+								{redeemedGift
+									? 'Выполнено'
+									: gift
+									? 'Редактировать'
+									: 'Принять'}
+							</Button>
+						)}
+						<Button
+							variant='contained'
+							color='error'
+							onClick={() => onClickCancel()}
+						>
+							{redeemedGift ? 'Отменить' : gift ? 'Удалить' : 'Отклонить'}
+						</Button>
+					</CardActions>
+				</CardContent>
+			</Card>
+		</>
 	);
 };

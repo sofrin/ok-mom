@@ -8,6 +8,8 @@ import {
 import React from 'react';
 import { progressValue } from '../model/ProgressAlg';
 import { taskSchema } from 'shared/types';
+import { selectGoal } from 'entities/Gifts/model/giftsSlice';
+import { useAppSelector } from 'shared/model/hooks';
 
 type Props = {
 	filteredTasks: taskSchema[];
@@ -15,6 +17,7 @@ type Props = {
 };
 
 export const ProgresItem = ({ filteredTasks, points }: Props) => {
+	const goal = useAppSelector(selectGoal);
 	return (
 		<Grid
 			item
@@ -40,7 +43,7 @@ export const ProgresItem = ({ filteredTasks, points }: Props) => {
 				{points ? (
 					<CircularProgress
 						variant='determinate'
-						value={progressValue(filteredTasks)}
+						value={progressValue(filteredTasks, goal)}
 					/>
 				) : (
 					<Skeleton
@@ -65,7 +68,7 @@ export const ProgresItem = ({ filteredTasks, points }: Props) => {
 						variant='caption'
 						component='div'
 						color='text.secondary'
-					>{`${Math.round(progressValue(filteredTasks))}%`}</Typography>
+					>{`${Math.round(progressValue(filteredTasks, goal))}%`}</Typography>
 				</Box>
 			</Box>
 		</Grid>

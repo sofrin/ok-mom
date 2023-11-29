@@ -3,11 +3,13 @@ import { Gift } from './types';
 import { RootState } from 'shared/redux/store';
 
 type giftSliceType = {
+	goal: number;
 	items: Gift[];
 	balance: number;
 	redeemedGifts: Gift[];
 };
 const initialState: giftSliceType = {
+	goal: 1000,
 	balance: 1000,
 	items: [
 		{
@@ -57,8 +59,22 @@ const giftSlice = createSlice({
 		addGift(state, action) {
 			state.items.push(action.payload);
 		},
+		updateGift(state, action) {
+			const item = state.redeemedGifts.find(
+				(item) => item.id === action.payload.id,
+			);
+			if (!item) return;
+			item.title = action.payload.title;
+			item.price = action.payload.price;
+			item.description = action.payload.description;
+			item.image = action.payload.image;
+		},
 		addRedeemedGift(state, action) {
+			if (state.redeemedGifts.find((item) => item.id === action.payload.id)) {
+				return;
+			}
 			state.redeemedGifts.push(action.payload);
+			state.balance -= action.payload.price;
 		},
 		removeGift(state, action) {
 			state.items = state.items.filter((item) => item.id !== action.payload);
@@ -77,6 +93,9 @@ const giftSlice = createSlice({
 		setBalance(state, action) {
 			state.balance = action.payload;
 		},
+		setGoal(state, action) {
+			state.goal = action.payload;
+		},
 	},
 });
 
@@ -88,9 +107,12 @@ export const {
 	setBalance,
 	addRedeemedGift,
 	removeRedeemedGift,
+	updateGift,
+	setGoal,
 } = giftSlice.actions;
 export const giftReducer = giftSlice.reducer;
 export const selectGifts = (state: RootState) => state.gift.items;
 export const selectBalance = (state: RootState) => state.gift.balance;
+export const selectGoal = (state: RootState) => state.gift.goal;
 export const selectRedeemedGifts = (state: RootState) =>
 	state.gift.redeemedGifts;

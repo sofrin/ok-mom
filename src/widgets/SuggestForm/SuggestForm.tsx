@@ -1,53 +1,36 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { addGift } from 'entities/Gifts/model/GiftsSlice';
 import { Gift } from 'entities/Gifts/model/types';
-import { useCallback } from 'react';
-import {
-	FieldErrors,
-	UseFormHandleSubmit,
-	UseFormRegister,
-} from 'react-hook-form';
+import { addSuggestion } from 'entities/Suggestions/model/suggestionSlice';
+import { useSnackbar } from 'notistack';
+
 import { useAppDispatch } from 'shared/model/hooks';
+import { useForm } from 'react-hook-form';
+import { SuggestionSchema } from 'shared/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type Props = {
-	handleSubmit: UseFormHandleSubmit<
-		{
-			title: string;
-			description: string;
-			price: number;
-		},
-		undefined
-	>;
-	errors: FieldErrors<{
-		title: string;
-		description: string;
-		price: number;
-	}>;
-	register: UseFormRegister<{
-		title: string;
-		description: string;
-		price: number;
-	}>;
-};
-
-export const ChildSuggestForm = ({ handleSubmit, errors, register }: Props) => {
+export const SuggestForm = () => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<SuggestionSchema>({
+		resolver: zodResolver(SuggestionSchema),
+	});
+	const { enqueueSnackbar } = useSnackbar();
 	const dispatch = useAppDispatch();
-	const onSubmitHandler = useCallback(
-		({ title, description, price }: Partial<Gift>) => {
-			dispatch(
-				addGift({
-					title,
-					description,
-					price,
-				}),
-			);
-		},
-		[dispatch],
-	);
+
+	const onSubmit = (data: Partial<Gift>) => {
+		dispatch(addSuggestion(data));
+		enqueueSnackbar('Подарок успешно отправлен', { variant: 'success' });
+	};
+	const onErrors = () => {
+		console.log('errors', errors);
+		enqueueSnackbar('Что-то пошло не так', { variant: 'error' });
+	};
 	return (
 		<Box
 			component='form'
-			onSubmit={handleSubmit(onSubmitHandler)}
+			onSubmit={handleSubmit(onSubmit, onErrors)}
 			noValidate
 			sx={{ mt: 1, width: '500px' }}
 		>
@@ -56,6 +39,7 @@ export const ChildSuggestForm = ({ handleSubmit, errors, register }: Props) => {
 				sx={{ textAlign: 'center' }}
 			>
 				Предложить подарок
+				{errors.root?.message}
 			</Typography>
 			<TextField
 				margin='normal'
@@ -65,7 +49,7 @@ export const ChildSuggestForm = ({ handleSubmit, errors, register }: Props) => {
 				fullWidth
 				id='title'
 				label='Название'
-				{...register('title', { required: 'Поле обязательно' })}
+				{...register('title', { required: true, minLength: 3 })}
 			/>
 			<TextField
 				margin='normal'
@@ -76,7 +60,7 @@ export const ChildSuggestForm = ({ handleSubmit, errors, register }: Props) => {
 				fullWidth
 				id='description'
 				label='Описание'
-				{...register('description', { required: 'Поле обязательно' })}
+				{...register('description', { required: true, minLength: 3 })}
 			/>
 			<TextField
 				type='number'
@@ -87,9 +71,10 @@ export const ChildSuggestForm = ({ handleSubmit, errors, register }: Props) => {
 				fullWidth
 				id='price'
 				label='Цена'
-				{...register('price', { required: 'Поле обязательно' })}
+				{...register('price', { valueAsNumber: true })}
 			/>
 			<input type='file' />
+
 			<Button
 				type='submit'
 				fullWidth

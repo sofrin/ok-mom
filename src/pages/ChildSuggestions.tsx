@@ -1,20 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Grid, Paper } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { SuggestionSchema } from 'shared/types';
 
-import { ChildSuggestForm } from '../widgets/ChildSuggestForm/ChildSuggestForm';
+import { SuggestForm } from 'widgets/SuggestForm/SuggestForm';
 
 export const ChildSuggestions = () => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<SuggestionSchema>({
-		resolver: zodResolver(SuggestionSchema),
-		mode: 'onChange',
-	});
-
 	return (
 		<Grid
 			container
@@ -36,11 +24,7 @@ export const ChildSuggestions = () => {
 						justifyContent: 'center',
 					}}
 				>
-					<ChildSuggestForm
-						handleSubmit={handleSubmit}
-						errors={errors}
-						register={register}
-					/>
+					<SuggestForm />
 				</Paper>
 			</Grid>
 		</Grid>

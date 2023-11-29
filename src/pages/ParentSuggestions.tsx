@@ -35,7 +35,7 @@ export const ParentSuggestions = () => {
 						spacing={2}
 						sx={{
 							padding: '10px',
-							height: '70vh',
+							height: 'auto',
 							overflow: 'auto',
 							width: '60vw',
 							justifyContent: 'center',

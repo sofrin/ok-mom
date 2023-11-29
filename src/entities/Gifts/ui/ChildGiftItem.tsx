@@ -8,8 +8,9 @@ import {
 import { Gift } from '../model/types';
 import Chip from '@mui/material/Chip';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
-import { useAppDispatch } from 'shared/model/hooks';
-import { addRedeemedGift, decrementBalance } from '../model/giftsSlice';
+import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { addRedeemedGift, selectRedeemedGifts } from '../model/giftsSlice';
+import { useSnackbar } from 'notistack';
 
 export const ChildGiftItem = ({
 	id,
@@ -18,9 +19,13 @@ export const ChildGiftItem = ({
 	price,
 	image,
 }: Gift): JSX.Element => {
+	const reedeemedGifts = useAppSelector(selectRedeemedGifts);
+	const { enqueueSnackbar } = useSnackbar();
 	const onClickBuy = () => {
+		if (reedeemedGifts.some((gift) => gift.id === id)) {
+			return enqueueSnackbar('Такой подарок уже куплен', { variant: 'error' });
+		}
 		dispatch(addRedeemedGift({ id, title, description, price, image }));
-		dispatch(decrementBalance(price));
 	};
 	const dispatch = useAppDispatch();
 	return (

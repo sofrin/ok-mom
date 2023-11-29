@@ -1,4 +1,4 @@
-import { Grid, Paper, Tab, Tabs } from '@mui/material';
+import { Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 import {
 	selectGifts,
 	selectRedeemedGifts,
@@ -7,7 +7,7 @@ import { ParentGiftCard } from 'entities/Suggestions/ui/ParentCard';
 import { SyntheticEvent, useState } from 'react';
 import { useAppSelector } from 'shared/model/hooks';
 import { CustomTabPanel } from 'shared/ui/CustomTabPanel';
-
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 export const ParentGifts = () => {
 	const redeemedGifts = useAppSelector(selectRedeemedGifts);
 	const gifts = useAppSelector(selectGifts);
@@ -21,6 +21,7 @@ export const ParentGifts = () => {
 	const handleChange = (event: SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
+	const [parent] = useAutoAnimate();
 	return (
 		<Grid
 			container
@@ -58,6 +59,7 @@ export const ParentGifts = () => {
 					</Tabs>
 
 					<Grid
+						ref={parent}
 						container
 						spacing={2}
 						sx={{
@@ -75,8 +77,20 @@ export const ParentGifts = () => {
 							{/* {redeemedGifts && (
 								<Typography variant='h5'> Заказанные подарки: </Typography>
 							)} */}
+							{!redeemedGifts.length && (
+								<Typography
+									sx={{ padding: '20px' }}
+									align='center'
+									variant='h5'
+								>
+									Заказанных подарков нет
+								</Typography>
+							)}
 							{redeemedGifts.map((gift) => (
-								<Grid item>
+								<Grid
+									key={gift.id}
+									item
+								>
 									<ParentGiftCard
 										key={gift.id}
 										id={gift.id}
@@ -95,7 +109,10 @@ export const ParentGifts = () => {
 						>
 							{/* {gifts && <Typography variant='h5'> Подарки: </Typography>} */}
 							{gifts.map((gift) => (
-								<Grid item>
+								<Grid
+									key={gift.id}
+									item
+								>
 									<ParentGiftCard
 										key={gift.id}
 										id={gift.id}

@@ -7,6 +7,6 @@ export const points = (filteredTasks: taskSchema[]) => {
 	);
 };
 
-export const progressValue = (filteredTasks: taskSchema[]) => {
-	return points(filteredTasks) * 0.1;
+export const progressValue = (filteredTasks: taskSchema[], goal: number) => {
+	return points(filteredTasks) / goal;
 };

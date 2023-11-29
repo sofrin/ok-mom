@@ -1,10 +1,11 @@
 import { Grid, Paper } from '@mui/material';
-import { selectBalance } from 'entities/Gifts/model/giftsSlice';
+import { selectBalance, selectGoal } from 'entities/Gifts/model/giftsSlice';
 import { useAppSelector } from 'shared/model/hooks';
 
 import { ChildrenCard } from 'entities/ChildrenCard';
 export const ParentChildren = () => {
 	const balance = useAppSelector(selectBalance);
+	const goal = useAppSelector(selectGoal);
 	const children = ['Ребёнок 1', 'Ребёнок 2'];
 	return (
 		<Grid
@@ -37,6 +38,7 @@ export const ParentChildren = () => {
 						{children &&
 							children.map((child, index) => (
 								<ChildrenCard
+									goal={goal}
 									key={index}
 									index={index}
 									child={child}

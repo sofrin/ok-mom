@@ -1,5 +1,5 @@
-import { Grid, Paper } from '@mui/material';
-import { filteredTasks } from 'entities/CardTask/model/filterTasks';
+import { Grid, Paper, Typography } from '@mui/material';
+import { childArchievedTasks } from 'entities/CardTask/model/filterTasks';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import Chart from 'entities/Chart/Chart';
 import { useEffect } from 'react';
@@ -14,8 +14,8 @@ export const ParentStatistics = () => {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
-	const firstChildTasks = filteredTasks(tasks, 'Ребёнок 1');
-	const secondChildTasks = filteredTasks(tasks, 'Ребёнок 2');
+	const firstChildTasks = childArchievedTasks(tasks, 'Ребёнок 1');
+	const secondChildTasks = childArchievedTasks(tasks, 'Ребёнок 2');
 	const children = [
 		{ name: 'Ребёнок 1', tasks: firstChildTasks },
 		{ name: 'Ребёнок 2', tasks: secondChildTasks },
@@ -57,11 +57,21 @@ export const ParentStatistics = () => {
 									sx={{ width: '1000px', height: '300px' }}
 									item
 								>
-									<Chart
-										key={child.name}
-										tasks={child.tasks}
-										child={child.name}
-									/>
+									{child.tasks.length == 0 ? (
+										<Typography
+											variant='h5'
+											align='center'
+											sx={{ padding: '20px' }}
+										>
+											Нет выполненных задач
+										</Typography>
+									) : (
+										<Chart
+											key={child.name}
+											tasks={child.tasks}
+											child={child.name}
+										/>
+									)}
 								</Grid>
 							))}
 					</Grid>

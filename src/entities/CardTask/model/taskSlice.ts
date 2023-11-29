@@ -8,7 +8,7 @@ export const getTasksThunk = createAsyncThunk<
 	void,
 	void | string,
 	{ state: RootState }
->('task/getTasks', async (str, { dispatch }) => {
+>('task/getTasks', async (str: void | string, { dispatch }) => {
 	try {
 		await dispatch(tasksApi.endpoints.getTasks.initiate(str)).unwrap();
 	} catch (error) {

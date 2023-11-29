@@ -21,7 +21,6 @@ import {
 	deleteTaskThunk,
 	removeTask,
 	selectDraggableTask,
-	selectTasks,
 	setDraggableTask,
 	updateTaskThunk,
 } from '../model/taskSlice';
@@ -40,7 +39,6 @@ export const CardTaskList = ({
 	completed = false,
 	archieved = false,
 }: Props) => {
-	const tasks = useAppSelector(selectTasks);
 	const draggableTask = useAppSelector(selectDraggableTask);
 	const dispatch = useAppDispatch();
 	// const isLoading = useAppSelector(selectLoading);
@@ -119,10 +117,10 @@ export const CardTaskList = ({
 						<Fragment key={obj.id}>
 							<ListItem
 								draggable
-								onDragOver={(e) => {
+								onDragOver={(e: React.DragEvent<HTMLLIElement>) => {
 									dragOverHandler(e);
 								}}
-								onDragStart={(e) => {
+								onDragStart={(e: React.DragEvent<HTMLLIElement>) => {
 									dragStartHandler(e, obj);
 								}}
 								disablePadding
@@ -132,7 +130,6 @@ export const CardTaskList = ({
 									<Link
 										className='flex items-center flex-1'
 										to={`/Home/tasks/${obj.id}`}
-										state={{ tasks: tasks }}
 									>
 										<ListItemIcon sx={{ p: 0, minWidth: 20 }}>
 											{priorityCircle(obj.priority)}
