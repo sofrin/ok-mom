@@ -19,6 +19,7 @@ import { ParentChildren } from 'pages/ParentChildren';
 import { ParentStatistics } from 'pages/ParentStatistics';
 import { ParentSchedule } from 'pages/ParentSchedule';
 import { tasksApi } from 'entities/CardTask/api/tasksApi';
+import { ChildSchedule } from 'pages/ChildSchedule';
 
 tasksApi.endpoints.getTasks.initiate('');
 
@@ -81,6 +82,10 @@ function App() {
 				<Route
 					path='/child/tasks'
 					element={<ChildTasks />}
+				/>
+				<Route
+					path='/child/schedule'
+					element={<ChildSchedule />}
 				/>
 				<Route
 					path='/child/suggestions'

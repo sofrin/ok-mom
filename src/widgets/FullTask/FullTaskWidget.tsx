@@ -46,7 +46,7 @@ const FullTask: React.FC = () => {
 					.catch((error) => enqueueSnackbar(error, { variant: 'error' }));
 		}
 		fetchTask();
-	}, []);
+	}, [dispatch, id, enqueueSnackbar]);
 	if (!singleTask) {
 		return <div>Загрузка...</div>;
 	}

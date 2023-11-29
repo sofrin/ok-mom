@@ -1,14 +1,39 @@
-import { Grid } from '@mui/material';
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Grid,
+} from '@mui/material';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import { priorityColor } from 'widgets/ChildViewTaskCard/model/priorityColor';
 
 import Scheduler from 'react-mui-scheduler';
+import { filteredTasks } from 'entities/CardTask/model/filterTasks';
 
-export const ParentSchedule = () => {
+type Event = {
+	taskType: 'daily' | 'todo' | 'habit';
+	points: number;
+	priority: 'low' | 'mid' | 'high' | 'critical';
+	description: string;
+	id: string;
+	label: string;
+	groupLabel: string;
+	user: string;
+	color: '#e0e0e0' | '#7986cb' | '#9c27b0' | '#e57373' | undefined;
+	startHour: string;
+	endHour: string;
+	date: string | undefined;
+	createdAt: Date | undefined;
+	createdBy: string;
+};
+export const ChildSchedule = () => {
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		const fetchTasks = async () => {
@@ -17,10 +42,11 @@ export const ParentSchedule = () => {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
+	const childTasks = filteredTasks(tasks, 'Ребёнок 1');
 
 	console.log(tasks);
-
-	const navigate = useNavigate();
+	const [open, setOpen] = useState(false);
+	const [item, setItem] = useState({} as Event);
 	const [state] = useState({
 		options: {
 			transitionMode: 'zoom', // or fade
@@ -46,21 +72,13 @@ export const ParentSchedule = () => {
 			showDatePicker: true,
 		},
 	});
-	type Event = {
-		id: string;
-		label: string;
-		groupLabel: string;
-		user: string;
-		color: '#e0e0e0' | '#7986cb' | '#9c27b0' | '#e57373' | undefined;
-		startHour: string;
-		endHour: string;
-		date: string | undefined;
-		createdAt: Date | undefined;
-		createdBy: string;
-	};
 
-	const events = tasks.map((task) => {
+	const events = childTasks.map((task) => {
 		return {
+			taskType: task.taskType,
+			points: task.points,
+			priority: task.priority,
+			description: task.description,
 			id: task.id,
 			label: task.title,
 			groupLabel: task.child,
@@ -83,7 +101,8 @@ export const ParentSchedule = () => {
 	};
 
 	const handleEventClick = (event: React.MouseEvent, item: Event) => {
-		navigate(`/Home/tasks/${item.id}`);
+		setItem(item);
+		setOpen(true);
 	};
 
 	const handleEventsChange = (item: Event) => {
@@ -105,6 +124,21 @@ export const ParentSchedule = () => {
 					width: 'fit-content',
 				}}
 			>
+				<Dialog
+					open={open}
+					onClose={() => setOpen(false)}
+				>
+					<DialogTitle>{item.label}</DialogTitle>
+					<DialogContent>
+						<DialogContentText>Описание: {item.description}</DialogContentText>
+						<DialogContentText>Награда: {item.points} баллов</DialogContentText>
+						<DialogContentText> Дата: {item.date}</DialogContentText>
+						<DialogContentText> Приоритет: {item.priority}</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setOpen(false)}>Close</Button>
+					</DialogActions>
+				</Dialog>
 				{tasks.length == 0 ? (
 					'Загрузка...'
 				) : (
