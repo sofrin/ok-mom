@@ -74,20 +74,24 @@ export const ParentSchedule = () => {
 		};
 	});
 
-	const handleCellClick = (event, row, day) => {
-		// Do something...
+	const handleCellClick = (
+		event: React.MouseEvent,
+		row: number,
+		day: string,
+	) => {
+		console.log('handleCellClick', event, row, day);
 	};
 
-	const handleEventClick = (event, item: Event) => {
+	const handleEventClick = (event: React.MouseEvent, item: Event) => {
 		navigate(`/Home/tasks/${item.id}`);
 	};
 
 	const handleEventsChange = (item: Event) => {
-		// Do something...
+		console.log(item);
 	};
 
 	const handleAlertCloseButtonClicked = (item: Event) => {
-		// Do something...
+		console.log(item);
 	};
 
 	return (

@@ -1,17 +1,17 @@
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import {
-	Card,
 	Box,
+	Card,
 	CardActionArea,
+	CardContent,
+	CardMedia,
+	Chip,
+	Collapse,
 	Grid,
 	Typography,
-	Chip,
-	CardMedia,
-	Collapse,
-	CardContent,
 } from '@mui/material';
 import { useState } from 'react';
 import { taskSchema } from 'shared/types';
-import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 
 export const HistoryChildCard = ({
 	title,

@@ -1,22 +1,23 @@
-import React, { DragEvent, Fragment } from 'react';
-import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import UndoIcon from '@mui/icons-material/Undo';
 import {
 	ListItem,
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { useSnackbar } from 'notistack';
-import { Link } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DoneIcon from '@mui/icons-material/Done';
-import UndoIcon from '@mui/icons-material/Undo';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { taskSchema } from 'shared/types';
-import { priorityCircle } from 'features/PriorityCircle/PriorityCircle';
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import { priorityCircle } from 'features/PriorityCircle/PriorityCircle';
+import { useSnackbar } from 'notistack';
+import React, { DragEvent, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { taskSchema } from 'shared/types';
 import {
 	deleteTaskThunk,
 	removeTask,
@@ -24,7 +25,6 @@ import {
 	setDraggableTask,
 	updateTaskThunk,
 } from '../model/taskSlice';
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 
 type Props = {
 	child: string;

@@ -2,25 +2,23 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Landing } from 'pages/Landing';
 
-import { SignUpWidget } from 'widgets/SignUpWidget';
-import { ParentLayout } from 'widgets/ParentLayout';
+import { ChildGifts } from 'pages/ChildGifts';
+import { ChildHistory } from 'pages/ChildHistory';
+import { ChildSchedule } from 'pages/ChildSchedule';
+import { ChildSuggestions } from 'pages/ChildSuggestions';
+import { ChildTasks } from 'pages/ChildTasks';
 import Home from 'pages/Home';
+import { ParentChildren } from 'pages/ParentChildren';
+import { ParentGifts } from 'pages/ParentGifts';
+import { ParentSchedule } from 'pages/ParentSchedule';
+import { ParentStatistics } from 'pages/ParentStatistics';
+import { ParentSuggestions } from 'pages/ParentSuggestions';
+import { ChildLayout } from 'widgets/ChildLayout';
 import FullTask from 'widgets/FullTask';
 import { NotFound } from 'widgets/NotFound';
+import { ParentLayout } from 'widgets/ParentLayout';
 import { SignInWidget } from 'widgets/SignInWidget';
-import { ChildLayout } from 'widgets/ChildLayout';
-import { ChildTasks } from 'pages/ChildTasks';
-import { ChildSuggestions } from 'pages/ChildSuggestions';
-import { ChildHistory } from 'pages/ChildHistory';
-import { ChildGifts } from 'pages/ChildGifts';
-import { ParentSuggestions } from 'pages/ParentSuggestions';
-import { ParentGifts } from 'pages/ParentGifts';
-import { ParentChildren } from 'pages/ParentChildren';
-import { ParentStatistics } from 'pages/ParentStatistics';
-import { ParentSchedule } from 'pages/ParentSchedule';
-import { tasksApi } from 'entities/CardTask/api/tasksApi';
-
-tasksApi.endpoints.getTasks.initiate('');
+import { SignUpWidget } from 'widgets/SignUpWidget';
 
 function App() {
 	return (
@@ -81,6 +79,10 @@ function App() {
 				<Route
 					path='/child/tasks'
 					element={<ChildTasks />}
+				/>
+				<Route
+					path='/child/schedule'
+					element={<ChildSchedule />}
 				/>
 				<Route
 					path='/child/suggestions'

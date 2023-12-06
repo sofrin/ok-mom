@@ -1,13 +1,13 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 import {
-	selectGifts,
-	selectRedeemedGifts,
+  selectGifts,
+  selectRedeemedGifts,
 } from 'entities/Gifts/model/giftsSlice';
 import { ParentGiftCard } from 'entities/Suggestions/ui/ParentCard';
 import { SyntheticEvent, useState } from 'react';
 import { useAppSelector } from 'shared/model/hooks';
 import { CustomTabPanel } from 'shared/ui/CustomTabPanel';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 export const ParentGifts = () => {
 	const redeemedGifts = useAppSelector(selectRedeemedGifts);
 	const gifts = useAppSelector(selectGifts);
