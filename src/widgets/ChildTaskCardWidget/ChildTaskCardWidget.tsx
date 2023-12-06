@@ -12,9 +12,7 @@ import { Item } from 'shared/ui/Item/Item';
 import { CardTaskList } from 'entities/CardTask/ui/CardTaskList';
 import { filteredTasks } from 'entities/CardTask/model/filterTasks';
 import { useAppSelector } from 'shared/model/hooks';
-import { tasksApi } from 'entities/CardTask/api/tasksApi';
-import { createSelector } from '@reduxjs/toolkit';
-import { taskSchema } from 'shared/types';
+import { selectTasks } from 'entities/CardTask/model/taskSlice';
 
 type Props = {
 	child: string;
@@ -27,16 +25,7 @@ export const ChildTaskCardWidget = ({
 	setOpen,
 	setdefaultChild,
 }: Props) => {
-	const selectTasksResult = tasksApi.endpoints.getTasks.select('');
-
-	const emptyTasks: taskSchema[] = [];
-
-	const selectAllTasks = createSelector(
-		selectTasksResult,
-		(usersResult) => usersResult?.data ?? emptyTasks,
-	);
-
-	const tasks = useAppSelector(selectAllTasks);
+	const tasks = useAppSelector(selectTasks);
 	const handleClickOpen = () => {
 		setOpen(true);
 		setdefaultChild(child);

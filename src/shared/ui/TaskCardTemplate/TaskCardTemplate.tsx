@@ -3,7 +3,6 @@ import { Grid, Paper } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import {
-	changeDraggableTask,
 	selectDraggableTask,
 	setDraggableTask,
 } from '../../../entities/CardTask/model/taskSlice';
@@ -26,11 +25,35 @@ export const TaskCardTemplate = ({ child, children }: Props) => {
 	async function dropHandler(e: DragEvent) {
 		e.preventDefault();
 		console.log(`draggableTask`, draggableTask);
-		dispatch(changeDraggableTask(child));
+		let chandedObj = {};
+		switch (child) {
+			case 'Выполненые задания':
+				chandedObj = {
+					...draggableTask,
+					isArchived: 'false',
+					isCompleted: 'true',
+				};
+				break;
+			case 'Задания в архиве':
+				chandedObj = {
+					...draggableTask,
+					isArchived: 'true',
+					isCompleted: 'true',
+				};
+				break;
+			default:
+				chandedObj = {
+					...draggableTask,
+					child: child,
+					isArchived: 'false',
+					isCompleted: 'false',
+				};
+				break;
+		}
 		dispatch(removeTask(draggableTask?.id));
 		console.log(draggableTask);
-		dispatch(addTask(draggableTask));
-		dispatch(updateTaskThunk(draggableTask as taskSchema))
+		dispatch(addTask(chandedObj));
+		dispatch(updateTaskThunk(chandedObj as taskSchema))
 			.unwrap()
 			.then(() => {
 				dispatch(setDraggableTask(null));
