@@ -1,5 +1,7 @@
+import { api } from 'shared/api/baseApi';
+
 import { LoginSchema, registerSchema } from 'shared/types';
-import { api } from '../../../shared/api/baseApi';
+
 import { UserResponse } from './types';
 import { SESSION_TAG } from 'shared/api/tags';
 
