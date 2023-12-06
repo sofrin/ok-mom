@@ -14,8 +14,8 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import { priorityColor } from 'widgets/ChildViewTaskCard/model/priorityColor';
 
-import Scheduler from 'react-mui-scheduler';
 import { filteredTasks } from 'entities/CardTask/model/filterTasks';
+import Scheduler from 'react-mui-scheduler';
 
 type Event = {
 	taskType: 'daily' | 'todo' | 'habit';

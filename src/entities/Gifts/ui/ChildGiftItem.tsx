@@ -1,16 +1,16 @@
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import {
 	Card,
+	CardActionArea,
 	CardContent,
 	CardMedia,
 	Typography,
-	CardActionArea,
 } from '@mui/material';
-import { Gift } from '../model/types';
 import Chip from '@mui/material/Chip';
-import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import { addRedeemedGift, selectRedeemedGifts } from '../model/giftsSlice';
-import { useSnackbar } from 'notistack';
+import { Gift } from '../model/types';
 
 export const ChildGiftItem = ({
 	id,

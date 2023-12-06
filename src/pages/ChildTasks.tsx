@@ -1,6 +1,6 @@
-import React from 'react';
 import { Grid } from '@mui/material';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import { GetFilteredChildTasks } from 'widgets/ChildViewTaskCard/model/filters';
 import { ChildViewTasksCol } from 'widgets/ChildViewTasksCol';

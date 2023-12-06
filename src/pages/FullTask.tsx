@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+	FormControlLabel,
+	Grid,
+	MenuItem,
+	Paper,
+	Select,
+	Switch,
+} from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import {
-	Select,
-	MenuItem,
-	FormControlLabel,
-	Switch,
-	Paper,
-	Grid,
-} from '@mui/material';
+import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-import { taskSchema } from '../Components/AddTaskDialog';
-import Box from '@mui/material/Box';
+import { taskSchema } from 'shared/types';
 
 export const FullTask: React.FC = () => {
 	const {

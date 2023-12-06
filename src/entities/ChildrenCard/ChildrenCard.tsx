@@ -1,19 +1,19 @@
+import DoneIcon from '@mui/icons-material/Done';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
-	Grid,
-	Card,
-	CardHeader,
 	Avatar,
-	IconButton,
+	Card,
 	CardContent,
-	TextField,
+	CardHeader,
 	Chip,
+	Grid,
+	IconButton,
+	TextField,
 	Typography,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { setBalance, setGoal } from 'entities/Gifts/model/giftsSlice';
 import { useState } from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DoneIcon from '@mui/icons-material/Done';
 import { useAppDispatch } from 'shared/model/hooks';
 
 type Props = {

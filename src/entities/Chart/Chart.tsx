@@ -1,15 +1,14 @@
 import { useTheme } from '@mui/material/styles';
-
+import Typography from '@mui/material/Typography';
 import {
-	LineChart,
+	Label,
 	Line,
+	LineChart,
+	ResponsiveContainer,
 	XAxis,
 	YAxis,
-	Label,
-	ResponsiveContainer,
 } from 'recharts';
 import { taskSchema } from 'shared/types';
-import Typography from '@mui/material/Typography';
 
 function createData(time: string, amount?: number) {
 	return { time, amount };

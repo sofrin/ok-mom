@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { tasksApi } from '../api/tasksApi';
-import { RootState } from 'shared/redux/store';
 import { isFetchBaseQueryError } from 'shared/api/isFetchBaseQueryError';
+import { RootState } from 'shared/redux/store';
 import { taskSchema } from 'shared/types';
+import { tasksApi } from '../api/tasksApi';
 
 export const getTasksThunk = createAsyncThunk<
 	void,
