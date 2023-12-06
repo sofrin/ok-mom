@@ -25,6 +25,10 @@ import {
 	setDraggableTask,
 	updateTaskThunk,
 } from '../model/taskSlice';
+import {
+	decrementBalance,
+	incrementBalance,
+} from 'entities/Gifts/model/giftsSlice';
 
 type Props = {
 	child: string;
@@ -62,6 +66,12 @@ export const CardTaskList = ({
 		value: boolean,
 		obj: taskSchema,
 	) => {
+		if (string === 'isCompleted' && value === true) {
+			dispatch(incrementBalance(obj.points));
+		}
+		if (string === 'isCompleted' && value === false) {
+			dispatch(decrementBalance(obj.points));
+		}
 		console.log(obj);
 		const chandedObj = { ...obj, [string]: String(value) };
 		dispatch(updateTaskThunk(chandedObj))
