@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Landing } from 'pages/Landing';
 
-import { tasksApi } from 'entities/CardTask/api/tasksApi';
 import { ChildGifts } from 'pages/ChildGifts';
 import { ChildHistory } from 'pages/ChildHistory';
 import { ChildSchedule } from 'pages/ChildSchedule';
@@ -20,8 +19,6 @@ import { NotFound } from 'widgets/NotFound';
 import { ParentLayout } from 'widgets/ParentLayout';
 import { SignInWidget } from 'widgets/SignInWidget';
 import { SignUpWidget } from 'widgets/SignUpWidget';
-
-tasksApi.endpoints.getTasks.initiate('');
 
 function App() {
 	return (

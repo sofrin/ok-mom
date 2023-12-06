@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import '../index.css';
 import store from '../shared/redux/store.js';
 import App from './App.js';
+import { tasksApi } from 'entities/CardTask/api/tasksApi';
+
+store.dispatch(tasksApi.endpoints.getTasks.initiate(''));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
