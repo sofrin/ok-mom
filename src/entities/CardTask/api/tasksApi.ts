@@ -33,7 +33,7 @@ export const tasksApi = api.injectEndpoints({
 			query: (body) => ({
 				url: `https://64f8d138824680fd21801557.mockapi.io/tasks/${body.id}`,
 				method: 'PUT',
-				body: body,
+				body,
 			}),
 			invalidatesTags: [{ type: TASK_TAG, id: 'LIST' }],
 			async onQueryStarted(body, { dispatch, queryFulfilled }) {
