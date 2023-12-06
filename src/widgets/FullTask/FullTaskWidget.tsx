@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Paper, Grid, Switch, FormControlLabel } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
-
 import Box from '@mui/material/Box';
 import { taskSchema } from 'shared/types';
 import { TaskForm } from 'entities/TaskForm/TaskForm';
@@ -17,7 +16,7 @@ import {
 	updateTaskThunk,
 } from 'entities/CardTask/model/taskSlice';
 
-const FullTask: React.FC = () => {
+const FullTask = () => {
 	const {
 		register,
 		handleSubmit,
@@ -48,7 +47,7 @@ const FullTask: React.FC = () => {
 		fetchTask();
 	}, []);
 	if (!singleTask) {
-		return <div>Загрузка...</div>;
+		return <> <div>Загрузка...</div></>;
 	}
 	const handleClose = () => {
 		navigate(-1);
