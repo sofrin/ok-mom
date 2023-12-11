@@ -14,7 +14,7 @@ export const SearchInput: React.FC = () => {
 	const updateSearchValue = useCallback(
 		debounce((str: string) => {
 			const fetchTasks = async () => {
-				str = `?title=${str}`;
+				str = `?title=${str}*`;
 				dispatch(
 					tasksApi.endpoints.getTasks.initiate(str, {
 						subscribe: false,
