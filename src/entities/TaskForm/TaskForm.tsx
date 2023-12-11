@@ -107,14 +107,6 @@ export const TaskForm = ({
 					variant='filled'
 					{...register('description')}
 				/>
-				<TextField
-					disabled={!checked}
-					autoFocus
-					margin='dense'
-					id='file'
-					type='file'
-					variant='outlined'
-				/>
 				<DialogContentText>Приоритет задания:</DialogContentText>
 				<Select
 					defaultValue={singleTask ? singleTask.priority : 'mid'}
