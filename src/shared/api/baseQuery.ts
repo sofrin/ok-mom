@@ -14,7 +14,7 @@ export const baseQuery: BaseQueryFn<
 	NonNullable<unknown>,
 	FetchBaseQueryMeta
 > = fetchBaseQuery({
-	baseUrl: '',
+	baseUrl: 'https://3b71928734199f6c.mokky.dev',
 	prepareHeaders: (headers, { getState }) => {
 		// By default, if we have a token in the store, let's use that for authenticated requests
 		const token = (getState() as RootState).auth.token;

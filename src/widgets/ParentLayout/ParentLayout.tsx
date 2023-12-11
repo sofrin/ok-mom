@@ -19,6 +19,7 @@ import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { NavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
+import { useAuth } from 'shared/model/hooks';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -28,7 +29,7 @@ export function ParentLayout() {
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
-
+	const isAuth = useAuth();
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Box sx={{ display: 'flex' }}>
@@ -61,7 +62,7 @@ export function ParentLayout() {
 							noWrap
 							sx={{ flexGrow: 1 }}
 						>
-							Parent home page
+							{`Welcome to the home page ${isAuth.user?.login}`}
 						</Typography>
 						<IconButton color='inherit'>
 							<Badge
