@@ -19,12 +19,15 @@ import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { NavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
-import { useAuth } from 'shared/model/hooks';
+import { useAppDispatch, useAuth } from 'shared/model/hooks';
+import { logOut } from 'features/authentication/model/authSlice';
+import Button from '@mui/material/Button';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export function ParentLayout() {
+	const dispatch = useAppDispatch();
 	const [open, setOpen] = React.useState(true);
 	const toggleDrawer = () => {
 		setOpen(!open);
@@ -64,6 +67,13 @@ export function ParentLayout() {
 						>
 							{`Welcome to the home page ${isAuth.user?.login}`}
 						</Typography>
+						<Button
+							variant='outlined'
+							color='inherit'
+							onClick={() => dispatch(logOut())}
+						>
+							Logout
+						</Button>
 						<IconButton color='inherit'>
 							<Badge
 								badgeContent={4}

@@ -36,7 +36,7 @@ export const SignInForm = () => {
 					console.log(error);
 				});
 		},
-		[dispatch],
+		[dispatch, navigate],
 	);
 
 	return (
