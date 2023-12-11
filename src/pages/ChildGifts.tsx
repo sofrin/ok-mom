@@ -23,7 +23,7 @@ export const ChildGifts = () => {
 						p: 3,
 						display: 'flex',
 						flexDirection: 'column',
-						width: 'fit-content',
+						width: '1000px',
 						alignItems: 'center',
 						justifyContent: 'center',
 					}}

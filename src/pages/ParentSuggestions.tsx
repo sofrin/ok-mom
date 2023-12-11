@@ -24,9 +24,10 @@ export const ParentSuggestions = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
-						justifyContent: 'center',
-						width: '100%',
+						justifyContent: 'flex-start',
+						width: '1000px',
 						padding: '10px',
+						height: '400px',
 					}}
 				>
 					<Typography variant='h5'> Предложения детей: </Typography>
