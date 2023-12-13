@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import { SearchInput } from 'features/Search/SearchInput';
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
 import { AddTaskDialog } from 'widgets/AddTask';
 import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
 import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
@@ -20,6 +20,8 @@ export default function Home() {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
+	const isAuth = useAuth();
+	console.log(isAuth.user?.login);
 
 	console.log(tasks);
 

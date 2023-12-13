@@ -9,17 +9,23 @@ export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		login: builder.mutation<UserResponse, LoginSchema>({
 			query: (body) => ({
-				url: 'login',
+				url: '/auth',
 				method: 'POST',
 				body,
 			}),
 			invalidatesTags: [SESSION_TAG],
 		}),
 		register: builder.mutation<UserResponse, registerSchema>({
-			query: (body) => ({
-				url: 'register',
+			query: ({ email, password, login }) => ({
+				url: '/register',
 				method: 'POST',
-				body,
+				body: {
+					role: 'parent',
+					children: [],
+					email,
+					password,
+					login,
+				},
 			}),
 			invalidatesTags: [SESSION_TAG],
 		}),

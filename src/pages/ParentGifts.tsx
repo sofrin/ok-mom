@@ -1,8 +1,8 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 import {
-  selectGifts,
-  selectRedeemedGifts,
+	selectGifts,
+	selectRedeemedGifts,
 } from 'entities/Gifts/model/giftsSlice';
 import { ParentGiftCard } from 'entities/Suggestions/ui/ParentCard';
 import { SyntheticEvent, useState } from 'react';
@@ -39,9 +39,10 @@ export const ParentGifts = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
-						justifyContent: 'center',
-						width: '100%',
+						justifyContent: 'flex-start',
+						width: '1000px',
 						padding: '10px',
+						height: '400px',
 					}}
 				>
 					<Tabs

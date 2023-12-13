@@ -18,7 +18,7 @@ export const ChildHistory = () => {
 						p: 3,
 						display: 'flex',
 						flexDirection: 'column',
-						width: '950px',
+						width: '1000px',
 						alignItems: 'center',
 						justifyContent: 'center',
 					}}

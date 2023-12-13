@@ -12,11 +12,12 @@ import { LoginSchema } from 'shared/types';
 import { useCallback } from 'react';
 import { loginThunk } from '../model/authSlice';
 import { useAppDispatch } from 'shared/model/hooks';
+import { useNavigate } from 'react-router';
 
 export const SignInForm = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const {
-		setError,
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -28,15 +29,16 @@ export const SignInForm = () => {
 		({ email, password }: LoginSchema) => {
 			dispatch(loginThunk({ email, password }))
 				.unwrap()
+				.then(() => {
+					navigate('/Home/tasks');
+				})
 				.catch((error) => {
-					setError('email', { type: 'server', message: error.message });
+					console.log(error);
 				});
 		},
-		[setError, dispatch],
+		[dispatch, navigate],
 	);
-	// if (isAuth) {
-	// 	return <Navigate to={'/Home'} />;
-	// }
+
 	return (
 		<Box
 			component='form'

@@ -6,7 +6,7 @@ import { updateTaskRequest } from '../model/taskSlice';
 export const tasksApi = api.injectEndpoints({
 	endpoints: (build) => ({
 		getTasks: build.query<taskSchema[], void | string>({
-			query: (str) => `https://64f8d138824680fd21801557.mockapi.io/tasks${str}`,
+			query: (str) => `/tasks${str}`,
 			providesTags: (result) => {
 				return result
 					? [
@@ -17,13 +17,13 @@ export const tasksApi = api.injectEndpoints({
 					: [{ type: TASK_TAG, id: 'LIST' }];
 			},
 		}),
-		getOneTask: build.query<taskSchema, string>({
-			query: (id) => `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
+		getOneTask: build.query<taskSchema, number>({
+			query: (id) => `/tasks/${id}`,
 			providesTags: (result, error, id) => [{ type: TASK_TAG, id }],
 		}),
 		createTask: build.mutation<void, taskSchema>({
 			query: (body) => ({
-				url: 'https://64f8d138824680fd21801557.mockapi.io/tasks',
+				url: '/tasks',
 				method: 'POST',
 				body,
 			}),
@@ -31,8 +31,8 @@ export const tasksApi = api.injectEndpoints({
 		}),
 		updateTask: build.mutation<void, updateTaskRequest>({
 			query: (body) => ({
-				url: `https://64f8d138824680fd21801557.mockapi.io/tasks/${body.id}`,
-				method: 'PUT',
+				url: `/tasks/${body.id}`,
+				method: 'PATCH',
 				body,
 			}),
 			invalidatesTags: [{ type: TASK_TAG, id: 'LIST' }],
@@ -52,9 +52,9 @@ export const tasksApi = api.injectEndpoints({
 				}
 			},
 		}),
-		deleteTask: build.mutation<void, string>({
+		deleteTask: build.mutation<void, number>({
 			query: (id) => ({
-				url: `https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
+				url: `/tasks/${id}`,
 				method: 'DELETE',
 			}),
 			invalidatesTags: (result, error, id) => [{ type: TASK_TAG, id }],

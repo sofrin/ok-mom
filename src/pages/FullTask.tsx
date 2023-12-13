@@ -46,13 +46,10 @@ export const FullTask: React.FC = () => {
 	useEffect(() => {
 		async function fetchTask() {
 			try {
-				const response = await fetch(
-					`https://64f8d138824680fd21801557.mockapi.io/tasks/` + id,
-					{
-						method: 'GET',
-						headers: { 'content-type': 'application/json' },
-					},
-				);
+				const response = await fetch(`/tasks/` + id, {
+					method: 'GET',
+					headers: { 'content-type': 'application/json' },
+				});
 				const task = await response.json();
 				// console.log(tasks);
 				setSingleTask(task);
@@ -72,15 +69,12 @@ export const FullTask: React.FC = () => {
 	const onSubmit = async (data: taskSchema) => {
 		console.log(`данные из измененной формы`, data);
 
-		const response = await fetch(
-			`https://64f8d138824680fd21801557.mockapi.io/tasks/${id}`,
-			{
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				// Send your data in the request body as JSON
-				body: JSON.stringify(data),
-			},
-		);
+		const response = await fetch(`/tasks/${id}`, {
+			method: 'PATCH',
+			headers: { 'content-type': 'application/json' },
+			// Send your data in the request body as JSON
+			body: JSON.stringify(data),
+		});
 		if (response.ok) {
 			alert('Form edited successfully');
 			handleClose();

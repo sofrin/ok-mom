@@ -19,6 +19,9 @@ import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { ChildNavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
+import { logOut } from 'features/authentication/model/authSlice';
+import Button from '@mui/material/Button';
+import { useAppDispatch } from 'shared/model/hooks';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -28,6 +31,7 @@ export function ChildLayout() {
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
+	const dispatch = useAppDispatch();
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Box sx={{ display: 'flex' }}>
@@ -62,6 +66,13 @@ export function ChildLayout() {
 						>
 							Child home page
 						</Typography>
+						<Button
+							variant='outlined'
+							color='inherit'
+							onClick={() => dispatch(logOut())}
+						>
+							Logout
+						</Button>
 						<IconButton color='inherit'>
 							<Badge
 								badgeContent={4}

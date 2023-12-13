@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { taskReducer } from 'entities/CardTask/model/taskSlice';
 import { giftReducer } from 'entities/Gifts/model/giftsSlice';
 import { suggestionsReducer } from 'entities/Suggestions/model/suggestionSlice';
-
 import { authReducer } from 'features/authentication/model/authSlice';
 
 import { api } from 'shared/api/baseApi';

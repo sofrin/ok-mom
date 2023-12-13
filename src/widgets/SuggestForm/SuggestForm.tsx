@@ -73,7 +73,6 @@ export const SuggestForm = () => {
 				label='Цена'
 				{...register('price', { valueAsNumber: true })}
 			/>
-			<input type='file' />
 
 			<Button
 				type='submit'

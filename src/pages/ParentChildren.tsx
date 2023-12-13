@@ -23,9 +23,10 @@ export const ParentChildren = () => {
 						p: 3,
 						display: 'flex',
 						flexDirection: 'column',
-						width: 'fit-content',
+						width: '1000px',
+						height: '400px',
 						alignItems: 'center',
-						justifyContent: 'center',
+						justifyContent: 'flex-start',
 					}}
 				>
 					<Grid
@@ -45,6 +46,8 @@ export const ParentChildren = () => {
 									balance={balance}
 								/>
 							))}
+
+              
 					</Grid>
 				</Paper>
 			</Grid>

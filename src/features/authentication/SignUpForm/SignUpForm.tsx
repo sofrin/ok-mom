@@ -17,7 +17,6 @@ import { useAppDispatch } from 'shared/model/hooks';
 export const SignUpForm = () => {
 	const dispatch = useAppDispatch();
 	const {
-		setError,
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
@@ -25,14 +24,23 @@ export const SignUpForm = () => {
 	const navigate = useNavigate();
 	const onSubmitHandler = useCallback(
 		({ email, password, login, confirmPassword }: registerSchema) => {
-			dispatch(registerThunk({ email, password, login, confirmPassword }))
+			dispatch(
+				registerThunk({
+					email,
+					password,
+					login,
+					confirmPassword,
+				}),
+			)
 				.unwrap()
-				.then(() => navigate('/Home/tasks'))
+				.then(() => {
+					navigate('/Home/tasks');
+				})
 				.catch((error) => {
-					setError('email', { type: 'server', message: error.message });
+					console.log(error);
 				});
 		},
-		[setError, dispatch, navigate],
+		[dispatch, navigate],
 	);
 
 	return (

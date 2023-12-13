@@ -25,8 +25,8 @@ export const loginThunk = createAsyncThunk<
 				throw new Error(error.data);
 			}
 		}
+		throw new Error('Unknown error');
 	}
-	throw new Error('Unknown error');
 });
 export const registerThunk = createAsyncThunk<
 	void,
@@ -41,8 +41,8 @@ export const registerThunk = createAsyncThunk<
 				throw new Error(error.data);
 			}
 		}
+		throw new Error('Unknown error');
 	}
-	throw new Error('Unknown error');
 });
 
 const authSlice = createSlice({
@@ -63,20 +63,21 @@ const authSlice = createSlice({
 		},
 		logOut: (state) => {
 			state.user = null;
+			state.token = null;
 		},
 	},
 	extraReducers: (builder) => {
 		builder.addMatcher(
 			authApi.endpoints.login.matchFulfilled,
 			(state: AuthState, { payload }) => {
-				state.user = payload.user;
+				state.user = payload.data;
 				state.token = payload.token;
 			},
 		);
 		builder.addMatcher(
 			authApi.endpoints.register.matchFulfilled,
 			(state: AuthState, { payload }) => {
-				state.user = payload.user;
+				state.user = payload.data;
 				state.token = payload.token;
 			},
 		);

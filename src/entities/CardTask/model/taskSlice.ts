@@ -55,9 +55,9 @@ export const updateTaskThunk = createAsyncThunk<
 });
 export const deleteTaskThunk = createAsyncThunk<
 	void,
-	string,
+	number,
 	{ state: RootState }
->('task/deleteTask', async (id: string, { dispatch }) => {
+>('task/deleteTask', async (id: number, { dispatch }) => {
 	try {
 		await dispatch(tasksApi.endpoints.deleteTask.initiate(id)).unwrap();
 	} catch (error) {
@@ -72,9 +72,9 @@ export const deleteTaskThunk = createAsyncThunk<
 
 export const getOneTaskThunk = createAsyncThunk<
 	taskSchema,
-	string,
+	number,
 	{ state: RootState }
->('task/getOneTask', async (id: string, { dispatch }) => {
+>('task/getOneTask', async (id: number, { dispatch }) => {
 	try {
 		const res = await dispatch(
 			//   ^?
