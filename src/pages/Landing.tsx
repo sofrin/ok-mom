@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import heroImg from '/src/assets/hero.png';
+import heroImg from '/src/assets/hero-min.png';
 export const Landing = () => {
 	return (
 		<>
