@@ -12,11 +12,10 @@ import { LoginSchema } from 'shared/types';
 import { useCallback } from 'react';
 import { loginThunk } from '../model/authSlice';
 import { useAppDispatch } from 'shared/model/hooks';
-import { useNavigate } from 'react-router';
 
 export const SignInForm = () => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
@@ -29,23 +28,11 @@ export const SignInForm = () => {
 		({ email, password }: LoginSchema) => {
 			dispatch(loginThunk({ email, password }))
 				.unwrap()
-				.then((userResponse) => {
-					switch (userResponse.data.role) {
-						case 'parent':
-							navigate('/Home/tasks');
-							break;
-						case 'child':
-							navigate('/child/tasks');
-							break;
-						default:
-							break;
-					}
-				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
-		[dispatch, navigate],
+		[dispatch],
 	);
 
 	return (
