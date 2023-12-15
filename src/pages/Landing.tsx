@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import heroImg from '/src/assets/hero.png';
 export const Landing = () => {
 	return (
 		<>
@@ -75,7 +75,7 @@ export const Landing = () => {
 				<div className='container relative'>
 					<img
 						className='w-[1680px] h-[960px]'
-						src='/hero.png'
+						src={heroImg}
 						alt='heropng'
 					/>
 					<p className=' font-medium text-5xl  max-w-[600px] absolute top-[542px] left-[190px]'>
