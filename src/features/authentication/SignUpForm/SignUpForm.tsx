@@ -36,7 +36,7 @@ export const SignUpForm = () => {
 			)
 				.unwrap()
 				.then(() => {
-					navigate('/Home/tasks');
+					navigate('/Home/children');
 				})
 				.catch((error) => {
 					console.log(error);
