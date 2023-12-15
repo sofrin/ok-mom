@@ -19,11 +19,11 @@ import { NotFound } from 'widgets/NotFound';
 import { ParentLayout } from 'widgets/ParentLayout';
 import { SignInWidget } from 'widgets/SignInWidget';
 import { SignUpWidget } from 'widgets/SignUpWidget';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+
 function App() {
 	return (
 		<Routes>
-			<SpeedInsights />
+			
 			<Route
 				path='/'
 				element={<Landing />}

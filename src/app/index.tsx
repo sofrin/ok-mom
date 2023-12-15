@@ -7,7 +7,7 @@ import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 import store, { persistor } from '../shared/redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
-
+import { SpeedInsights } from '@vercel/speed-insights/react';
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<BrowserRouter>
@@ -17,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 						loading={null}
 						persistor={persistor}
 					>
+						<SpeedInsights />
 						<App />
 					</PersistGate>
 				</Provider>
