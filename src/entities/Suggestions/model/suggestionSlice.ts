@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Gift } from 'entities/Gifts/model/types';
 
 import { RootState } from 'shared/redux/store';
-
+import ImgUrl from '../../../assets/randompic.avif';
 type initialStateType = {
 	items: Gift[];
 };
@@ -14,14 +14,16 @@ const initialState: initialStateType = {
 			title: 'suggestion title  1',
 			price: 100,
 			description: 'suggestion description 1',
-			image: 'https://source.unsplash.com/random',
+			image: {
+				ImgUrl,
+			},
 		},
 		{
 			id: '2',
 			title: 'suggestion title  2',
 			price: 200,
 			description: 'suggestion description 2',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 	],
 };

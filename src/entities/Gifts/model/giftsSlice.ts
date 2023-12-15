@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Gift } from './types';
 import { RootState } from 'shared/redux/store';
-
+import ImgUrl from '../../../assets/randompic.avif';
 type giftSliceType = {
 	goal: number;
 	items: Gift[];
@@ -17,28 +17,28 @@ const initialState: giftSliceType = {
 			title: 'gift title  1',
 			price: 100,
 			description: 'gift description 1',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 		{
 			id: '2',
 			title: 'gift title  2',
 			price: 200,
 			description: 'gift description 2',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 		{
 			id: '3',
 			title: 'gift title  3',
 			price: 300,
 			description: 'gift description 3',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 		{
 			id: '4',
 			title: 'gift title  4',
 			price: 400,
 			description: 'gift description 4',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 	],
 	redeemedGifts: [
@@ -47,7 +47,7 @@ const initialState: giftSliceType = {
 			title: 'redeemed gift title  ',
 			price: 400,
 			description: 'redeemed gift description ',
-			image: 'https://source.unsplash.com/random',
+			image: { ImgUrl },
 		},
 	],
 };

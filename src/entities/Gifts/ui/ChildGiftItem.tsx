@@ -11,7 +11,7 @@ import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
 import { addRedeemedGift, selectRedeemedGifts } from '../model/giftsSlice';
 import { Gift } from '../model/types';
-
+import ImgUrl from '../../../assets/randompic.avif';
 export const ChildGiftItem = ({
 	id,
 	title,
@@ -39,7 +39,7 @@ export const ChildGiftItem = ({
 				</Typography>
 				<CardMedia
 					sx={{ height: 140, mb: 2 }}
-					image={image}
+					image={ImgUrl}
 					title='gift'
 				/>
 				<Typography

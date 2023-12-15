@@ -3,5 +3,5 @@ export type Gift = {
 	title: string;
 	price: number;
 	description: string;
-	image: string;
+	image: { ImgUrl: string };
 };

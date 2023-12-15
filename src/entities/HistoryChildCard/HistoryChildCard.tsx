@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { taskSchema } from 'shared/types';
-
+import ImgUrl from '../../assets/randompic.avif';
 export const HistoryChildCard = ({
 	title,
 	description,
@@ -60,7 +60,7 @@ export const HistoryChildCard = ({
 						height: 100,
 						objectFit: 'fill',
 					}}
-					image='https://source.unsplash.com/random'
+					image={ImgUrl}
 					alt='img'
 				/>
 			</CardActionArea>

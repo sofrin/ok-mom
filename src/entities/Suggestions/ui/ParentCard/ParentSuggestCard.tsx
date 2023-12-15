@@ -17,7 +17,7 @@ import {
 	removeRedeemedGift,
 } from 'entities/Gifts/model/giftsSlice';
 import { removeSuggestion } from 'entities/Suggestions/model/suggestionSlice';
-
+import ImgUrl from '../../../../assets/randompic.avif';
 type Props = {
 	setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 	id: string;
@@ -86,7 +86,7 @@ export const ParentGiftCard = ({
 						height: 100,
 						objectFit: 'fill',
 					}}
-					image={image ? image : 'https://source.unsplash.com/random'}
+					image={image ? image : ImgUrl}
 					alt='img'
 				/>
 				<CardContent sx={{ width: '100%' }}>

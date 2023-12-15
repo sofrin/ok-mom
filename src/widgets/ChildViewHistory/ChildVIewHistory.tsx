@@ -32,7 +32,6 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 				justifyContent: 'center',
 				width: 'auto',
 				height: '700px',
-				overflowY: 'auto',
 			}}
 		>
 			<Box
@@ -40,7 +39,9 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					width: '400px',
+					width: '500px',
+					overflowY: 'auto',
+					scrollbarWidth: 'thin',
 				}}
 			>
 				<Typography
@@ -50,6 +51,9 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 					Задания на проверке:
 				</Typography>
 				<List
+					sx={{
+						overflow: 'clip',
+					}}
 					ref={parent}
 					disablePadding
 				>
@@ -65,7 +69,7 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 				</List>
 			</Box>
 
-			<Box sx={{ height: 'auto', margin: '0 30px' }}>
+			<Box sx={{ height: 'auto', margin: '10px' }}>
 				<Divider orientation='vertical' />
 			</Box>
 			<Box
@@ -73,7 +77,7 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					width: '400px',
+					width: '500px',
 				}}
 			>
 				<Typography
@@ -83,6 +87,11 @@ export const ChildVIewHistory = ({ child }: { child: string }) => {
 					Подтвержденные задания:
 				</Typography>
 				<List
+					sx={{
+						overflowY: 'auto',
+						overflowX: 'hidden',
+						scrollbarWidth: 'thin',
+					}}
 					ref={parent}
 					disablePadding
 				>

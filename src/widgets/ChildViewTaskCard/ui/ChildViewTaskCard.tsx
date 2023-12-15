@@ -1,5 +1,5 @@
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
-
+import ImgUrl from '../../../assets/randompic.avif';
 import { CardActionArea, TextField, Grid, CardMedia } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -90,9 +90,8 @@ export const ChildViewTaskCard: React.FC<Props> = ({
 						component='img'
 						sx={{
 							height: 100,
-							objectFit: 'fill',
 						}}
-						image='https://source.unsplash.com/random'
+						image={ImgUrl}
 						alt='img'
 					/>
 				</CardActionArea>
