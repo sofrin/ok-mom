@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { NavBar } from 'widgets/NavBar/NavBar';
@@ -33,6 +33,9 @@ export function ParentLayout() {
 		setOpen(!open);
 	};
 	const isAuth = useAuth();
+	if (!isAuth.user || isAuth.user.role !== 'parent') {
+		return <Navigate to='/signIn' />;
+	}
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Box sx={{ display: 'flex' }}>
@@ -65,7 +68,7 @@ export function ParentLayout() {
 							noWrap
 							sx={{ flexGrow: 1 }}
 						>
-							{`Welcome to the home page ${isAuth.user?.login}`}
+							{`Добро пожаловать ${isAuth.user?.login}`}
 						</Typography>
 						<Button
 							variant='outlined'
