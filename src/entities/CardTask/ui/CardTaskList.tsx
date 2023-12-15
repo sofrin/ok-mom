@@ -114,6 +114,7 @@ export const CardTaskList = ({
 				height: listHeight,
 				overflowY: 'auto',
 				overflowX: 'hidden',
+				scrollbarWidth: 'thin',
 				flexGrow: 1,
 			}}
 		>
