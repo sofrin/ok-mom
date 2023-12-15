@@ -14,14 +14,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { ChildNavBar } from 'widgets/NavBar/NavBar';
 import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
 import { logOut } from 'features/authentication/model/authSlice';
 import Button from '@mui/material/Button';
-import { useAppDispatch } from 'shared/model/hooks';
+import { useAppDispatch, useAuth } from 'shared/model/hooks';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -32,6 +32,10 @@ export function ChildLayout() {
 		setOpen(!open);
 	};
 	const dispatch = useAppDispatch();
+	const isAuth = useAuth();
+	if (!isAuth.user) {
+		return <Navigate to='/signIn' />;
+	}
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Box sx={{ display: 'flex' }}>
