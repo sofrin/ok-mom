@@ -50,7 +50,7 @@ export const ParentSuggestions = () => {
 									title={suggestion.title}
 									price={suggestion.price}
 									description={suggestion.description}
-									image={suggestion.image}
+									image={suggestion.image.ImgUrl}
 								/>
 							</Grid>
 						))}

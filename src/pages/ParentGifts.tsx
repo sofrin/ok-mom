@@ -98,7 +98,7 @@ export const ParentGifts = () => {
 										title={gift.title}
 										price={gift.price}
 										description={gift.description}
-										image={gift.image}
+										image={gift.image.ImgUrl}
 										redeemedGift
 									/>
 								</Grid>
@@ -120,7 +120,7 @@ export const ParentGifts = () => {
 										title={gift.title}
 										price={gift.price}
 										description={gift.description}
-										image={gift.image}
+										image={gift.image.ImgUrl}
 										gift
 									/>
 								</Grid>
