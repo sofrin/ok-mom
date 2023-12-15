@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from 'shared/redux/store';
-import { LoginSchema, registerSchema } from 'shared/types';
+import {
+	LoginSchema,
+	Parent,
+	registerChildSchema,
+	registerParentSchema,
+} from 'shared/types';
 import { authApi } from '../api/authApi';
 import { User } from 'entities/User/model/types';
 import { isFetchBaseQueryError } from 'shared/api/isFetchBaseQueryError';
@@ -28,13 +33,51 @@ export const loginThunk = createAsyncThunk<
 		throw new Error('Unknown error');
 	}
 });
-export const registerThunk = createAsyncThunk<
-	void,
-	registerSchema,
+export const updateParentUserThunk = createAsyncThunk<
+	Parent,
+	Partial<Parent>,
 	{ state: RootState }
->('auth/register', async (body: registerSchema, { dispatch }) => {
+>(
+	'auth/updateParentUser',
+	async (body: Partial<Parent>, { dispatch }): Promise<Parent> => {
+		try {
+			const res = await dispatch(
+				authApi.endpoints.updateParentUser.initiate(body),
+			).unwrap();
+			return res;
+		} catch (error) {
+			if (isFetchBaseQueryError(error)) {
+				if (typeof error.data === 'string') {
+					throw new Error(error.data);
+				}
+			}
+			throw new Error('Unknown error');
+		}
+	},
+);
+export const parentRegisterThunk = createAsyncThunk<
+	void,
+	registerParentSchema,
+	{ state: RootState }
+>('auth/parentRegister', async (body: registerParentSchema, { dispatch }) => {
 	try {
-		await dispatch(authApi.endpoints.register.initiate(body)).unwrap();
+		await dispatch(authApi.endpoints.parentRegister.initiate(body)).unwrap();
+	} catch (error) {
+		if (isFetchBaseQueryError(error)) {
+			if (typeof error.data === 'string') {
+				throw new Error(error.data);
+			}
+		}
+		throw new Error('Unknown error');
+	}
+});
+export const childRegisterThunk = createAsyncThunk<
+	void,
+	registerChildSchema,
+	{ state: RootState }
+>('auth/childRegister', async (body: registerChildSchema, { dispatch }) => {
+	try {
+		await dispatch(authApi.endpoints.childRegister.initiate(body)).unwrap();
 	} catch (error) {
 		if (isFetchBaseQueryError(error)) {
 			if (typeof error.data === 'string') {
@@ -53,10 +96,12 @@ const authSlice = createSlice({
 			state,
 			{
 				payload: { user, token },
-			}: PayloadAction<{ user: User; token: string }>,
+			}: PayloadAction<{ user: User; token?: string }>,
 		) => {
 			state.user = user;
-			state.token = token;
+			if (token) {
+				state.token = token;
+			}
 		},
 		setToken: (state, { payload }: PayloadAction<string>) => {
 			state.token = payload;
@@ -75,7 +120,7 @@ const authSlice = createSlice({
 			},
 		);
 		builder.addMatcher(
-			authApi.endpoints.register.matchFulfilled,
+			authApi.endpoints.parentRegister.matchFulfilled,
 			(state: AuthState, { payload }) => {
 				state.user = payload.data;
 				state.token = payload.token;

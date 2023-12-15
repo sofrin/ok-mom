@@ -1,12 +1,19 @@
-import { Grid, Paper } from '@mui/material';
-import { selectBalance, selectGoal } from 'entities/Gifts/model/giftsSlice';
-import { useAppSelector } from 'shared/model/hooks';
+import { Button, Grid, Paper, Typography } from '@mui/material';
+import { useAuth } from 'shared/model/hooks';
 
 import { ChildrenCard } from 'entities/ChildrenCard';
+import { ChildSignUpForm } from '../features/authentication/ChildSighUpForm/ChildSighUpForm';
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+
 export const ParentChildren = () => {
-	const balance = useAppSelector(selectBalance);
-	const goal = useAppSelector(selectGoal);
-	const children = ['Ребёнок 1', 'Ребёнок 2'];
+	const isAuth = useAuth();
+
+	const [open, setOpen] = useState(false);
+	if (!isAuth.user || isAuth.user.role !== 'parent') {
+		return <Navigate to='/signIn' />;
+	}
+	const children = isAuth.user.children;
 	return (
 		<Grid
 			container
@@ -36,18 +43,36 @@ export const ParentChildren = () => {
 						alignItems={'center'}
 						direction={'row'}
 					>
-						{children &&
+						{children.length != 0 ? (
 							children.map((child, index) => (
 								<ChildrenCard
-									goal={goal}
+									goal={child.goal}
 									key={index}
 									index={index}
-									child={child}
-									balance={balance}
+									childName={child.name}
+									balance={child.balance}
 								/>
-							))}
-
-              
+							))
+						) : (
+							<Typography variant='h5'> Нет детей </Typography>
+						)}
+						<Grid
+							container
+							justifyContent='center'
+							alignItems='center'
+							mt={5}
+						>
+							<Button
+								variant='contained'
+								onClick={() => setOpen(true)}
+							>
+								Добавить ребёнка
+							</Button>
+						</Grid>
+						<ChildSignUpForm
+							open={open}
+							setOpen={setOpen}
+						/>
 					</Grid>
 				</Paper>
 			</Grid>

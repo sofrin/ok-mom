@@ -10,8 +10,8 @@ import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { registerSchema } from 'shared/types';
-import { registerThunk } from 'features/authentication/model/authSlice';
+import { registerParentSchema } from 'shared/types';
+import { parentRegisterThunk } from 'features/authentication/model/authSlice';
 import { useAppDispatch } from 'shared/model/hooks';
 
 export const SignUpForm = () => {
@@ -20,12 +20,14 @@ export const SignUpForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<registerSchema>({ resolver: zodResolver(registerSchema) });
+	} = useForm<registerParentSchema>({
+		resolver: zodResolver(registerParentSchema),
+	});
 	const navigate = useNavigate();
 	const onSubmitHandler = useCallback(
-		({ email, password, login, confirmPassword }: registerSchema) => {
+		({ email, password, login, confirmPassword }: registerParentSchema) => {
 			dispatch(
-				registerThunk({
+				parentRegisterThunk({
 					email,
 					password,
 					login,

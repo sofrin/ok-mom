@@ -2,6 +2,7 @@ import Grid from '@mui/material/Grid';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import { SearchInput } from 'features/Search/SearchInput';
 import * as React from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
 import { AddTaskDialog } from 'widgets/AddTask';
 import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
@@ -9,9 +10,11 @@ import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
 import { CompletedTaskCardWidget } from 'widgets/CompletedCardWidget';
 
 export default function Home() {
+	const isAuth = useAuth();
 	const dispatch = useAppDispatch();
 	const [openForm, setOpenForm] = React.useState(false);
-	const [defaultChild, setdefaultChild] = React.useState('Ребёнок 1');
+
+	const [defaultChild, setdefaultChild] = React.useState('');
 
 	React.useEffect(() => {
 		const fetchTasks = async () => {
@@ -20,11 +23,13 @@ export default function Home() {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
-	const isAuth = useAuth();
+
 	console.log(isAuth.user?.login);
 
 	console.log(tasks);
-
+	if (!isAuth.user || isAuth.user.role !== 'parent') {
+		return <Navigate to='/signIn' />;
+	}
 	return (
 		<>
 			<SearchInput />
@@ -32,34 +37,21 @@ export default function Home() {
 				container
 				spacing={3}
 			>
-				<Grid
-					item
-					xs={6}
-					md={4}
-					lg={6}
-				>
-					{' '}
-					<ChildTaskCardWidget
-						key={`Ребёнок 1`}
-						child='Ребёнок 1'
-						setOpen={setOpenForm}
-						setdefaultChild={setdefaultChild}
-					/>
-				</Grid>
-				<Grid
-					item
-					xs={6}
-					md={4}
-					lg={6}
-				>
-					{' '}
-					<ChildTaskCardWidget
-						key={`Ребёнок 2`}
-						child='Ребёнок 2'
-						setOpen={setOpenForm}
-						setdefaultChild={setdefaultChild}
-					/>
-				</Grid>
+				{isAuth.user.children.map((child) => (
+					<Grid
+						item
+						xs={6}
+						md={4}
+						lg={6}
+					>
+						<ChildTaskCardWidget
+							key={child.name}
+							child={child.name}
+							setdefaultChild={setdefaultChild}
+							setOpen={setOpenForm}
+						/>
+					</Grid>
+				))}
 
 				<Grid
 					item
@@ -67,7 +59,6 @@ export default function Home() {
 					md={4}
 					lg={6}
 				>
-					{' '}
 					<CompletedTaskCardWidget child='Выполненные задания' />
 				</Grid>
 				<Grid
@@ -76,7 +67,6 @@ export default function Home() {
 					md={4}
 					lg={6}
 				>
-					{' '}
 					<ArchievedTaskCardWidget child='Задания в архиве' />
 				</Grid>
 				<Grid

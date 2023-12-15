@@ -18,11 +18,11 @@ import { useAppDispatch } from 'shared/model/hooks';
 
 type Props = {
 	index: number;
-	child: string;
+	childName: string;
 	balance: number;
 	goal: number;
 };
-export const ChildrenCard = ({ index, child, balance, goal }: Props) => {
+export const ChildrenCard = ({ childName, balance, goal }: Props) => {
 	const dispatch = useAppDispatch();
 	const [clicked, setClicked] = useState(false);
 	const handleClick = () => {
@@ -41,7 +41,7 @@ export const ChildrenCard = ({ index, child, balance, goal }: Props) => {
 								sx={{ bgcolor: red[500] }}
 								aria-label='recipe'
 							>
-								{index + 1}
+								{childName.split('')[0]}
 							</Avatar>
 						}
 						action={
@@ -49,7 +49,7 @@ export const ChildrenCard = ({ index, child, balance, goal }: Props) => {
 								<MoreVertIcon />
 							</IconButton>
 						}
-						title={child}
+						title={childName}
 						subheader=''
 					/>
 					<CardContent>

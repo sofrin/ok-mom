@@ -3,9 +3,11 @@ import { childArchievedTasks } from 'entities/CardTask/model/filterTasks';
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import Chart from 'entities/Chart/Chart';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { Navigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
 
 export const ParentStatistics = () => {
+	const isAuth = useAuth();
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		const fetchTasks = async () => {
@@ -14,14 +16,17 @@ export const ParentStatistics = () => {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
-	const firstChildTasks = childArchievedTasks(tasks, 'Ребёнок 1');
-	const secondChildTasks = childArchievedTasks(tasks, 'Ребёнок 2');
-	const children = [
-		{ name: 'Ребёнок 1', tasks: firstChildTasks },
-		{ name: 'Ребёнок 2', tasks: secondChildTasks },
-	];
-	console.log(`firstChildTasks`, firstChildTasks);
-	console.log(`secondChildTasks`, secondChildTasks);
+
+	if (!isAuth.user || isAuth.user.role !== 'parent') {
+		return <Navigate to='/signIn' />;
+	}
+
+	const children = isAuth.user.children.map((child) => {
+		return {
+			name: child.name,
+			tasks: childArchievedTasks(tasks, child.name),
+		};
+	});
 	return (
 		<Grid
 			container

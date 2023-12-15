@@ -1,6 +1,11 @@
 import { api } from 'shared/api/baseApi';
 
-import { LoginSchema, registerSchema } from 'shared/types';
+import {
+	LoginSchema,
+	Parent,
+	registerChildSchema,
+	registerParentSchema,
+} from 'shared/types';
 
 import { UserResponse } from './types';
 import { SESSION_TAG } from 'shared/api/tags';
@@ -15,21 +20,31 @@ export const authApi = api.injectEndpoints({
 			}),
 			invalidatesTags: [SESSION_TAG],
 		}),
-		register: builder.mutation<UserResponse, registerSchema>({
-			query: ({ email, password, login }) => ({
+		parentRegister: builder.mutation<UserResponse, registerParentSchema>({
+			query: (body) => ({
 				url: '/register',
 				method: 'POST',
-				body: {
-					role: 'parent',
-					children: [],
-					email,
-					password,
-					login,
-				},
+				body,
+			}),
+			invalidatesTags: [SESSION_TAG],
+		}),
+		updateParentUser: builder.mutation<Parent, Partial<Parent>>({
+			query: (body) => ({
+				url: `/users/${body.id}`,
+				method: 'PATCH',
+				body,
+			}),
+			invalidatesTags: [SESSION_TAG],
+		}),
+		childRegister: builder.mutation<UserResponse, registerChildSchema>({
+			query: (body) => ({
+				url: 'register',
+				method: 'POST',
+				body,
 			}),
 			invalidatesTags: [SESSION_TAG],
 		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useParentRegisterMutation } = authApi;
