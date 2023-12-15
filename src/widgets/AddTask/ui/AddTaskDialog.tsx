@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TaskForm } from 'entities/TaskForm/TaskForm';
 import { taskSchema } from 'shared/types';
-import { useAppDispatch } from 'shared/model/hooks';
+import { useAppDispatch, useAuth } from 'shared/model/hooks';
 
 import { useSnackbar } from 'notistack';
 import { createTaskThunk } from 'entities/CardTask/model/taskSlice';
@@ -23,12 +23,15 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
 
 	defaultChild,
 }) => {
+	const isAuth = useAuth();
+	const parent_id = isAuth.user?.id;
 	const { enqueueSnackbar } = useSnackbar();
 	const dispatch = useAppDispatch();
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const onSubmit = async (data: taskSchema) => {
+		data.parent_id = parent_id;
 		dispatch(createTaskThunk(data))
 			.unwrap()
 			.then(() => {

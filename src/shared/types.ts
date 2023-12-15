@@ -14,6 +14,7 @@ export const taskSchema = z.object({
 	isArchived: z.enum(['true', 'false']).default('false'),
 	completedAt: z.date().optional(),
 	createdAt: z.date().optional(),
+	parent_id: z.number().optional(),
 });
 export const registerChildSchema = z
 	.object({

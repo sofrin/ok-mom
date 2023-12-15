@@ -5,9 +5,9 @@ import {
 	Select,
 	TextField,
 } from '@mui/material';
-import React from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { taskSchema } from 'shared/types';
+import { useAuth } from 'shared/model/hooks';
+import { Child, taskSchema } from 'shared/types';
 
 type TaskFormProps = {
 	checked?: boolean;
@@ -24,6 +24,12 @@ export const TaskForm = ({
 	errors,
 	register,
 }: TaskFormProps) => {
+	const isAuth = useAuth();
+	let children: Child[] = [];
+	if (isAuth.user && isAuth.user.role === 'parent') {
+		children = isAuth.user?.children;
+	}
+
 	return (
 		<DialogContent sx={{ width: 600 }}>
 			{errors.description && (
@@ -54,8 +60,14 @@ export const TaskForm = ({
 					label='Ребёнок'
 					{...register('child')}
 				>
-					<MenuItem value={'Ребёнок 1'}>Ребёнок 1</MenuItem>
-					<MenuItem value={'Ребёнок 2'}>Ребёнок 2</MenuItem>
+					{children.map((child) => (
+						<MenuItem
+							key={child.name}
+							value={child.name}
+						>
+							{child.name}
+						</MenuItem>
+					))}
 				</Select>
 			</div>
 			<div className='flex flex-col'>
