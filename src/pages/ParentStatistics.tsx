@@ -4,17 +4,18 @@ import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import Chart from 'entities/Chart/Chart';
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
+import { useAppDispatch, useAppSelector, useAuth, useGetUserInfo } from 'shared/model/hooks';
 
 export const ParentStatistics = () => {
 	const isAuth = useAuth();
 	const dispatch = useAppDispatch();
+	const { parent_id } = useGetUserInfo();
 	useEffect(() => {
 		const fetchTasks = async () => {
-			await dispatch(getTasksThunk('')).unwrap();
+			await dispatch(getTasksThunk({ str: '', parent_id: parent_id })).unwrap();
 		};
 		fetchTasks();
-	}, [dispatch]);
+	}, [dispatch, parent_id]);
 	const tasks = useAppSelector(selectTasks);
 
 	if (!isAuth.user || isAuth.user.role !== 'parent') {

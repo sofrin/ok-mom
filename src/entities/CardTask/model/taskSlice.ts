@@ -6,20 +6,26 @@ import { tasksApi } from '../api/tasksApi';
 
 export const getTasksThunk = createAsyncThunk<
 	void,
-	void | string,
+	{ str?: string | undefined; parent_id?: number | undefined },
 	{ state: RootState }
->('task/getTasks', async (str: void | string, { dispatch }) => {
-	try {
-		await dispatch(tasksApi.endpoints.getTasks.initiate(str)).unwrap();
-	} catch (error) {
-		if (isFetchBaseQueryError(error)) {
-			if (typeof error.data === 'string') {
-				throw new Error(error.data);
+>(
+	'task/getTasks',
+	async (
+		str: { str?: string | undefined; parent_id?: number | undefined },
+		{ dispatch },
+	) => {
+		try {
+			await dispatch(tasksApi.endpoints.getTasks.initiate(str)).unwrap();
+		} catch (error) {
+			if (isFetchBaseQueryError(error)) {
+				if (typeof error.data === 'string') {
+					throw new Error(error.data);
+				}
 			}
+			throw new Error('Unknown error');
 		}
-		throw new Error('Unknown error');
-	}
-});
+	},
+);
 export const createTaskThunk = createAsyncThunk<
 	void,
 	taskSchema,

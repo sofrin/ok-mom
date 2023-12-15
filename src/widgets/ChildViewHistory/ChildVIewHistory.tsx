@@ -8,17 +8,22 @@ import {
 import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import { HistoryChildCard } from 'entities/HistoryChildCard/HistoryChildCard';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import {
+	useAppDispatch,
+	useAppSelector,
+	useGetUserInfo,
+} from 'shared/model/hooks';
 import { taskSchema } from 'shared/types';
 
 export const ChildVIewHistory = ({ child }: { child: string }) => {
 	const dispatch = useAppDispatch();
+	const { parent_id } = useGetUserInfo();
 	useEffect(() => {
 		const fetchTasks = async () => {
-			dispatch(getTasksThunk('')).unwrap();
+			await dispatch(getTasksThunk({ str: '', parent_id: parent_id })).unwrap();
 		};
 		fetchTasks();
-	}, [dispatch]);
+	}, [dispatch, parent_id]);
 	const tasks = useAppSelector(selectTasks);
 	const archievedTasks = childArchievedTasks(tasks, child);
 	const completedTasks = childCompletedTasks(tasks, child);

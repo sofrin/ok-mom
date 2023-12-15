@@ -1,31 +1,32 @@
 import debounce from 'lodash.debounce';
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 
 import { Box, InputAdornment } from '@mui/material';
-import { useAppDispatch } from 'shared/model/hooks';
+import { useAppDispatch, useAuth } from 'shared/model/hooks';
 import { tasksApi } from 'entities/CardTask/api/tasksApi';
 
 export const SearchInput: React.FC = () => {
 	const [value, setValue] = useState<string>('');
 	const dispatch = useAppDispatch();
+	const isAuth = useAuth();
 	const inputRef = useRef<HTMLInputElement>(null);
-	const updateSearchValue = useCallback(
-		debounce((str: string) => {
-			const fetchTasks = async () => {
-				str = `?title=${str}*`;
-				dispatch(
-					tasksApi.endpoints.getTasks.initiate(str, {
+	const updateSearchValue = debounce((str: string) => {
+		const fetchTasks = async () => {
+			dispatch(
+				tasksApi.endpoints.getTasks.initiate(
+					{ str: str, parent_id: isAuth.user?.id },
+					{
 						subscribe: false,
 						forceRefetch: true,
-					}),
-				);
-			};
-			fetchTasks();
-		}, 1000),
-		[],
-	);
+					},
+				),
+			);
+		};
+		fetchTasks();
+	}, 1000);
+
 	const onClickClose = () => {
 		updateSearchValue('');
 		setValue('');

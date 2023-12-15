@@ -3,7 +3,12 @@ import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 import { SearchInput } from 'features/Search/SearchInput';
 import * as React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
+import {
+	useAppDispatch,
+	useAppSelector,
+	useAuth,
+	useGetUserInfo,
+} from 'shared/model/hooks';
 import { AddTaskDialog } from 'widgets/AddTask';
 import { ArchievedTaskCardWidget } from 'widgets/ArchievedTasksCardWidget';
 import { ChildTaskCardWidget } from 'widgets/ChildTaskCardWidget';
@@ -15,13 +20,13 @@ export default function Home() {
 	const [openForm, setOpenForm] = React.useState(false);
 
 	const [defaultChild, setdefaultChild] = React.useState('');
-
+	const { parent_id } = useGetUserInfo();
 	React.useEffect(() => {
 		const fetchTasks = async () => {
-			dispatch(getTasksThunk('')).unwrap();
+			dispatch(getTasksThunk({ str: '', parent_id: parent_id })).unwrap();
 		};
 		fetchTasks();
-	}, [dispatch]);
+	}, [dispatch, parent_id]);
 	const tasks = useAppSelector(selectTasks);
 
 	console.log(isAuth.user?.login);

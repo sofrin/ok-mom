@@ -3,19 +3,25 @@ import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import {
+	useAppDispatch,
+	useAppSelector,
+	useGetUserInfo,
+} from 'shared/model/hooks';
 import { priorityColor } from 'widgets/ChildViewTaskCard/model/priorityColor';
 
 import Scheduler from 'react-mui-scheduler';
 
 export const ParentSchedule = () => {
+	const { parent_id } = useGetUserInfo();
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		const fetchTasks = async () => {
-			await dispatch(getTasksThunk('')).unwrap();
+			await dispatch(getTasksThunk({ str: '', parent_id: parent_id })).unwrap();
 		};
 		fetchTasks();
-	}, [dispatch]);
+	}, [dispatch, parent_id]);
+
 	const tasks = useAppSelector(selectTasks);
 
 	console.log(tasks);

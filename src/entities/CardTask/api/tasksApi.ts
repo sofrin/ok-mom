@@ -5,8 +5,9 @@ import { updateTaskRequest } from '../model/taskSlice';
 
 export const tasksApi = api.injectEndpoints({
 	endpoints: (build) => ({
-		getTasks: build.query<taskSchema[], void | string>({
-			query: (str) => `/tasks${str}`,
+		getTasks: build.query<taskSchema[], { str?: string; parent_id?: number }>({
+			query: ({ str = '', parent_id }) =>
+				`/tasks?parent_id=${parent_id}&title=${str}*`,
 			providesTags: (result) => {
 				return result
 					? [
@@ -39,10 +40,14 @@ export const tasksApi = api.injectEndpoints({
 			async onQueryStarted(body, { dispatch, queryFulfilled }) {
 				console.log('PATCH', body);
 				const patchResult = dispatch(
-					tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
-						// Object.assign(draft, patch);
-						draft.push(body as taskSchema);
-					}),
+					tasksApi.util.updateQueryData(
+						'getTasks',
+						{ str: '', parent_id: body.parent_id },
+						(draft) => {
+							// Object.assign(draft, patch);
+							draft.push(body as taskSchema);
+						},
+					),
 				);
 				console.log('PATCH RESULT', patchResult);
 				try {
