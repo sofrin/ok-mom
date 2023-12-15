@@ -29,8 +29,17 @@ export const SignInForm = () => {
 		({ email, password }: LoginSchema) => {
 			dispatch(loginThunk({ email, password }))
 				.unwrap()
-				.then(() => {
-					navigate('/Home/tasks');
+				.then((userResponse) => {
+					switch (userResponse.data.role) {
+						case 'parent':
+							navigate('/Home/tasks');
+							break;
+						case 'child':
+							navigate('/child/tasks');
+							break;
+						default:
+							break;
+					}
 				})
 				.catch((error) => {
 					console.log(error);
