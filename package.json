@@ -19,6 +19,7 @@
 		"@mui/material": "^5.14.8",
 		"@reduxjs/toolkit": "^1.9.7",
 		"@types/lodash.debounce": "^4.0.7",
+		"@vercel/speed-insights": "^1.0.2",
 		"lodash.debounce": "^4.0.8",
 		"notistack": "^3.0.1",
 		"pkg-dir": "^7.0.0",
