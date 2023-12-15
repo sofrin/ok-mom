@@ -88,7 +88,7 @@ export const Landing = () => {
 				</div>
 				<div className='contaiter flex p-20 justify-center items-center gap-20 '>
 					<img
-						src='/about.png'
+						src='/happi.jpg'
 						alt='about'
 						className='w-[750px] h-[440px] '
 					/>
