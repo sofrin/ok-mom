@@ -37,7 +37,7 @@ const FullTask = () => {
 	useEffect(() => {
 		async function fetchTask() {
 			if (id)
-				dispatch(getOneTaskThunk(id))
+				dispatch(getOneTaskThunk(Number(id)))
 					.unwrap()
 					.then((res) => {
 						setSingleTask(res);
@@ -47,14 +47,19 @@ const FullTask = () => {
 		fetchTask();
 	}, [dispatch, id, enqueueSnackbar]);
 	if (!singleTask) {
-		return <> <div>Загрузка...</div></>;
+		return (
+			<>
+				{' '}
+				<div>Загрузка...</div>
+			</>
+		);
 	}
 	const handleClose = () => {
 		navigate(-1);
 	};
 	const onSubmit = async (data: taskSchema) => {
 		console.log(`данные из измененной формы`, data);
-		data.id = id as unknown as string;
+		data.id = Number(id);
 
 		dispatch(updateTaskThunk(data))
 			.unwrap()
