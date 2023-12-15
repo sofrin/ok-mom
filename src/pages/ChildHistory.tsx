@@ -1,7 +1,16 @@
 import { Grid, Paper } from '@mui/material';
 import { ChildVIewHistory } from '../widgets/ChildViewHistory/ChildVIewHistory';
+import { useAuth } from 'shared/model/hooks';
 
 export const ChildHistory = () => {
+	const isAuth = useAuth();
+	let username = '';
+	if (isAuth.user?.role === 'child') {
+		username = isAuth.user.name;
+	}
+	if (isAuth.user?.role === 'parent') {
+		username = isAuth.user.children[0].name;
+	}
 	return (
 		<Grid
 			container
@@ -23,7 +32,7 @@ export const ChildHistory = () => {
 						justifyContent: 'center',
 					}}
 				>
-					<ChildVIewHistory child='Ребёнок 1' />
+					<ChildVIewHistory child={username} />
 				</Paper>
 			</Grid>
 		</Grid>

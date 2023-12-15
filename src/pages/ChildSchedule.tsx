@@ -11,7 +11,7 @@ import { getTasksThunk, selectTasks } from 'entities/CardTask/model/taskSlice';
 
 import { useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from 'shared/model/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from 'shared/model/hooks';
 import { priorityColor } from 'widgets/ChildViewTaskCard/model/priorityColor';
 
 import { filteredTasks } from 'entities/CardTask/model/filterTasks';
@@ -34,6 +34,7 @@ type Event = {
 	createdBy: string;
 };
 export const ChildSchedule = () => {
+	const isAuth = useAuth();
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		const fetchTasks = async () => {
@@ -42,7 +43,14 @@ export const ChildSchedule = () => {
 		fetchTasks();
 	}, [dispatch]);
 	const tasks = useAppSelector(selectTasks);
-	const childTasks = filteredTasks(tasks, 'Ребёнок 1');
+	let username = '';
+	if (isAuth.user?.role === 'child') {
+		username = isAuth.user.name;
+	}
+	if (isAuth.user?.role === 'parent') {
+		username = isAuth.user.children[0].name;
+	}
+	const childTasks = filteredTasks(tasks, username);
 
 	console.log(tasks);
 	const [open, setOpen] = useState(false);
