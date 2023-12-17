@@ -18,7 +18,6 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { AppBar } from 'shared/ui/AppBar/AppBar';
 import { Drawer } from 'shared/ui/Drawer/Drawer';
 import { ChildNavBar } from 'widgets/NavBar/NavBar';
-import { secondaryListItems } from 'widgets/SecondaryNavbar/SecondaryNavbar';
 import { logOut } from 'features/authentication/model/authSlice';
 import Button from '@mui/material/Button';
 import { useAppDispatch, useAuth } from 'shared/model/hooks';
@@ -107,7 +106,6 @@ export function ChildLayout() {
 					<List component='nav'>
 						{ChildNavBar}
 						<Divider sx={{ my: 1 }} />
-						{secondaryListItems}
 					</List>
 				</Drawer>
 				<Box
